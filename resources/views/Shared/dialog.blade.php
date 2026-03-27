@@ -23,7 +23,7 @@
                 </div>
             </form>
         </div>
-        <div title="Usuarios" id="dialogUser">
+        <div title="Usuarios" id="dialogUser" style="padding-top:10px">
             <form action="{{url('/users')}}" method="POST"autocommplete="off" id="frmUser">
                 @csrf
                 <div class="mb-3">
@@ -86,8 +86,13 @@
                 <input type="hidden"  value="{{isset($client)? $client->id:''}}" name="client" id="client" >
                 <input type="hidden" name="document_type" id="document_type">
 
+                <div class="custom-file mb-3">
+                    <input type="file"accept="image/*"  name="file"  class="custom-file-input"  id="customfile">
+                    <label class="custom-file-label" for="customFile">Escoge un archivo </label>
+                </div>
                 <div class="mb-3">
-                    <input type="file"accept="image/*"  name="file"  class="form-control form-control-sm"  id="file">
+                    <label class="form-label" style="font-size:14px" >Descripcion</label>
+                    <textarea class="form-control" name="description" ></textarea>
                 </div>
             </form>
         </div>

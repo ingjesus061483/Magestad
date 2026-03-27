@@ -8,6 +8,7 @@
         <meta name="author" content="" />
         <title>@yield('title')</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
         <link href="{{url('/css/styles.css')}}" rel="stylesheet" />
         <link href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.3.4/datatables.min.css" rel="stylesheet" integrity="sha384-R5Azes02wvL9ervyq6xo5WLyg1ufX0qwun0F/0qos0E0wNjnnRTADTQpjpnNLakj" crossorigin="anonymous">
         <link rel="shortcut icon" type="image/x-icon" href="{{url('/img/magestad.ico')}}" />
@@ -47,7 +48,7 @@
                         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li>
-                            <form class="d-none d-md-inline-block form-inline" action="{{url('users/logout')}}"
+                            <form  action="{{url('users/logout')}}"
                              method="post">
                             @csrf
                             <button title="Cerrar sesion" type="button" onclick="validar(this,'Desea cerrar la sesion?')" class="btn">

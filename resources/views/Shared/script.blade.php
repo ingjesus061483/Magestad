@@ -9,9 +9,20 @@
             var client=$("#client").val();
             var app=$("#info").val();
             var urlBase=$("#base_url").val();
-            if($("#newness_type_id"))
-            {
-                $("#newness_type_id").autocomplete({
+            $(".custom-file-input").on("change", function() {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            });
+            var newnesstype=$("#newness_type").autocomplete({
+                    select:function(event,ui){
+                        $("#newness_type").val( ui.item.label );
+                        $("#newness_type_id").val( ui.item.value );
+                        return false;
+                    },
+                    focus: function( event, ui ) {
+                        $( "#newness_type" ).val( ui.item.label );
+                        return false;
+                    },
                     source: function( request, response )
                     {
                         $.ajax({
@@ -30,15 +41,21 @@
                                     {
                                         return{
                                             label: item.name,
-                                            value: item.id+" - "+item.name
+                                            value: item.id+" - "+item.name,
                                         }
                                  }));
-                             //   response( data );
                             }
                         });
                     },
                     minLength: 0,
-                });
+                }).autocomplete( "instance" );
+            console.log(newnesstype);
+            if(newnesstype!=undefined)
+            {
+                newnesstype._renderItem = function( ul, item ) {
+                    return $( "<li>" ).append( "<div style='font-size:10px;padding:5px' >" + item.label + "</div>" )
+                                    .appendTo( ul );
+                };
             }
             function focus(text)
             {
@@ -65,16 +82,31 @@
                                     {
                                         return{
                                             label: item.name,
-                                            value: item.id+" - "+item.name
+                                            value: item.id+" - "+item.name,
+                                            desc:item.identification
                                         }
                                  }));
                             }
-                        } );
+                        });
+                    },
+                    focus: function( event, ui ) {
+                        $( ".client" ).val( ui.item.label );
+                        return false;
+                    },
+                    select: function( event, ui ) {
+                        $( ".client" ).val( ui.item.label );
+                        $("#client_id").val( ui.item.value );
+                        /*$( "#project-description" ).html( ui.item.desc );
+                        $( "#project-icon" ).attr( "src", "images/" + ui.item.icon );*/
+
+                        return false;
                     },
                     minLength: 0,
-                } );
-
-
+                })
+                .autocomplete( "instance" )._renderItem = function( ul, item ) {
+                    return $( "<li>" ).append( "<div style='font-size:10px;padding:5px' ><strong>Idnetificacion:</strong>" + item.desc + "<br/><strong>Nombre:</strong>" + item.label + "</div>" )
+                                    .appendTo( ul );
+                };
             }
             if( $("#errors").length>0 )
             {
@@ -179,6 +211,10 @@
                     }],      */
                 });
             }
+            $( "#accordion" ).accordion({
+                collapsible: true,
+                 heightStyle: "content"
+            });
             function cambiarColor(combo)
             {
                 var state_homework_id=combo.value;
@@ -335,7 +371,6 @@
                         //alert(ajaxContext.responseText)
                     }
                 });
-
             }
             function validar(obj, mensaje)
             {
@@ -590,13 +625,15 @@
                    $("#age").html("Edad: "+age +" años");
             });
             $(".currency").focus(function(){
-                this.value= "";
+                this.value= "$";
             });
             $(".currency").blur(function(){
-              this.value= new Intl.NumberFormat("en-US", {
+              var num= new Intl.NumberFormat("en-US", {
                                         style: "currency",
                                         currency: "USD"
-                                        }).format(this.value);
+                                        }).format(this.value.replace('$',''));
+                    this.value=num;
+
             });
             $("#state").change(function(){
                 console.log(this.value);
@@ -783,7 +820,7 @@
             });
             var dialogNewnessType=$("#dialogNewnessType").dialog({
                 autoOpen: false,
-                height: 250,
+                height:500,
                 width: 500,
                 modal: true,
                 buttons:
@@ -811,8 +848,8 @@
             });
             var dialogViewDocuments= $("#dialogViewDocuments").dialog({
                 autoOpen: false,
-                height: 400,
-                width: 700,
+                height: 500,
+                width: 500,
                 modal: true,
                 buttons:
                 [{
@@ -832,7 +869,7 @@
             });
             var dialogDocumentType= $("#dialogDocumentType").dialog({
                 autoOpen: false,
-                height: 250,
+                height: 500,
                 width: 500,
                 modal: true,
                 buttons:
@@ -888,7 +925,7 @@
             })
             var dialogAttach= $("#dialogAttach").dialog({
                 autoOpen: false,
-                height: 250,
+                height: 500,
                 width: 500,
                 modal: true,
                 buttons:
@@ -916,8 +953,8 @@
             });
             var dialogPolicy= $("#dialogPolicy").dialog({
                 autoOpen: false,
-                height: 350,
-                width: 600,
+                height:500,
+                width: 500,
                 modal: true,
                 buttons:
                 [{
@@ -937,8 +974,8 @@
             });
             var dialogArl= $("#dialogArl").dialog({
                 autoOpen: false,
-                height: 350,
-                width: 600,
+                height: 500,
+                width: 500,
                 modal: true,
                 buttons:
                 [{
@@ -961,7 +998,7 @@
             });
             dialogEps= $("#dialogEps").dialog({
                 autoOpen: false,
-                height: 350,
+                height: 500,
                 width: 600,
                 modal: true,
                 buttons:
@@ -988,8 +1025,8 @@
             });
             dialogContact= $("#dialogContact").dialog({
                 autoOpen: false,
-                height: 300,
-                width: 400,
+                height: 500,
+                width: 500,
                 modal: true,
                 buttons:
                 [

@@ -18,13 +18,13 @@
             {{$item->description}}
             <div style="padding: 5px;">
                  <a title="Editar" onclick="editarPolicy({{$item->id}})" class="btn btn-warning btn-sm">
-                            <i class="fa-solid fa-pencil"></i>
-                        </a>&nbsp;
+                    <i class="fa-solid fa-pencil"></i>
+                 </a>&nbsp;
                  <form method="POST" action="{{url('/authorizationPolicies')}}/{{$item->id}}"  style="display:inline">
-                            @csrf
-                            {{method_field('DELETE')}}
-                            <button type="button" title="Eliminar" class="btn btn-danger btn-sm" onclick="validar(this,'¿Desea eliminar el registro?')"><i class="fa-solid fa-trash"></i></button>
-                        </form>
+                    @csrf
+                    {{method_field('DELETE')}}
+                    <button type="button" title="Eliminar" class="btn btn-danger btn-sm" onclick="validar(this,'¿Desea eliminar el registro?')"><i class="fa-solid fa-trash"></i></button>
+                </form>
             </div>
         </div>
         @endforeach

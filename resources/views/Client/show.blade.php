@@ -10,19 +10,19 @@
     <div class="card-body" style="font-size: 14px">
         @if(auth()->check())
         <div class="row">
-            <div  class="col-4">
+            <div  class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" for=""style="font-weight:bold"  > REFERENCIA: </label>
                     {{$client->reference}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" for=""style="font-weight:bold"> CALIDAD DEL TITULAR: </label>
                     {{$client->quality_holder?->name}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" for="" style="font-weight:bold">TITULO VALOR: </label>
                     {{$client->value_title}}
@@ -31,28 +31,28 @@
         </div>
         @endif
         <div class="row">
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" for="" style="font-weight:bold">NOMBRES Y APELLIDOS: </label>
                     {{$client->name_last_name}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" for="" style="font-weight: bold"># DOCUMENTO:</label>
                     {{$client->identification}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3" >
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-sm-6">
                             <div class="mb-3" >
                                 <label class="form-label" for="" style="font-weight: bold">FECHA DE NACIMIENTO:</label>
                                 {{ date("d/m/Y", strtotime($client->date_birth))}}
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-sm-6">
                             <div class="mb-3" >
                                 <label class="form-label" for="" style="font-weight:bold">EDAD:</label>
                                 {{\Carbon\Carbon::parse($client->date_birth)->age.'años'}}
@@ -63,19 +63,19 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3" >
                     <label class="form-label" for="" style="font-weight:bold">FECHA DE EXPEDICION:</label>
                     {{ date("d/m/Y", strtotime($client ->expedition_date))}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3" >
                     <label class="form-label" for="" style="font-weight: bold">DIRECCION RESIDENCIA:</label>
                     {{$client->address}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" for=""style="font-weight:bold" >BARRIO: </label>
                     {{ $client->neighborhood}}
@@ -83,19 +83,19 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3" >
                     <label class="form-label" for="" style="font-weight:bold"> ESTADO CIVIL:</label>
                     {{$client->marital_status->name}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" for="" style="font-weight: bold"> EMAIL:</label>
                     {{$client->email}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3" >
                     <label class="form-label" for="" style="font-weight: bold"> NIVEL DE ESTUDIOS:</label>
                     {{$client->level_study->name}}
@@ -125,7 +125,7 @@
     <div class="card-body" style="font-size:14px">
         @foreach($client->employment_informations as $item)
         <div class="row">
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" style="font-weight: bold" for="">
                         EMPRESA DONDE LABORA:
@@ -133,7 +133,7 @@
                     {{$item->company_works}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label"style="font-weight: bold" for="">
                         NIT #:
@@ -141,7 +141,7 @@
                     {{$item->nit_company_work}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" style="font-weight: bold" for="">
                         DIRECCION OFICINA PRINCIPAL:
@@ -151,7 +151,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" style="font-weight: bold" for="">
                         DEPARTAMENTO:
@@ -159,7 +159,7 @@
                     {{$item->state->name}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label"style="font-weight: bold" for="">
                         CIUDAD:
@@ -167,7 +167,7 @@
                     {{$item->city->name}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" style="font-weight: bold" for="">
                         EMPRESA EN MISION:
@@ -177,7 +177,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" style="font-weight: bold" for="">
                         NIT EMPRESA EN MISION:
@@ -185,7 +185,7 @@
                     {{$item->nit}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" style="font-weight: bold" for="">
                         DIRECCION SEDE:
@@ -193,7 +193,7 @@
                     {{$item->branch_address}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" style="font-weight: bold" for="">
                         FECHA DE INGRESO:
@@ -203,7 +203,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" style="font-weight: bold" for="">
                         SALARIO MENSUAL PROMEDIO:
@@ -211,7 +211,7 @@
                     ${{number_format($item->monthly_average_salary,0,',','.')}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" style="font-weight: bold" for="">
                         CARGO ACTUAL:
@@ -219,7 +219,7 @@
                     {{$item->current_position}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" style="font-weight: bold" for="">
                         FRECUENCIA DE PAGOS:
@@ -229,7 +229,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" style="font-weight: bold" for="">
                         FECHA DE PAGO EMPRESA (FPE):
@@ -237,7 +237,7 @@
                     {{$item->company_payment_date->name}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" style="font-weight: bold" for="">
                         FECHA DE PAGO CLIENTE (FPC):
@@ -245,7 +245,7 @@
                     {{$item->customer_payment_date->name}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" style="font-weight: bold" for="">
                         TIPO DE CONTRATO:
@@ -255,7 +255,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" style="font-weight: bold" for="">
                         EPS AFILIADA:
@@ -263,7 +263,7 @@
                     {{$item->eps_affiliate->name}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" style="font-weight: bold" for="">
                         ARL AFILIADA:
@@ -283,7 +283,7 @@
     <div class="card-body" style="font-size: 14px">
         @foreach($client->loans as $item)
         <div class="row">
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" for="" style="font-weight: bold">
                         CREDITO SOLICITADO (COP):
@@ -291,7 +291,7 @@
                    ${{number_format($item->ammount,0,',','.')}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3">
                     <label class="form-label" style="font-weight: bold" for="">
                         PLAZO SOLICITADO (Meses):
@@ -299,7 +299,7 @@
                     {{$item->term}}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="mb-3" >
                     <label class="form-label" style="font-weight: bold" for="">
                         TIPO DE GARANTIA:
@@ -319,7 +319,7 @@
     </div>
     <div class="card-body"style="font-size: 14px">
         <div class="row">
-            <div class="col-6">
+            <div class="col-sm-6">
                 <div class="mb-3">
                     <label class="form-label" style="font-weight: bold" for="">
                         POSEE VEHICULO:
@@ -327,7 +327,7 @@
                     {{$client->vehicle==1?'Si':'No' }}
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-sm-6">
                 <div class="mb-3">
                     <label class="form-label" style="font-weight: bold" for="">
                         POSEE PROPIEDADES:
@@ -345,7 +345,7 @@
     </div>
     <div class="card-body" style="font-size: 14px">
         <div class="row">
-            <div class="col-6">
+            <div class="col-sm-6">
                 <div class="mb-3">
                     <label class="form-label" for="" style="font-weight: bold">
                         TIENE EMBARGOS
@@ -353,7 +353,7 @@
                     {{$client->seizure==1?'Si':'No' }}
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-sm-6">
                 <div class="mb-3">
                     <label class="form-label" for="" style="font-weight: bold">
                         EMPRESA QUE LO EMBARGA
@@ -426,32 +426,41 @@
            <p> Estimado Sr(a).&nbsp;&nbsp;<strong>{{$client->name_last_name}}</strong>:</p>
            <p>Para continuar con el proceso de su solicitud de crédito, es necesario que adjunte copia de los sgtes. documentos: </p>
         </div>
-        <div style="width:70%; margin:0 auto">
+        <div style="width:100%; margin:0 auto">
             <table class="table table-bordered" style="  table-layout: fixed; width:100%" >
                 <thead style ="font-size: 14px" >
                     <tr>
+                        <th >&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th >&nbsp;&nbsp;&nbsp;&nbsp;</th>
                         <th style="width:20px">#</th>
                         <th style="text-align:center;width:100%;">TIPO DE DOCUMENTO </th>
-                        <th style="text-align:center;width:20px;" >CANTIDAD</th>
-                        <th >&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th style="text-align:center;width:100%;" >CANTIDAD</th>
+
                     </tr>
                 </thead>
                 <tbody style ="font-size: 12px">
                     @foreach ($documenttypes as $item )
                         <tr>
-                            <th scope="row" style="text-align: center;width:20px  ">{{$item->id}}.</th>
-                            <td style="width:100%;">{{$item->name}}</td>
-                            <td style="text-align:center;width:20px;">{{$item->amount}} </td>
-                            <td style="text-align:center;">
+                             <td style="text-align:center;">
 
                                 <a title="adjuntar documentos" onclick="attach({{$item->id}})" class="btn btn-primary btn-sm" id="btnAttach" >
                                     <i class="fa-solid fa-paperclip"></i>
                                 </a>
-                                &nbsp;
-                                <a title="Ver documentos" onclick="viewDocuments({{$client->id}},{{$item->id}})" class="btn btn-success btn-sm">
-                                    <i class="fa-solid fa-eye"></i>
-                                </a>
                             </td>
+                            <td style="text-align:center;">
+                                <form action="{{url('/documents')}}" method="GET">
+                                    @csrf
+                                    <input type="hidden" name="client_id" value="{{$client->id}}" >
+                                    <input type="hidden" name="document_type_id" value="{{$item->id}}" >
+                                    <button type="submit" class="btn btn-success btn-sm">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+
+                                </form>
+                            </td>
+                            <th scope="row" style="text-align: center;width:20px  ">{{$item->id}}.</th>
+                            <td style="width:100%;">{{$item->name}}</td>
+                            <td style="text-align:center;width:20px;">{{$item->amount}} </td>
                         </tr>
                     @endforeach
                 </tbody>

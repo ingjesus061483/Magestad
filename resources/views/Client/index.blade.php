@@ -85,7 +85,7 @@
                     <td>{{$item->Company_works}}</td>
                     <td>{{$item->main_address}}</td>
                     <td>{{$item->company_on_mission}}</td>
-                    <td>{{$item->nit}}</td>
+                    <td>{{$item->nit_company_mision}}</td>
                     <td>{{$item->branch_address}}</td>
                     <td>{{date("d/m/Y", strtotime($item->entry_date))}}</td>
                     <td>${{number_format($item->average_monthly_salary)}}</td>
@@ -101,7 +101,7 @@
                     <td>{{$item->estate==1?'Si':'No'}}  </td>
                     <td>{{$item->seizure}} </td>
                     <td>${{number_format( $item->ammount)}}  </td>
-                    <td>{{$item->term}}    </td>
+                    <td>{{number_format($item->term)}}     </td>
                     <td>{{$item->warranty}}  </td>
 
                 </tr>

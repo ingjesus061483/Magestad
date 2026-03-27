@@ -22,15 +22,22 @@ class DocumentController extends Controller
      */
     public function index(ShowRequest $request)
     {
+        $document_type=DocumentType::find($request->document_type_id);
         $documents=Document::where('client_id',$request->client_id)
                            ->where('document_type_id',$request->document_type_id)
                            ->get();
+        if(count($documents)==0)
+        {
+            return back()->withErrors("No has insertado ningun documento");
+        }
+        $data=[
+            'client_id'=>$request->client_id,
+            'documents'=>$documents,
+            'document_type'=>$document_type,
+        ];
+        return view("Document.index",$data);
       //  $client=Client::find($request->client_id);
       //  session(['client' => $client]);
-        $data=[
-        'documents'=>$documents];
-        return response()->json($data);
-
     }
     /**
      * Show the form for creating a new resource.
@@ -49,14 +56,17 @@ class DocumentController extends Controller
         $document_type=DocumentType::find($request->document_type);
         $document=document::where('client_id',$request->client)->where('document_type_id',$request->document_type)->orderby('id','desc')->first();
         $id=$document? $document->id +1 :1;
-        $name= $this->getImage($request,$document_type->name.$client->identification.$id);
+        $name= "$document_type->name($id)";
+        $path=$this->getImage($request,"$document_type->name $client->identification $id");
         Document::create([
             'client_id'=>$request->client,
             'document_type_id'=>$request->document_type,
             'name'=>$name,
+            'path'=>$path,
             'description'=>$request->description,
         ]);
-       return back()->with(['message'=>'Documento cargado correctamente']);
+       return redirect()->to(url('documents')."?client_id=$request->client&document_type_id=$request->document_type")
+                        ->with(['message'=>'Documento cargado correctamente']);
         //
     }
 
@@ -92,12 +102,13 @@ class DocumentController extends Controller
     public function destroy($id)
     {
         $document=Document::find($id);
+        $client=$document->client;
         $document_path=public_path('img/'.$document->name);
         $document->delete();
         if (file_exists($document_path)) {
             unlink($document_path);
         }
-        return back()->with(['message'=>'Documento eliminado correctamente']);
+        return redirect()->to(url("/clients")."/".$client->id)->with(['message'=>'Documento eliminado correctamente']);
         //
     }
 }

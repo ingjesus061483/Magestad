@@ -26,7 +26,7 @@ use App\Models\Warranty;
 use App\Models\AuthorizationPolicy;
 use App\Models\ClientPolicy;
 use App\Models\DocumentType;
-
+use Illuminate\Support\Facades\Auth;
 class ClientController extends Controller
 {
     protected $QualityHolder;
@@ -79,7 +79,7 @@ class ClientController extends Controller
                                    'einf.Company_works' ,
                                    'einf.main_address' ,
                                    'einf.company_on_mission',
-                                   'einf.nit' ,
+                                   'einf.nit as nit_company_mision' ,
                                    'einf.branch_address',
                                    'einf.entry_date' ,
                                    'einf.average_monthly_salary',
@@ -121,7 +121,7 @@ class ClientController extends Controller
     public function SearchByName(Request $request)
     {
         $clients=Client::where('clients.name_last_name','like','%'.$request->name.'%')
-                      ->select( "id")
+                      ->select( "id","identification")
                       ->selectRaw("name_last_name as name")
                       ->get();
         return response()->json($clients);
@@ -354,7 +354,7 @@ class ClientController extends Controller
     public function edit( AutorizeRequest $request,int $id)
     {
         $client=Client::find($id);
-        $arr=[];
+        $arrp=[];
         $policiesclients=ClientPolicy::where('client_id',$client?->id);
         $contactInfos=ContactInformation::where ('client_id',$client?->id);
         $EmploymentInformation=EmploymentInformation::where ('client_id',$client!=null?$client->id:0)->first();
@@ -362,11 +362,13 @@ class ClientController extends Controller
         $info=session()->has("info")?session('info'):'client';
         foreach($policiesclients->get() as $pc)
         {
-            $arr[]=$pc->policy_id;
+            $arrp[]=$pc->policy_id;
         }
         $data=[
             'client'=>$client,
-            'policies'=>$this->policies->whereNotIn ('id',$arr)->get(),
+             'policies'=>$this->policies->whereNotIn ('id',$arrp)->get(),
+            'autorizations'=>$this->autorizations->whereNotIn ('id',$arrp)->get(),
+
             'policyclients'=>$policiesclients->get(),
             'contactInfos'=>$contactInfos->get(),
             'EmploymentInformation'=>$EmploymentInformation,
@@ -395,6 +397,10 @@ class ClientController extends Controller
      */
     public function update(UpdateRequest $request, $id)
     {
+        if(!Auth::check())
+        {
+            return back()->withErrors('No puedes actualizar el registro sino te has logueado. Comúnicate con el administrador del sistema para mas información' );
+        }
        $arrclient=[
             'identification'=>$request->identification,
             'name_last_name'=>$request->name_last_name,

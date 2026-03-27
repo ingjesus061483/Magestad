@@ -11,18 +11,31 @@
             @csrf
             <input type="hidden" name="user_id" id="user_id" value="{{auth()->user()->id}}">
             <div class="row mb-3">
-                <div class="col-6">
+                <div class="col-sm-6">
                     <label for="date" class="col-form-label" style="font-size:14px">Fecha</label>
                     <input type="date"name="date" class="form-control" id="date" style="font-size:12px" value="{{date('Y-m-d')}}">
                 </div>
-                <div class="col-6">
-                    <label for="client_id" class="col-form-label" style="font-size:14px">Cliente</label>
-                    <input type="text"name="client_id" class="client form-control" id="client_id" style="font-size:12px">
-
+                <div class="col-sm-6">
+                   @include('Shared.searchClient')
                 </div>
             </div>
              <div class="row mb-3">
-                <div class="col-6">
+                <div class="col-sm-6">
+                    <label for="homework_type_id" class="col-form-label" style="font-size:14px">Tipo de Tarea</label>
+                   <select class="form-select" name="homework_type_id" style="font-size:12px" id="homework_type_id">
+                        <option value="" disabled selected>Seleccione una opción</option>
+                        @foreach ($homework_types as $type)
+                            <option value="{{$type->id}}">{{$type->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                 <div class="col-sm-6">
+                    <label for="remark" class="col-form-label" style="font-size:14px">Tarea</label>
+                    <textarea class="form-control" name="remark" id="remark" rows="3" class="form-control" style="font-size:12px" ></textarea>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-6">
                     <label for="state_homework_id" class="col-form-label"style="font-size:14px">Estado </label>
                     <select  onchange="cambiarColor(this)" class="form-select" name="state_homework_id" style="font-size:12px" id="state_homework_id">
                         <option value="" disabled selected>Seleccione una opción</option>
@@ -39,20 +52,8 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-6">
-                    <label for="homework_type_id" class="col-form-label" style="font-size:14px">Tipo de Tarea</label>
-                   <select class="form-select" name="homework_type_id" style="font-size:12px" id="homework_type_id">
-                        <option value="" disabled selected>Seleccione una opción</option>
-                        @foreach ($homework_types as $type)
-                            <option value="{{$type->id}}">{{$type->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
             </div>
-            <div class="mb-3">
-                <label for="remark" class="col-form-label" style="font-size:14px">Tarea</label>
-                <textarea class="form-control" name="remark" id="remark" rows="3" class="form-control" style="font-size:12px" ></textarea>
-            </div>
+
             <div class="mb-3">
                 <button type="submit" class="btn btn-success">Guardar</button>
             </div>

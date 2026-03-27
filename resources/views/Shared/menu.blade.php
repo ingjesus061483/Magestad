@@ -31,6 +31,7 @@
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
                                 Usuarios
                             </a>
+
                             @else
                             <div class="sb-sidenav-menu-heading">Formatos</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
