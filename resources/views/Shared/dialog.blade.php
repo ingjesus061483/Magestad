@@ -113,7 +113,7 @@
         <div title="EPS" id="dialogEps">
             <form id ="frmEps" action="{{url('/eps')}}" method="POST" autocomplete="off">
                 @csrf
-                <p style="color: red;font-size:12">Si su EPS no se encuentra en el listado, por favor registrela</p>
+                <p style="color:gray;font-style: italic; font-size:14px">Registre aqui su EPS</p>
                 <div class="mb-3">
                     <label class="form-label" for="" style="font-size:14px"> Nombre*</label>
                     <input type="text" name="name" class="form-control" style="width:80%;font-size12px " id="name">
@@ -129,7 +129,7 @@
         <div title="ARL" id="dialogArl">
             <form id ="frmArl" action="{{url('/arls')}}" method="POST" autocomplete="off">
                 @csrf
-                <p style="color: red;font-size:12px">Si su ARL no se encuentra en el listado, por favor registrela</p>
+                <p style="color:gray;font-style: italic; font-size:14px">Registre aqui su ARL</p>
                 <div class="mb-3">
                     <label class="form-label" for="" style="font-size:14px"> Nombre*</label>
                     <input type="text" name="name" class="form-control" style="width:80%;font-size:12px; " id="name">

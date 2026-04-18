@@ -18,13 +18,17 @@ class NewnessController extends Controller
 
     public function index(AutorizeRequest $request)
     {
+        $pendingNewnesses=Newness::where('state_newness_id',1)->get();
+        $doneNewnesses=Newness::where('state_newness_id',2)->get();
         $data=[
+            'pendingNewnesses'=>$pendingNewnesses,
+            'doneNewnesses'=>$doneNewnesses,
             'newnesses'=>Newness::all(),
             'clients'=>Client::all(),
             'newnesstypes'=>NewnessType::all(),
             'state_newnesses'=>StateNewness::all()
         ];
-        return view ('Newness.index',$data);
+        return view('Newness.index',$data);
 
         //
     }
@@ -56,7 +60,7 @@ class NewnessController extends Controller
             'client_id'=>$request->client_id,
             'newness_type_id'=>$request->newness_type_id,
             'remark'=>$request->remark,
-            'state_newness_id'=>$request->state_newness_id
+            'state_newness_id'=>1
         ]);
         return redirect()->to('/Newness')->with(['message'=>'Novedad creada correctamente']);
         //
@@ -98,10 +102,9 @@ class NewnessController extends Controller
             'client_id'=>$request->client_id,
             'newness_type_id'=>$request->newness_type_id,
             'remark'=>$request->remark,
-            'state_newness_id'=>$request->state_newness_id
         ];
         $newness->update($arrNewness);
-       return redirect()->to('/Newness')->with(['message'=>'Novedad creada correctamente']);
+       return redirect()->to('/Newness')->with(['message'=>'Novedad actualizada correctamente']);
 
         //
     }

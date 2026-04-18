@@ -17,9 +17,11 @@ class CompanyPaymentDatesSeeder extends Seeder
             [ 'name'=>'Dia 10','description'=>''],
             ['name'=>'Dia 20','description'=>''],
             [ 'name'=>'Dia 30','description'=>''],
-            ['name'=>'Dia 5/20','description'=>''],
-            ['name'=>'Dia 10/25','description'=>''],
-            ['name'=>'Dia 15/30','description'=>'']            
+            ['name'=>'Dia 5 | 20','description'=>''],
+            ['name'=>'Dia 10 |25','description'=>''],
+            [';name'=>'Dia 15 | 30','description'=>''],
+            ['name'=>'semanal','description'=>''],
+
         ]);
         //
     }

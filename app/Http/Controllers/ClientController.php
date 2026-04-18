@@ -99,6 +99,7 @@ class ClientController extends Controller
                                    'loans.term',
                                    'w.name as warranty',
                                    'clients.created_at')
+                                ->selectRaw("concat(city.name ,' | ', st.name)as city")
                                 ->selectRaw("concat('CC',' ', clients.identification) as identification")
                                 ->selectRaw("CASE WHEN clients.seizure =1 THEN concat('SI',' | ',clients.company_seizure) ELSE 'NO' END as seizure")
                                 ->selectRaw("TIMESTAMPDIFF(YEAR, clients.date_birth, CURDATE()) AS age")
@@ -201,6 +202,8 @@ class ClientController extends Controller
                                              `authorization_policies` ap ON ap.id=cp.policy_id WHERE
                                              cp.client_id=clients.id AND ap.title='A15')as A15")
                                 ->leftjoin("quality_holders as q","q.id","=","quality_holder_id")
+                                ->join('cities as city','city.id','=','city_id' )
+                                ->join('states as st','st.id','=','city.state_id'  )
                                 ->join("marital_status as ms","ms.id","=","marital_status_id")
                                 ->join("level_studies as ls","ls.id","=","clients.level_study_id")
                                 ->leftjoin("employment_informations as einf","clients.id","=","einf.client_id")
@@ -380,6 +383,7 @@ class ClientController extends Controller
             'date_birth'=>$request->birth_date,
             'expedition_date'=>$request->expedition_date,
             'neighborhood'=>$request->neighborhood,
+            'city_id'=>$request->city_id,
             'vehicle'=>$request->vehicle==null?0:(bool)$request->vehicle ,
             'estate'=>$request->estate==null?0:(bool)$request->estate,
             'seizure'=>$request->seizure==null?0:(bool)$request->seizure,
@@ -548,6 +552,7 @@ class ClientController extends Controller
             'email'=>$request->email,
             'reference'=>$request->reference,
             'value_Title'=>$request->value_Title,
+             'city_id'=>$request->city_id,
             'date_birth'=>$request->birth_date,
             'expedition_date'=>$request->expedition_date,
             'neighborhood'=>$request->neighborhood,

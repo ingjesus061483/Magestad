@@ -23,10 +23,13 @@ class HomeworkController extends Controller
      */
     public function index(AutorizeRequest $request)
     {
-        $data=[
+        $pendingTasks=Homework::where('state_homework_id',1)->get();
+        $doneTasks=Homework::where('state_homework_id',2)->get();
+         $data=[
+            'pendingTasks'=>$pendingTasks,
+            'doneTasks'=>$doneTasks,
             'homeworks'=>Homework::all(),
-            'clients'=>Client::all(),
-            'state_homeworks'=>StateHomework::all()
+            'state_homeworks'=>StateHomework::all(),
         ];
         return view ('Homework.index',$data);
         //
@@ -38,7 +41,6 @@ class HomeworkController extends Controller
     public function create(AutorizeRequest $request)
     {
         $data=[
-            'state_homeworks'=>StateHomework::all(),
             'homework_types'=>HomeworkType::all()
         ];
         return view('Homework.create',$data);

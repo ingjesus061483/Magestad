@@ -29,21 +29,29 @@ class StoreRequest extends FormRequest
     }
     protected function failedAuthorization()
     {
-        
+
         throw new HttpResponseException(response()->redirectTo(url('/UnAutorize'))
             ->with(['error' => 'Esta accion no esta autorizada!']));
     }
     public function messages()
     {
         return [
-            'name.required' => 'El :attribute es obligatorio.',       
-            'name.max' => 'El :attribute no debe ser mayor a 50 caracteres.', 
-        ];    
+            'name.required' => 'El :attribute es obligatorio.',
+            'name.max' => 'El :attribute no debe ser mayor a 50 caracteres.',
+        ];
     }
     public function attributes()
     {
         return [
-            'name' => 'nombre de la ARL', 
+            'name' => 'nombre de la ARL',
         ];
+    }
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'name' => strtoupper($this->name),
+        ]);
+
+
     }
 }

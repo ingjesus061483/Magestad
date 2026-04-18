@@ -35,7 +35,7 @@ public function prepareForValidation()
             'date' => 'required|date',
             'client_id' => 'required|integer|exists:clients,id',
             'remark' => 'required|string|max:255',
-            'state_homework_id' => 'required|integer|exists:state_homework,id',
+
 
 
             //
@@ -54,9 +54,6 @@ public function prepareForValidation()
             'remark.required' => 'La :attribute es obligatoria.',
             'remark.string' => 'La :attribute debe ser una cadena de texto.',
             'remark.max' => 'La :attribute no debe ser mayor a 255 caracteres.',
-            'state_homework_id.required' => 'El :attribute es obligatorio.',
-            'state_homework_id.integer' => 'El :attribute debe ser un número entero.',
-            'state_homework_id.exists' => 'El :attribute no existe.',
             'homework_type_id.required' => 'El :attribute es obligatorio.',
             'homework_type_id.integer' => 'El :attribute debe ser un número entero.',
             'homework_type_id.exists' => 'El :attribute no existe.',
@@ -70,7 +67,6 @@ public function prepareForValidation()
             'date' => 'fecha',
             'client_id' => 'cliente',
             'remark' => 'observación',
-            'state_homework_id' => 'estado de tarea',
             'homework_type_id' => 'tipo de tarea',
 
         ];

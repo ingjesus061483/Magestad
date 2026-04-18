@@ -6,6 +6,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="text/javascript">
             var user=$("#user").val();
+
             var client=$("#client").val();
             var app=parseInt($("#info").val());
             var urlBase=$("#base_url").val();
@@ -13,6 +14,49 @@
                 var fileName = $(this).val().split("\\").pop();
                 $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
             });
+            var city=$('#city_name').autocomplete({
+                    select:function(event,ui){
+                        $("#city_name").val( ui.item.label );
+                        $("#city_id").val( ui.item.value );
+                        console.log($("#city_id").val());
+                        return false;
+                    },
+                    focus: function( event, ui ) {
+                        $("#city_name").val( ui.item.label );
+                        return false;
+                    },
+                    source: function( request, response )
+                    {
+                        $.ajax({
+                            url: urlBase+"cities/GetcitiesByName/",
+                            type: "GET",
+                            dataType: "json",
+                            data:{
+                                name: request.term
+                            },
+                            success: function( data )
+                            {
+                                 response(
+                                    $.map( data, function( item )
+                                    {
+                                        return{
+                                            label: item.name,
+                                            value: item.id,
+                                        }
+                                 }));
+                            }
+                        });
+                    },
+                    minLength: 0,
+            }).autocomplete( "instance" );
+            if(city!=undefined)
+            {
+                city._renderItem = function( ul, item ) {
+                    return $( "<li>" ).append( "<div style='font-size:10px;padding:5px' >" + item.label + "</div>" )
+                                    .appendTo( ul );
+                };
+
+            }
             var client_identification=$("#client_identification").autocomplete({
                     select:function(event,ui){
                         $("#client_identification").val( ui.item.label );
@@ -258,6 +302,18 @@
                 heightStyle: "content",
                 active: app
             });
+            function GetRequestLoanById(id)
+            {
+                if(id==null)
+                {
+                    url=urlBase+"requestLoan";//"{{url('/requestLoan/')}}";
+                }
+                else
+                {
+                    url=urlBase+"requestLoan?id="+id;//"{{url('/requestLoan/')}}/"+id;
+                }
+                window.location.href=url;
+            }
             function GetPolicyBytitle(title)
             {
                 url=urlBase+"authorizationPolicies/ShowByTitle/0";//"{{url('/authorizationPolicies/')}}/"+id;
@@ -332,62 +388,117 @@
                         break;
                 }
             }
-            function cambiarEstadoHomework(id,combo){
-                var state_homework_id=combo.value;
-                var url=urlBase+"homework/changeStateHomework/"+id;//"{{url('/homework/ChangeStateHomework/')}}/"+id;
-                var data={
-                    state_homework_id:state_homework_id,
-                    _token: "{{ csrf_token() }}"                };
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    data:data,
-                    dataType: "json",
-                    success: function (result)
+            function cambiarEstadoHomework(id,checkbox){
+                Swal.fire({
+                    title: "¿Desea cambiar el estado de la tarea?",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Si, continuar",
+                    cancelButtonText: "Cancelar"
+                    }).then((result) =>
                     {
-                        console.log(result.message);
-                        location.reload();
-                    },
-                    error: function (ajaxContext)
-                    {
-                        Swal.fire({
-                            title: "Se han encontrado los siguientes errores:",
-                            icon: "error",
-                            text:ajaxContext.responseText,
-                            draggable: true
-                        });
-                        //alert(ajaxContext.responseText)
-                    }
-                });
+                        if(result.isConfirmed)
+                        {
+
+                              var state_homework_id=checkbox.checked?2:1;
+                              var url=urlBase+"homework/changeStateHomework/"+id;//"{{url('/homework/ChangeStateHomework/')}}/"+id;
+                              var data={
+                                    state_homework_id:state_homework_id,
+                                    _token: "{{ csrf_token() }}"
+                              };
+                              $.ajax({
+                                    url: url,
+                                    type: "POST",
+                                    data:data,
+                                    dataType: "json",
+                                    success: function (result)
+                                    {
+                                        Swal.fire({
+                                            title: "Información",
+                                            icon: "info",
+                                            text:result.message,
+                                            draggable: true
+                                        });
+
+                                        console.log(result.message);
+                                        location.reload();
+                                    },
+                                    error: function (ajaxContext)
+                                    {
+                                        Swal.fire({
+                                            title: "Se han encontrado los siguientes errores:",
+                                            icon: "error",
+                                            text:ajaxContext.responseText,
+                                            draggable: true
+                                        });
+                                        //alert(ajaxContext.responseText)
+                                    }
+                            });
+                        }
+                        else
+                        {
+                            checkbox.checked=!checkbox.checked;
+                        }
+
+                    });
+
             }
-            function cambiarEstadoNewness(id,combo){
-                var state_newness_id=combo.value;
-                var url=urlBase+"Newness/changeStateNewness/"+id;//"{{url('/Newness/ChangeStateNewness/')}}/"+id;
-                var data={
-                    state_newness_id:state_newness_id,
-                    _token: "{{ csrf_token() }}"
-                };
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    data:data,
-                    dataType: "json",
-                    success: function (result)
+            function cambiarEstadoNewness(id,checkbox){
+                Swal.fire({
+                    title: "¿Desea cambiar el estado de la novedad?",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Si, continuar",
+                    cancelButtonText: "Cancelar"
+                    }).then((result) =>
                     {
-                        console.log(result.message);
-                        location.reload();
-                    },
-                    error: function (ajaxContext)
-                    {
-                        Swal.fire({
-                            title: "Se han encontrado los siguientes errores:",
-                            icon: "error",
-                            text:ajaxContext.responseText,
-                            draggable: true
-                        });
-                        //alert(ajaxContext.responseText)
-                    }
-                });
+                        if(result.isConfirmed)
+                        {
+                            var state_newness_id=checkbox.checked?2:1;
+                            var url=urlBase+"Newness/changeStateNewness/"+id;//"{{url('/Newness/ChangeStateNewness/')}}/"+id;
+                            var data={
+                                state_newness_id:state_newness_id,
+                                _token: "{{ csrf_token() }}"
+                            };
+                            $.ajax({
+                                url: url,
+                                type: "POST",
+                                data:data,
+                                dataType: "json",
+                                success: function (result)
+                                {
+                                    Swal.fire({
+                                        title: "Información",
+                                        icon: "info",
+                                        text:result.message,
+                                        draggable: true
+                                    });
+                                    console.log(result.message);
+                                    location.reload();
+                                },
+                                error: function (ajaxContext)
+                                {
+                                    Swal.fire({
+                                        title: "Se han encontrado los siguientes errores:",
+                                        icon: "error",
+                                        text:ajaxContext.responseText,
+                                        draggable: true
+                                    });
+                                    //alert(ajaxContext.responseText)
+                                }
+                            });
+                        }
+                        else
+                        {
+                            checkbox.checked=!checkbox.checked;
+                        }
+
+                    });
+
             }
             function editarNovedad(id)
             {
@@ -690,6 +801,18 @@
                     }
                 });
             }
+            $("#eps_affiliate").change(function(){
+                if(this.value == "-1")
+                {
+                    dialogEps.dialog("open");
+                }
+            });
+            $("#arl_affiliate").change(function(){
+                if(this.value == "-1")
+                {
+                    dialogArl.dialog("open");
+                }
+            });
             $("#btnHomework").click(function(){
                 dialogHomework.dialog("open");
 

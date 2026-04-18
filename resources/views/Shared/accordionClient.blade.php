@@ -39,12 +39,12 @@
                 <div  class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label"style="font-size:12px" for="">
-                             CALIDAD DEL TITULAR
+                             CALIDAD DEL TITULAR*
                         </label>
                         <select style="font-size: 12px" class="form-select" name="quality_holder" id="quality_holder">
                             <option value="">Seleccione una opción </option>
                             @foreach($QualityHolder as $item)
-                            <option value="{{$item->id}}"{{$item->id==$client?->quality_holder_id?'selected':''}}>{{$item->name}}</option>
+                            <option value="{{$item->id}}"{{$item->id==$client?->quality_holder_id?'selected':(old('quality_holder')==$item->id?'selected':'')}}>{{$item->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -91,7 +91,7 @@
                                 id="expedition_date">
                     </div>
                 </div>
-                <div class="col-sm-6">
+                    <div class="col-sm-6">
                     <div class="mb-3" >
                         <label class="form-label" for=""style="font-size: 12px">
                             DIRECCION RESIDENCIA*
@@ -99,6 +99,7 @@
                         <input type="text" style="font-size: 12px" class="form-control" value="{{$client!=null?$client->address:old('address')}}" name="address" id="address">
                     </div>
                 </div>
+
             </div>
             <div class="row">
                 <div class="col-sm-6">
@@ -109,6 +110,17 @@
                         <input type="text" style="font-size: 12px" name="neighborhood" value="{{$client!=null?$client->neighborhood:old('neighborhood')}}" class="form-control" id="neighborhood">
                     </div>
                 </div>
+                <div class="col-sm-6">
+                    <div class="mb-3">
+                        <label class="form-label" for=""style="font-size: 12px">
+                            CIUDAD DE RESIDENCIA*
+                        </label>
+                        <input type="text" style="font-size: 12px" value="{{$client!=null?$client->city?->name.' | '.$client->city?->state->name :old('city')}}" class="form-control" id="city_name">
+                        <input type="hidden" name="city_id" value="{{$client!=null?$client->city_id:old('city_id')}}" id="city_id">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3" >
                         <label class="form-label" for=""style="font-size: 12px">
@@ -124,8 +136,6 @@
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for=""style="font-size: 12px">
@@ -134,6 +144,8 @@
                         <input type="email" value="{{$client!=null?$client->email:old('email')}}" style="font-size: 12px" class="form-control" name="email" id="email">
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3" >
                         <label class="form-label" for=""style="font-size: 12px">
@@ -157,7 +169,7 @@
     </h3>
     <div>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-6">
                 <div style="padding: 5px;color:rgba(180, 158, 169, 1);font-size:12px">
                     Los campos marcados con * deben ser llenados obligatoriamente
                 </div>
@@ -194,7 +206,7 @@
             </div>
 
         </div>
-        <div class="col-sm-6">
+        <div class="col-6">
             <!--    <a class="btn btn-primary"title="Crear datos de contacto"
         id="btnContact">
             <i class="fa-solid fa-square-phone-flip"></i>
@@ -432,10 +444,8 @@
                             @foreach($EpsAffiliates as $item)
                             <option value="{{$item->id}}"{{$item->id==$EmploymentInformation?->eps_affiliate_id?'selected':''}}{{old('eps_affiliate')!=''?'selected':''}} >{{$item->name}} </option>
                             @endforeach
+                            <option value="-1">OTROS </option>
                         </select>
-                        <div style="font-size:12px">
-                            <strong>Nota:</strong>   Si su  EPS no existe  en nuestra base de datos por favor creela  <a class="btnEps" href="#" id="btnEps"> aqui</a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -448,10 +458,8 @@
                             @foreach($ArlAffiliates as $item)
                             <option value="{{$item->id}}" {{$item->id==$EmploymentInformation?->arl_affiliate_id?'selected':''}}{{old('arl_affiliate')!=''?'selected':''}}>{{$item->name}} </option>
                             @endforeach
+                             <option value="-1">OTROS </option>
                         </select>
-                        <div style="font-size:12px">
-                            <strong>Nota:</strong> Si su ARL no existe  en nuestra base de datos por favor creela <a class="btnArl" href="#" id="btnArl">aqui</a>
-                        </div>
                     </div>
                 </div>
             </div>

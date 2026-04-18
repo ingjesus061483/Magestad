@@ -9,4 +9,7 @@ class StateNewness extends Model
 {
     use HasFactory;
     protected $table="state_newness";
+    function newnesses(){
+        return $this->hasMany(Newness::class,'state_newness_id');
+    }
 }

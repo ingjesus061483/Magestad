@@ -12,6 +12,7 @@ class Client extends Model
         'name_last_name',
         'address',
         'email',
+        'city_id',
         'reference',
         'value_Title',
         'date_birth',
@@ -26,6 +27,10 @@ class Client extends Model
         'level_study_id'
     ];
     use HasFactory;
+    public function city()
+    {
+        return $this->belongsTo(City::class,'city_id');
+    }
     public function Marital_Status()
     {
         return $this->belongsTo(MaritalStatus::class,'marital_status_id');

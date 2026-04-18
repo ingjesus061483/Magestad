@@ -34,25 +34,7 @@
                     <textarea class="form-control" name="remark" id="remark" rows="3" class="form-control" style="font-size:12px" ></textarea>
                 </div>
             </div>
-            <div class="row mb-3">
-                <div class="col-sm-6">
-                    <label for="state_homework_id" class="col-form-label"style="font-size:14px">Estado </label>
-                    <select  onchange="cambiarColor(this)" class="form-select" name="state_homework_id" style="font-size:12px" id="state_homework_id">
-                        <option value="" disabled selected>Seleccione una opción</option>
-                        @foreach ($state_homeworks as $state)
-                            <option value="{{$state->id}}"
-                                @switch($state->id)
-                                @case(1)
-                                    style="background-color:rgba(217, 18, 18, 0.8);color:white;"
-                                    @break
-                                @case(2)
-                                    style="background-color:rgba(0, 100, 0, 0.8);color:white;"
-                                    @break
-                                @endswitch>{{$state->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
+
 
             <div class="mb-3">
                 <button type="submit" class="btn btn-success">Guardar</button>

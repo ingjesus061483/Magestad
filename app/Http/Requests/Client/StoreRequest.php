@@ -34,6 +34,7 @@ class StoreRequest extends FormRequest
             'address'=>'required|max:100',
             'email'=>'required|email|max:50',
             'birth_date'=>'required',
+            'city_id'=>'required|exists:cities,id',
             'expedition_date'=>'required',
             'neighborhood'=>'required|max:50',
             'quality_holder'=>'required',
@@ -44,6 +45,8 @@ class StoreRequest extends FormRequest
     public function messages()
     {
         return [
+            'city_id.exists' => 'La :attribute seleccionada no es válida.',
+            'city_id.required' => 'La :attribute es obligatoria.',
             'identification.required' => 'La :attribute es obligatoria.',
             'identification.unique' => 'La :attribute ya está registrada.',
             'identification.max' => 'La :attribute no debe ser mayor a 50 caracteres.',
@@ -66,6 +69,7 @@ class StoreRequest extends FormRequest
     public function attributes()
     {
         return [
+            'city_id' => 'ciudad',
             'quality_holder' => 'calidad del titular',
             'identification' => 'identificación',
             'name_last_name' => 'nombre y apellido',

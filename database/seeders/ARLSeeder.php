@@ -13,18 +13,20 @@ class ARLSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('arl_affiliates')->insert([
-            ['name'=>'SEGUROS DE VIDA ALFA SA'],
-            ['name'=>'LIBERTY SEGUROS DE VIDA'],
-            ['name'=>'POSITIVA COMPAÑIA DE SEGUROS'],
-            ['name'=>'RIESGOS PROFESIONALES COLMENA SA COMPAÑIA DE SEGUROS DE VIDA'],
-            ['name'=>'ARP SURA'],
-            ['name'=>'LA EQUIDAD SEGUROS DE VIDA ORGANISMO COOPERATIVO LA EQUIDAD VIDA'],
-            ['name'=>'MAPFRE COLOMBIA VIDA SEGUROS SA'],
-            ['name'=>'SEGUROS DE VIDA COLPATRIA SA'],
-            ['name'=>'CIA DE SEGUROS BOLIVAR SA'],
-            ['name'=>'COMPAÑIA DE SEGUROS DE VIDA AURORA']
-        ]);
+        $arls=[
+          ["name"=>"AXA COLPATRIA"],
+          ["name"=>"LIBERTY SEGUROS"],
+          ["name"=>"POSITIVA"],
+          ["name"=>"COLMENA"],
+          ["name"=>"SURA"],
+          ["name"=>"EQUIDAD SEGUROS"],
+          [ "name"=>"MAPFRE"],
+          ["name"=>"SEGUROS BOLIVAR"],
+          ["name"=>"COLSANITAS"],
+          ["name"=>"SEGUROS ALFA"],
+          ["name"=>"AURORA | SEGUROS DE VIDA"],
+        ];
+        DB::table('arl_affiliates')->insert($arls);
         //
     }
 }

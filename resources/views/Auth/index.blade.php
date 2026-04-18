@@ -10,7 +10,7 @@
     <div class="card-body">
         <div style="padding: 5px">
             <a title="Crear usuarios" class="btn btn-primary"id="btnUser" >
-                <i class="fa-solid fa-user-tie"></i>
+                <i class="fa-solid fa-plus"></i>
             </a>
         </div>
 
@@ -28,7 +28,7 @@
                 @foreach($users as $item)
                 <tr>
                     <td>
-   <button type="button" title="Actualizar" class="btn btn-warning btn-sm" onclick="editarUser({{$item->id}})"><i class="fa-solid fa-pencil"></i></button>
+                        <button type="button" title="Actualizar" class="btn btn-warning btn-sm" onclick="editarUser({{$item->id}})"><i class="fa-solid fa-pencil"></i></button>
                     </td>
                     <td>
                          <form method="POST" action="{{url('/users')}}/{{$item->id}}"  style="display:inline">

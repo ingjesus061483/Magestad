@@ -9,7 +9,7 @@
     </div>
     <div class="card-body">
         <div style="padding: 5px">
-            <a  title="Crear tipo de documento" id="btnNewnessType" class="btn btn-primary" > <i class="fas fa-table me-1"></i></a>
+            <a  title="Crear tipo de documento" id="btnNewnessType" class="btn btn-primary" > <i class="fas fa-plus me-1"></i></a>
         </div>
 
         <table  class="table table-hover table-bordered" style="width: 100%" >
@@ -24,17 +24,18 @@
             <tbody style ="font-size: 12px">
                 @foreach ($NewnessTypes as $item)
                 <tr>
+
+                    <td style="text-align: center">
+                        <a title="Editar" onclick="editarNewnessType({{$item->id}})" class="btn btn-warning btn-sm">
+                            <i class="fa-solid fa-pencil"></i>
+                        </a>
+                    </td>
                     <td style="text-align: center">
                         <form method="POST" action="{{url('/NewnessType')}}/{{$item->id}}"  style="display:inline">
                             @csrf
                             {{method_field('DELETE')}}
                             <button type="button" title="Eliminar" class="btn btn-danger btn-sm" onclick="validar(this,'¿Desea eliminar el registro?')"><i class="fa-solid fa-trash"></i></button>
                         </form>
-                    </td>
-                    <td style="text-align: center">
-                        <a title="Editar" onclick="editarNewnessType({{$item->id}})" class="btn btn-warning btn-sm">
-                            <i class="fa-solid fa-pencil"></i>
-                        </a>
                     </td>
                     <td>{{$item->name}}    </td>
                     <td>{{$item->description}}  </td>

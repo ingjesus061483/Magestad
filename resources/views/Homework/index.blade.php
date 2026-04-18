@@ -1,66 +1,45 @@
 @extends('Shared/layout')
-@section('title','Listado de tareas')
+@section('title','Tareas')
 @section('content')
-
-<div class="card mb-4" style="width: 100% ; margin:0 auto">
-    <div class="card-header">
-        <i class="fas fa-table me-1"></i>
-        Listado de tareas
-    </div>
-    <div class="card-body">
-        <div style="padding: 5px">
-            <a  title="Crear Tarea" href="{{url('/homework/create')}}" class="btn btn-primary" ><i class="fa-solid fa-newspaper"></i></a>
+      <div style="padding-bottom: 5px">
+            <a  title="Crear Tarea" href="{{url('/homework/create')}}" class="btn btn-primary" ><i class="fa-solid fa-plus"></i></a>
         </div>
-        <table  class="table table-hover table-bordered" style="width: 100%" >
-            <thead style ="font-size: 14px" >
-                <tr>
-                    <th style="text-align: center">N°</th>
-                    <th style="text-align: center">ID</th>
-                    <th style="text-align: center">FECHA</th>
-                    <th style="text-align: center" >CLIENTE	</th>
-                    <th style="text-align: center">TAREA</th>
-                    <th style="text-align: center">TIPO DE TAREA</th>
-                    <th style="text-align: center">ESTADO</th>
-                     <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+<div id="accordion">
+    @foreach ($state_homeworks as $item)
 
-                </tr>
-            </thead>
-            <tbody style ="font-size: 12px" >
-            @foreach ($homeworks as $item)
-            <tr>
-                <td style="text-align: center;">{{$item->id}}</td>
-                <td style="text-align: center;"> {{$item->user->name}}</td>
-                <td style="text-align: center;">{{date("d/m/Y", strtotime($item->date))}}</td>
-                <td style="text-align: center;">{{$item->client->identification.' '.$item->client->name_last_name }}</td>
-                <td style="text-align: center;">{{$item->remark}}</td>
-                <td style="text-align: center;">{{$item->homework_type->name}}</td>
-                <td style="text-align: center;">
-                    <select class="form-select"  onchange="cambiarEstadoHomework({{$item->id}},this)" aria-label="Default select example" style="font-size:12px;
-                        {{$item->state_homework->id==1?'background-color:rgba(172,63,71,0.5);':''}} {{$item->state_homework->id==2?'background-color:rgba(75,181,67,0.5);':''}}
-                        text-align:center;color:black;font-weight:bold">
-                        @foreach ($state_homeworks as $state)
-                        <option value="{{$state->id}}"  {{$item->state_homework->id==$state->id?'selected':''}}
-                            @switch($state->id)
-                                @case(1)
-                                    style="background-color:rgba(172,63,71,0.5);color:black;font-weight:bold"
-                                    @break
-                                @case(2)
-                                    style="background-color:rgba(75,181,67,0.5);color:black;font-weight:bold"
-                                    @break
-                            @endswitch>{{$state->name}}</option>
-                        @endforeach
-                    </select>
-                </td>
-                <td style="text-align: center;">
-                    <a title="Editar" href="{{url('/homework/'.$item->id.'/edit')}}" class="btn btn-warning btn-sm">
-                        <i class="fa-solid fa-pencil"></i>
-                    </a>
-                </td>
-            </tr>
-            @endforeach
-            </tbody>
-        </table>
+    <h3>
+        <a
+        @switch($item->id)
+        @case(1)
+      style="background-color:rgba(217, 18, 18, 0.8);color:white; border-radius: 10px;"
+            @break
+        @case(2)
+
+                  style="background-color:rgba(0, 100, 0, 0.8);color:white; border-radius: 10px;"
+             @break
+        @case(3)
+        style="background-color:rgb(245, 218, 39);border-radius:10px"
+    @endswitch >
+        &nbsp;&nbsp;
+
+    </a>
+      <strong >&nbsp; {{ explode('|',$item->name)[0]}} </strong>&nbsp;|&nbsp;{{ explode('|',$item->name)[1] }}, {{ number_format($item->homeworks->count()) }}
+    </h3>
+    <div>
+        @switch($item->id)
+            @case(1)
+            @include('Shared.tableTasks',['homeworks'=>$pendingTasks])
+                @break
+            @case(2)
+            @include("Shared.tableTasks",['homeworks'=>$doneTasks])
+                @break
+
+        @endswitch
+
     </div>
+@endforeach
 </div>
+
+
 
 @endsection

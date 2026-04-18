@@ -14,11 +14,11 @@
                                     <a class="nav-link" href="{{url('/authorizationPolicies')}}"> Politicas y autorizaciones</a>
                                 </nav>
                             </div>
-                            <a class="nav-link" href="{{url('/homework/create')}}">
+                            <a class="nav-link" href="{{url('/homework')}}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-clipboard-check"></i></div>
                                 Tareas
                             </a>
-                            <a class="nav-link" href="{{url('/Newness/create')}}">
+                            <a class="nav-link" href="{{url('/Newness')}}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-newspaper"></i></div>
                                 Novedades
 
@@ -30,6 +30,10 @@
                             <a class="nav-link" href="{{url('/users')}}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
                                 Usuarios
+                            </a>
+                            <a class="nav-link" href="{{url('/requestLoan')}}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-landmark"></i></div>
+                                Solicitudes de préstamo
                             </a>
 
                             @else

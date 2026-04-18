@@ -22,6 +22,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'city_id'=>'required|exists:cities,id',
             'identification'=>'required|max:50|unique:clients,identification,'.$this->id,
             'name_last_name'=>'required|max:100',
             'address'=>'required|max:100',
@@ -38,6 +39,8 @@ class UpdateRequest extends FormRequest
     public function messages()
     {
         return [
+            'city_id.exists' => 'La :attribute seleccionada no es válida.',
+            'city_id.required' => 'La :attribute es obligatoria.',
             'identification.required' => 'La :attribute es obligatoria.',
             'identification.unique' => 'La :attribute ya está registrada.',
             'identification.max' => 'La :attribute no debe ser mayor a 50 caracteres.',
@@ -60,6 +63,7 @@ class UpdateRequest extends FormRequest
     public function attributes()
     {
         return [
+            'city_id' => 'ciudad',
             'identification' => 'identificación',
             'name_last_name' => 'nombre y apellido',
             'address' => 'dirección',

@@ -17,8 +17,8 @@ class EpsController extends Controller
     public function index(AutorizeRequest $request)
     {
         $data=[
-            'eps'=>EpsAffiliate::all()
-        ];  
+            'eps'=>EpsAffiliate::orderby('name','asc')->get()
+        ];
         return view('EPS.index',$data);
         //
     }
@@ -27,23 +27,23 @@ class EpsController extends Controller
         $EpsAffiliate=new EpsAffiliate();
         $EpsAffiliate->name=$request->name;
         $EpsAffiliate->description=$request->description;
-        $EpsAffiliate->save();                
+        $EpsAffiliate->save();
         return back()->with(['message'=>'EPS afiliada creada correctamente']);
     }
     public function destroy($id)
-    {        
-        $EpsAffiliate=EpsAffiliate::find($id);                                    
-        $EpsAffiliate->delete();                
+    {
+        $EpsAffiliate=EpsAffiliate::find($id);
+        $EpsAffiliate->delete();
         return back()->with(['message'=>'EPS afiliada eliminada correctamente']);
     }
     public function update(UpdateRequest $request ,$id)
-    {       
+    {
         $EpsAffiliate=EpsAffiliate::find($id);
         $arrEps=[
             'name'=>$request->name,
             'description'=>$request->description
         ];
-        $EpsAffiliate->update($arrEps);        
+        $EpsAffiliate->update($arrEps);
         return back()->with(['message'=>'EPS afiliada actualizada correctamente']);
     }
     //

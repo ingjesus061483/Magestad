@@ -18,9 +18,10 @@ class CustomerPaymentDatesSeeder extends Seeder
           ['name'=>'10','description'=>''],
           ['name'=>'20','description'=>''],
           ['name'=>'30','description'=>''],
-          ['name'=>'5/20','description'=>''],
-          ['name'=>'10/25','description'=>''],
-          ['name'=>'15/30','description'=>'']            
+          ['name'=>'5 |20','description'=>''],
+          ['name'=>'10 | 25','description'=>''],
+          ['name'=>'15 | 30','description'=>''],
+          ['name'=>'semanal','description'=>''],
         ]);
         //
     }

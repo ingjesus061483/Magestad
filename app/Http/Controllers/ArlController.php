@@ -17,7 +17,7 @@ class ArlController extends Controller
     public function index(AutorizeRequest $request)
     {
         $data=[
-            'arls'=>ArlAffiliate::all()
+            'arls'=>ArlAffiliate::orderby('name','asc')->get()
         ];
         return view('Arl.index',$data);
         //

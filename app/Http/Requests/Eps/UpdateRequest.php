@@ -16,11 +16,11 @@ class UpdateRequest extends FormRequest
     }
     protected function failedAuthorization()
     {
-        
+
         throw new HttpResponseException(response()->redirectTo(url('/UnAutorize'))
             ->with(['error' => 'Esta accion no esta autorizada!']));
     }
-    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -36,15 +36,23 @@ class UpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'El :attribute es obligatorio.',  
+            'name.required' => 'El :attribute es obligatorio.',
             'name.max' => 'El :attribute no debe ser mayor a 50 caracteres.',
-        ];    
+        ];
     }
     public function attributes()
     {
         return [
             'name' => 'Nombre de la EPS',
- 
+
         ];
+    }
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'name' => strtoupper($this->name),
+        ]);
+
+
     }
 }

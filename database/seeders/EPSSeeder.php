@@ -13,24 +13,29 @@ class EPSSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('eps_affiliates')->insert([
-         ['name'=>'Emssanar'],
-         ['name' =>'Mallamas'],
-         ['name'=>'Nueva EPS'],
-         ['name'=>'Sanitas'],
-         ['name'=>'Asmet Salud'],
-         ['name'=>'Magisterio'],
-         ['name'=>'Famisanar'],
-         ['name'=>'Inpec'],
-         ['name'=>'Unariño'],
-         ['name'=>'Ferrocarriles Nales'],
-         ['name'=>'Ecopetrol'],
-         ['name'=>'Suramericana'],
-         ['name'=>'Unisalud'],         
-         ['name'=>'EPS Fliar Colombia'],         
-         ['name'=>'Salud Total'],         
-         ['name'=>'Uvalle']             
-        ]);
+        $eps=[
+            ['name'=>'COMFAORIENTE'],
+            ['name'=>'ALIANSALUD'],
+            ['name'=>'NUEVA EPS'],
+            ['name'=>'SALUD MIA'],
+            ['name'=>'MUTUAL SER'],
+            ['name'=>'MAGISTERIO'],
+            [ 'name'=>'FAMISANAR'],
+            ['name'=>'SANITAS'],
+            ['name'=>'PROTEGER | ANTIGUO CAJACOPI'],
+            [ 'name'=>'SALUD BOLIVAR' ],
+            [ 'name'=>'COMPENSAR' ],
+            [ 'name'=>'SURA'],
+            ['name'=>'SAVIA SALUD'],
+            ['name'=>'COMFENALCO'],
+            ['name'=>'SALUD TOTAL'],
+            ['name'=>'COOSALUD'],
+            ['name'=>'CONSALUD'],
+            [ 'name'=>'COOMEVA'],
+            [ 'name'=>'CAPITAL SALUD'],
+            [ 'name'=>'SALUD VIDA']
+        ];
+        DB::table('eps_affiliates')->insert($eps);
         //
     }
 }

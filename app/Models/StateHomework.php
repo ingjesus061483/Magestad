@@ -9,4 +9,8 @@ class StateHomework extends Model
 {
     use HasFactory;
     protected $table='state_homework';
+    public function homeworks()
+    {
+        return $this->hasMany(Homework::class,'state_homework_id');
+    }
 }

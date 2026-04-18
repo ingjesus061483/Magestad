@@ -1,22 +1,21 @@
 @extends('Shared/layout')
-@section('title','Listado de clientes')
+@section('title','Base de datos cliente')
 @section('content')
 
 <div class="card mb-4" style="width: 70% ;margin:0 auto">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
-        Solicitudes de credito
+        Base de datos cliente
     </div>
     <div class="card-body">
         <div style="padding: 5px">
             <a href="{{url('/clients/create')}}" title="Crear cliente" class="btn btn-primary" >
-                <i class="fa-solid fa-user-tie"></i>
+                <i class="fa-solid fa-plus"></i>
             </a>
             <a title="Exportar a excel" href="{{url('clients/downloadExcel/0')}}" class="btn btn-success">
                 <i class="fa-solid fa-file-excel"></i>
             </a>
         </div>
-
         <table  class="table table-hover table-bordered" style="width:100%">
             <thead style ="font-size: 14px" >
                 <tr>
@@ -32,8 +31,9 @@
                     <th style="text-align:center">EDAD</th>
                     <th style="text-align:center">FECHA DE EXPEDICION</th>
                     <th style="text-align:center">DIRECCION</th>
-                    <th style="text-align:center">EMAIL</th>
                     <th style="text-align:center"> BARRIO</th>
+                     <th style="text-align:center">CIUDAD</th>
+                     <th style="text-align:center">EMAIL</th>
                     <th style="text-align:center">ESTADO CIVIL</th>
                     <th style="text-align:center">INFORMACION DE CONTACTO</th>
                     <th style="text-align:center">NIT EMPRESA</th>
@@ -94,6 +94,12 @@
             <tbody style ="font-size: 12px">
                 @foreach ($clients as $item)
                 <tr>
+                    <td>
+                        <a href="{{url('/clients')}}/{{$item->id}}/edit"
+                            title="Editar" class="btn btn-warning btn-sm">
+                            <i class="fa-solid fa-pencil"></i>
+                        </a>
+                    </td>
                     <td style="width:100%">
                         <form method="POST"  action="{{url('/clients')}}/{{$item->id}}"  style="display:inline">
                             @csrf
@@ -102,7 +108,6 @@
                         </form>
 
                     </td>
-                    <td><a href="{{url('/clients')}}/{{$item->id}}/edit" title="Editar" class="btn btn-warning btn-sm"><i class="fa-solid fa-pencil"></i></a></td>
                     <td>{{date("d/m/Y", strtotime($item->created_at))}}</td>
                     <td>{{$item->reference}}</td>
                     <td>{{$item->quality_holder}}</td>
@@ -113,8 +118,9 @@
                     <td>{{$item->age.' años'}}</td>
                     <td>{{date("d/m/Y", strtotime($item->expedition_date))}}</td>
                     <td>{{$item->address}}</td>
-                    <td>{{$item->email}}</td>
                     <td> {{$item->neighborhood}}</td>
+                    <td>{{$item->city}}</td>
+                    <td>{{$item->email}}</td>
                     <td>{{$item->marital_status}}</td>
                     <td>{{$item->contact_informations}}</td>
                     <td>{{$item->nit}}</td>

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewnessTypeController;
 use App\Http\Controllers\HomeworkController;
+use App\Http\Controllers\RequestLoanController;
 use Maatwebsite\Excel\Facades\Excel;
 /*
 |--------------------------------------------------------------------------
@@ -33,10 +34,12 @@ use Maatwebsite\Excel\Facades\Excel;
 Route::get('/',[HomeController::class,'index']);/* function () {
     return view('welcome');
 });*/
+Route::resource('requestLoan',RequestLoanController::class);
 Route::resource('homework',HomeworkController::class);
 Route::get('UnAutorize', function () {
     return view('Shared.UnAutorize');
 });
+Route::get('cities/GetcitiesByName',[CityController::class,'GetcitiesByName']);
 Route::get('clients/downloadExcel/{id}',[ClientController::class,'downloadExcel']);
 Route::resource('Newness',NewnessController::class);
 Route::resource('NewnessType',NewnessTypeController::class);

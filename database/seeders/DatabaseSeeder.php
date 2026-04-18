@@ -39,7 +39,8 @@ class DatabaseSeeder extends Seeder
             NewnessStateSeeder::class,
             NewnessTypeSeeder::class,
             StatePoliciesSeeder::class,
-            AuthorizationPolicySeeder::class
+            AuthorizationPolicySeeder::class,
+            PrioritySeeder::class
             ]);
 
 

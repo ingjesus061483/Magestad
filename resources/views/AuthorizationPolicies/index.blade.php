@@ -9,7 +9,7 @@
     </div>
     <div class="card-body">
         <div style="padding: 5px">
-            <a  title="Crear politica o autorizacion" class="btnPolicy btn btn-primary" ><i class="fa-solid fa-circle-plus"></i></a>
+            <a  title="Crear politica o autorizacion" class="btnPolicy btn btn-primary" ><i class="fa-solid fa-plus"></i></a>
         </div>
         <div style="height:300px;overflow: auto;">
         @foreach($policies as $item)
