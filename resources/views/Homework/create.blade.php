@@ -23,7 +23,6 @@
                 <div class="col-sm-6">
                     <label for="homework_type_id" class="col-form-label" style="font-size:14px">Tipo de Tarea</label>
                    <select class="form-select" name="homework_type_id" style="font-size:12px" id="homework_type_id">
-                        <option value="" disabled selected>Seleccione una opción</option>
                         @foreach ($homework_types as $type)
                             <option value="{{$type->id}}">{{$type->name}}</option>
                         @endforeach
@@ -34,8 +33,6 @@
                     <textarea class="form-control" name="remark" id="remark" rows="3" class="form-control" style="font-size:12px" ></textarea>
                 </div>
             </div>
-
-
             <div class="mb-3">
                 <button type="submit" class="btn btn-success">Guardar</button>
             </div>
