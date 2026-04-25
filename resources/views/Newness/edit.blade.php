@@ -1,6 +1,5 @@
 @extends('Shared/layout')
 @section('title',' Editar novedad')
-@section('module','Diario')
 @section('content')
 <div class="card mb-4" style="width: 100% ; margin:0 auto">
     <div class="card-header">
@@ -20,7 +19,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="client_id" class="col-form-label" style="font-size:14px">Cliente</label>
-                    <input type="text"name="client_id" class="client form-control" id="client_id" value="{{$newness->client->id.' - '.$newness->client->name_last_name}}" style="font-size:12px">
+                    <input type="text"name="client" class="client form-control" id="client" value="{{$newness->client}}" style="font-size:12px">
 
                 </div>
             </div>

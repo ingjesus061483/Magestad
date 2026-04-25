@@ -1,9 +1,8 @@
 @extends('Shared/layout')
-@section('img',url('img/CerikSoluciones.png'))
 @section('title','Formulario de solicitud de credito')
 @section('content')
 <div style="padding-bottom: 5px">
-    <div class="card mb-4" id="cardInfoPersonal"style=" width:85%;margin:0 auto;">
+    <div class="card mb-4" id="cardInfoPersonal"style=" width:100%;margin:0 auto;">
         <div class="card-header">
             <i class="fa-solid fa-id-card"></i>
             INFORMACION PERSONAL
@@ -105,7 +104,7 @@
             </div>
         </div>
     </div>
-    <div class="card mb-4" id="cardDatosContacto" style="width:85%;margin:0 auto; ">
+    <div class="card mb-4" id="cardDatosContacto" style="width:100%;margin:0 auto; ">
         <div class="card-header">
             <i class="fa-solid fa-address-book"></i>
             INFORMACION DE CONTACTO
@@ -118,7 +117,7 @@
             </ul>
         </div>
     </div>
-    <div class="card mb-4" id="cardInfoLaboral" style="width:85%;margin:0 auto; ">
+    <div class="card mb-4" id="cardInfoLaboral" style="width:100%;margin:0 auto; ">
         <div class="card-header">
             <i class="fa-solid fa-user-tie"></i>
             INFORMACION LABORAL
@@ -276,7 +275,7 @@
             @endforeach
         </div>
     </div>
-    <div class="card mb-4" id="cardInfoCrediticia" style="width:85%;margin:0 auto;">
+    <div class="card mb-4" id="cardInfoCrediticia" style="width:100%;margin:0 auto;">
         <div class="card-header">
             <i class="fa-solid fa-credit-card"></i>
             ACERCA EL CREDITO
@@ -313,7 +312,7 @@
         </div>
 
     </div>
-    <div class="card mb-4" id="cardInfoPatrimonial" style="width:85%;margin:0 auto;">
+    <div class="card mb-4" id="cardInfoPatrimonial" style="width:100%;margin:0 auto;">
         <div class="card-header">
             <i class="fa-solid fa-building-user"></i>
             INFORMACION PATRIMONIAL
@@ -339,7 +338,7 @@
             </div>
         </div>
     </div>
-    <div class="card mb-4" id="cardInfoLegal" style="width:85%;margin:0 auto;">
+    <div class="card mb-4" id="cardInfoLegal" style="width:100%;margin:0 auto;">
         <div class="card-header">
             <i class="fa-solid fa-scale-balanced"></i>
             INFORMACION LEGAL
@@ -365,7 +364,7 @@
             </div>
         </div>
     </div>
-    <div class="card mb-4" id="cardPoltrataDatosPers" style="width:85%;margin:0 auto;">
+    <div class="card mb-4" id="cardPoltrataDatosPers" style="width:100%;margin:0 auto;">
         <div class="card-header">
             <i class="fa-solid fa-database"></i>
             POLITICA DE TRATAMIENTO DE DATOS PERSONALES
@@ -386,7 +385,7 @@
             </div>
         </div>
     </div>
-    <div class="card mb-4" id="cardPolAutorizaciones"style="width:85%;margin:0 auto; ">
+    <div class="card mb-4" id="cardPolAutorizaciones"style="width:100%;margin:0 auto; ">
         <div class="card-header">
             <i class="fa-solid fa-building-shield"></i>
             POLITICAS
@@ -417,7 +416,7 @@
             @endforeach
         </div>
     </div>
-    <div class="card mb-4"style="width:85%;margin:0 auto; ">
+    <div class="card mb-4"style="width:100%;margin:0 auto; ">
         <div class="card-header">
             <i class="fa-solid fa-building-shield"></i>
             AUTORIZACIONES
@@ -450,57 +449,15 @@
             </div>
         </div>
     </div>
-    <div class="card mb-4" id="cardPolAutorizaciones"style="width:85%;margin:0 auto; ">
-        <div class="card-header">
-            <i class="fa-solid fa-image"></i>
-            DOCUMENTOS ADJUNTOS
-        </div>
-        <div class="card-body">
-            <div style="padding: 5px ;font-size:14px; text-align: justify;">
-                <p> Estimado Sr(a).&nbsp;&nbsp;<strong>{{$client->name_last_name}}</strong>:</p>
-                <p>Para continuar con el proceso de su solicitud de crédito, es necesario que adjunte copia de los sgtes. documentos: </p>
-            </div>
-            <div style="width:100%; margin:0 auto">
-                <table class="table table-bordered" style="  table-layout: fixed; width:100%" >
-                    <thead style ="font-size: 14px" >
-                        <tr>
-                            <th >&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                            <th style="width:20px">#</th>
-                            <th style="text-align:center;width:100%;">TIPO DE DOCUMENTO </th>
-                            <th style="text-align:center;width:100%;" >CANTIDAD</th>
-
-                        </tr>
-                    </thead>
-                    <tbody style ="font-size: 12px">
-                        @foreach ($documenttypes as $item )
-                            <tr>
-                                <td style="text-align:center;">
-                                    <form action="{{url('/documents')}}" method="GET">
-                                        @csrf
-                                        <input type="hidden" name="client_id" value="{{$client->id}}" >
-                                        <input type="hidden" name="document_type_id" value="{{$item->id}}" >
-                                        <button type="submit" class="btn btn-success btn-sm">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </button>
-
-                                    </form>
-                                </td>
-                                <th scope="row" style="text-align: center;width:20px  ">{{$item->id}}.</th>
-                                <td style="width:100%;">{{$item->name}}</td>
-                                <td style="text-align:center;width:20px;">{{$item->amount}} </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
 </div>
-@if (auth()->check())
 <div style="padding-top:5px;padding-bottom:5px">
+    @if (auth()->check())
     <a class="btn btn-primary" title="Regresar" href="{{url('/clients')}}">
         <i class="fa-solid fa-arrow-left"></i>
     </a>
+    @endif
+    <a title="Finalizar proceso" href="{{url('/')}}" class="btn btn-danger">
+    <i class="fa-solid fa-flag-checkered"></i>
+    </a>
 </div>
-@endif
 @endsection

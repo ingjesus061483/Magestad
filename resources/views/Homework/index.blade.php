@@ -1,6 +1,5 @@
 @extends('Shared/layout')
 @section('title','Tareas')
-@section('module','Diario')
 @section('content')
 <div style="padding-bottom: 5px">
     <a  title="Crear Tarea" href="{{url('/homework/create')}}" class="btn btn-primary" >

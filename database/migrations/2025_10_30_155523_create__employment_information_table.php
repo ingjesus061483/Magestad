@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('employment_informations', function (Blueprint $table) {
             $table->id();
-            $table->string("nit_company_work",50);
-            $table ->string("company_works",100);
-            $table->string ("main_address",50);
+            $table->string("nit_company_work",50)->nullable();
+            $table ->string("company_works",100)->nullable();
+            $table->string ("main_address",50)->nullable();
             $table ->string("company_on_mission",50)->nullable();
             $table->string("nit",50)->nullable();
             $table->string("branch_address",50)->nullable();
@@ -25,36 +25,36 @@ return new class extends Migration
             $table->foreignId('client_id')
             ->constrained('clients')
             ->onUpdate('cascade')
-            ->onDelete('cascade');            
-            
+            ->onDelete('cascade');
+
             $table->foreignId("payment_frequency_id")
-                  ->constrained("payment_frequency")                   
-                  ->onUpdate('cascade')                  
-                  ->onDelete('cascade');            
+                  ->constrained("payment_frequency")
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
 
             $table->foreignId('company_payment_date_id')
-                  ->constrained('company_payment_dates')                  
-                  ->onUpdate('cascade')                  
+                  ->constrained('company_payment_dates')
+                  ->onUpdate('cascade')
                   ->onDelete('cascade');
 
             $table->foreignId('customer_payment_date_id')
                   ->constrained('customer_payment_dates')
-                  ->onUpdate('cascade')                  
+                  ->onUpdate('cascade')
                   ->onDelete('cascade');
 
             $table->foreignId('contract_type_id')
                   ->constrained('contract_types')
-                  ->onUpdate('cascade')                  
+                  ->onUpdate('cascade')
                   ->onDelete('cascade');
-                  
+
             $table->foreignId('eps_affiliate_id')
-                  ->constrained('eps_affiliates')                     
-                  ->onUpdate('cascade')                  
+                  ->constrained('eps_affiliates')
+                  ->onUpdate('cascade')
                   ->onDelete('cascade');
 
             $table->foreignId('arl_affiliate_id')
                 ->constrained('arl_affiliates')
-                ->onUpdate('cascade')                  
+                ->onUpdate('cascade')
                 ->onDelete('cascade');
 
             $table->timestamps();

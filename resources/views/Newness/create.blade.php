@@ -1,6 +1,5 @@
 @extends('Shared/layout')
 @section('title',' Crear novedad')
-@section('module','Diario')
 @section('content')
 <div class="card mb-4" style="width: 100% ; margin:0 auto">
     <div class="card-header">
@@ -18,19 +17,23 @@
                 </div>
                 <div class="col-sm-6">
 
-                    @include('Shared.searchClient')
+                     <label for="date" class="col-form-label" style="font-size:14px">Cliente</label>
+                    <input type="text"name="client" class="form-control" id="date" style="font-size:12px" value="{{old('client')}}">
+
 
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-sm-6">
                     <label for="newness_type_id" class="col-form-label" style="font-size:14px">Tipo de Novedad</label>
-                    <input type="text"  class="form-control" name="newness_type" style="font-size:12px" id="newness_type">
-                    <input type="hidden"  class="form-control" name="newness_type_id" style="font-size:12px" id="newness_type_id">
+                    <input type="text" value="{{old('newness_type')}}"  class="form-control" name="newness_type" style="font-size:12px" id="newness_type">
+                    <input type="hidden"  class="form-control"value="{{old('newness_type_id')}}" name="newness_type_id" style="font-size:12px" id="newness_type_id">
                 </div>
                 <div class="col-sm-6">
                     <label for="remark" class="col-form-label" style="font-size:14px">Novedad</label>
-                    <textarea class="form-control" name="remark" id="remark" rows="3" class="form-control" style="font-size:12px" ></textarea>
+                    <textarea class="form-control" name="remark" id="remark" rows="3" class="form-control" style="font-size:12px" >
+                        {{old('remark')}}
+                    </textarea>
                 </div>
             </div>
 

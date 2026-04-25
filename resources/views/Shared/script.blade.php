@@ -1,18 +1,41 @@
- <script src="{{url('/js/jquery.js')}}"></script>
+  <!-- Bootstrap core JavaScript-->
+    <script src="{{asset('resources/vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('resources/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{{asset('resourses/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{{asset('resources/js/sb-admin-2.min.js')}}"></script>
+
+    <!-- Page level plugins -->
+    <script src="{{asset('resourses/vendor/chart.js/Chart.min.js')}}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{{asset('resources/js/demo/chart-area-demo.js')}}"></script>
+    <script src="{{asset('resources/js/demo/chart-pie-demo.js')}}"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="{{url('/js/scripts.js')}}"></script>
         <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.3.4/datatables.min.js" integrity="sha384-mtJ3+H/dkUyvhmcXYSyIZyaeG0TnEkh91c1JwFkrkBLHBv8oQ3lFjUp8xfDan41b" crossorigin="anonymous"></script>
-        <script src="{{url('/jquery-ui-1.12.1.custom/jquery-ui.js')}}"></script>
+        <script src="{{asset('resources/js/jquery-ui-1.12.1.custom/jquery-ui.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="text/javascript">
             var user=$("#user").val();
 
             var client=$("#client").val();
-            var app=parseInt($("#info").val());
+            var app=$("#info").val()==""?$("#info").val():parseInt($("#info").val());
             var urlBase=$("#base_url").val();
             $(".custom-file-input").on("change", function() {
                 var fileName = $(this).val().split("\\").pop();
                 $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            });
+            $("#ProgressBar").progressbar({
+            classes: {
+            "ui-progressbar": "highlight"
+            },
+            max:9,
+            value:app
             });
             var city=$('#city_name').autocomplete({
                     select:function(event,ui){
@@ -298,10 +321,12 @@
                 });
             }
             $( "#accordion" ).accordion({
-                collapsible: true,
+                collapsible:true,
                 heightStyle: "content",
                 active: app
             });
+
+
             function GetRequestLoanById(id)
             {
                 if(id==null)
@@ -330,7 +355,7 @@
                         var title=getTitle(result);
                         Swal.fire({
                             title: title,
-                            imageUrl: urlBase+"img/autorizaciones.png",
+                            imageUrl: urlBase+"ImagenSistema/autorizaciones.png",
                             imageHeight:200,
                             html: "<p style='text-align:justify'>"+result.description+"</p>",
                             draggable: true
@@ -521,12 +546,16 @@
                     return true;
                 }
             }
-            function submitPolicy(state)
+            function submitPolicy(button)
             {
+                $(button).removeAttr('onclick');
+                console.log($(button).data('state'));
+                console.log($(button).data('panel'));
+                var panel=$(button).data('panel');
+                var state=$(button).data('state');
+                $("#"+panel).css('display','none');
                 $("#frmClientPolicy #state_policy_id").val(state);
                 $("#frmClientPolicy").submit();
-
-
             }
             function viewDocuments(client,document_type)
             {
@@ -1016,7 +1045,7 @@
                 buttons:
                 [{
                     icon:'fa-solid fa-magnifying-glass',
-                    text: "Buscar",
+                    title: "Buscar",
                     class: 'btn btn-success',
                     click: function () {
                         $("#frmfilter")[0].submit();
@@ -1024,7 +1053,7 @@
                 },
                 {
                     icon:'fa-solid fa-door-open',
-                    text: "Salir",
+                    title: "Salir",
                     class: 'btn btn-danger',
                     click: function () {
                         dialogfilter.dialog("close");
@@ -1046,7 +1075,7 @@
                 buttons:
                 [{
                     icon: 'fa-solid fa-save',
-                    text: "Guardar",
+                    title: "Guardar",
                     "class": 'btn btn-success',
                     click: function () {
                         $("#frmNewnessType")[0].submit();
@@ -1054,7 +1083,7 @@
                 },
                 {
                     icon: 'fa-solid fa-door-open',
-                    text: "Salir",
+                    title: "Salir",
                     "class": 'btn btn-danger',
                     click: function () {
                         dialogNewnessType.dialog("close");
@@ -1097,7 +1126,7 @@
                 buttons:
                 [{
                     icon: 'fa-solid fa-save',
-                    text: "Guardar",
+                    title: "Guardar",
                     "class": 'btn btn-success',
                     click: function () {
                         $("#frmDocumentType")[0].submit();
@@ -1105,7 +1134,7 @@
                 },
                 {
                     icon: 'fa-solid fa-door-open',
-                    text: "Salir",
+                    title: "Salir",
                     "class": 'btn btn-danger',
                     click: function () {
                         dialogDocumentType.dialog("close");
@@ -1127,7 +1156,7 @@
                 buttons:
                 [{
                     icon: 'fa-solid fa-save',
-                    text: "Guardar",
+                    title: "Guardar",
                     class: 'btn btn-success',
                     click: function () {
                        $("#frmUser")[0].submit();
@@ -1135,7 +1164,7 @@
                 },
                 {
                     icon: 'fa-solid fa-door-open',
-                    text: "Salir",
+                    title: "Salir",
                     "class": 'btn btn-danger',
                     click: function () {
                         dialogUser.dialog("close");
@@ -1157,7 +1186,7 @@
                 buttons:
                 [{
                     icon: 'fa-solid fa-paperclip',
-                    text: "Adjuntar",
+                    title: "Adjuntar",
                     "class": 'btn btn-success',
                     click: function () {
                        $("#frmAttach")[0].submit();
@@ -1165,7 +1194,7 @@
                 },
                 {
                     icon: 'fa-solid fa-door-open',
-                    text: "Salir",
+                    title: "Salir",
                     "class": 'btn btn-danger',
                     click: function () {
                         dialogAttach.dialog("close");
@@ -1187,7 +1216,7 @@
                 buttons:
                 [{
                     icon: 'fa-solid fa-save',
-                    text: "Guardar",
+                    title: "Guardar",
                     "class": 'btn btn-success',
                     click: function () {
                         $("#frmPolicy")[0].submit();
@@ -1195,7 +1224,7 @@
                 },
                 {
                     icon: 'fa-solid fa-door-open',
-                    text: "Salir",
+                    title: "Salir",
                     "class": 'btn btn-danger',
                     click: function () {
                         dialogPolicy.dialog("close");
@@ -1210,7 +1239,7 @@
                 buttons:
                 [{
                     icon: 'fa-solid fa-save',
-                    text: "Guardar",
+                    title: "Guardar",
                     "class": 'btn btn-success',
                     click: function () {
                         $("#frmArl")[0].submit();
@@ -1218,7 +1247,7 @@
                 },
                 {
                     icon: 'fa-solid fa-door-open',
-                    text: "Salir",
+                    title: "Salir",
                     "class": 'btn btn-danger',
                     click: function () {
                         dialogArl.dialog("close");
@@ -1236,7 +1265,7 @@
                 buttons:
                 [{
                     icon: 'fa-solid fa-save',
-                    text: "Guardar",
+                    title: "Guardar",
                     "class": 'btn btn-success',
                     click: function () {
                         $("#frmEps")[0].submit();
@@ -1244,7 +1273,7 @@
                 },
                 {
                     icon: 'fa-solid fa-door-open',
-                    text: "Salir",
+                    title: "Salir",
                     "class": 'btn btn-danger',
                     click: function () {
                         dialogEps.dialog("close");

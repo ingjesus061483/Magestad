@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 use App\Exports\ClientExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -28,9 +27,13 @@ use App\Models\Warranty;
 use App\Models\AuthorizationPolicy;
 use App\Models\ClientPolicy;
 use App\Models\DocumentType;
+use App\Models\LoanType;
+use App\Models\OccupationalPosition;
 use Illuminate\Support\Facades\Auth;
 class ClientController extends Controller
 {
+    protected $loantypes;
+    protected $occupationalposition;
     protected $QualityHolder;
     protected $ArlAffiliates;
     protected $EpsAffiliates;
@@ -50,6 +53,7 @@ class ClientController extends Controller
     protected $documenttypes;
     function __construct()
     {
+        $this->occupationalposition=OccupationalPosition::select('id','name');
         $this->documenttypes=DocumentType::select('id','name');
         $this->cities=City::orderby('name','asc');
         $this->policies=AuthorizationPolicy::where('title','like','p%')->select('*');
@@ -65,6 +69,7 @@ class ClientController extends Controller
         $this->maritalstatus=MaritalStatus::orderby('name','asc');
         $this->phonetypes=PhoneType::orderby('name','asc');
         $this->Warranties=Warranty::orderby('name','asc');
+        $this->loantypes=LoanType::select('id','name');
         $this->States=State::orderby('name','asc');
         $this->clients=Client::select('clients.id',
                                    'clients.reference',
@@ -77,6 +82,7 @@ class ClientController extends Controller
                                    'clients.email',
                                    'clients.neighborhood',
                                    'ms.name as marital_status',
+                                   'op.name as occupational_position',
                                    'einf.nit_company_work as nit',
                                    'einf.Company_works' ,
                                    'einf.main_address' ,
@@ -98,6 +104,7 @@ class ClientController extends Controller
                                    'loans.ammount',
                                    'loans.term',
                                    'w.name as warranty',
+                                   "lt.name as loan_type",
                                    'clients.created_at')
                                 ->selectRaw("concat(city.name ,' | ', st.name)as city")
                                 ->selectRaw("concat('CC',' ', clients.identification) as identification")
@@ -207,6 +214,7 @@ class ClientController extends Controller
                                 ->join("marital_status as ms","ms.id","=","marital_status_id")
                                 ->join("level_studies as ls","ls.id","=","clients.level_study_id")
                                 ->leftjoin("employment_informations as einf","clients.id","=","einf.client_id")
+                                ->leftjoin("occupational_positions as op","op.id","=","einf.occupational_position_id")
                                 ->leftjoin("eps_affiliates as eps","eps.id","=","einf.eps_affiliate_id" )
                                 ->leftjoin("arl_affiliates as arl","arl.id","=","einf.arl_affiliate_id")
                                 ->leftjoin("payment_frequency as fp","fp.id","=","einf.payment_frequency_id")
@@ -214,6 +222,7 @@ class ClientController extends Controller
                                 ->leftjoin("customer_payment_dates as cuspd","cuspd.id","=","einf.customer_payment_date_id")
                                 ->leftjoin("contract_types as ctrtype","ctrtype.id","=","einf.contract_type_id")
                                 ->leftjoin("loans","clients.id","=","loans.client_id" )
+                                ->leftjoin("loan_types as lt","lt.id","=","loans.loan_type_id")
                                 ->leftjoin("warranties as w","w.id","=","loans.warranty_id");
     }
     public function GetClients(Request $request)
@@ -335,10 +344,12 @@ class ClientController extends Controller
         $contactInfos=ContactInformation::where ('client_id',$client?->id);
         $EmploymentInformation=EmploymentInformation::where ('client_id',$client?->id)->first();
         $loan=Loan::where('client_id',$client?->id)->first();
-        $info=session()->has("info")?session('info'):'0';
+        $info=session()->has("info")?session('info'):'';
         $arrp=$this->getArray($policiesclients->get());
         $arra=$this->getArray($autorizationclients->get());
         $data=[
+            'loantypes'=>$this->loantypes->get(),
+            'occupationalposition'=>$this->occupationalposition->get(),
             'policiesCount'=>$this->policies->count(),
             'autorizationsCount'=>$this->autorizations->count(),
             'policies'=>$this->policies->whereNotIn ('id',$arrp)->get(),
@@ -421,39 +432,42 @@ class ClientController extends Controller
         if($contactInfos->count()==0)
         {
             session(["info"=>"1"]);
-            return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client?->id]);
+            return redirect()->to(url('/clients/create'))->withErrors('La informacion de contacto no ha sido diligenciaciada')
+            ->withInput(['client_id'=>$client?->id]);
         }
         if($EmploymentInformation==null)
         {
             session(["info"=>"2"]);
-            return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
+            return redirect()->to(url('/clients/create'))->withErrors('La informacion empleo no ha sido diligenciaciada')
+            ->withInput(['client_id'=>$client->id]);
         }
         if($loan==null&& $client->quality_holder_id==1)
         {
             session(["info"=>"5"]);
-            return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
+            return redirect()->to(url('/clients/create'))->withErrors('La informacion dl credito no ha sido diligenciado')
+            ->withInput(['client_id'=>$client->id]);
         }
         if($policiesclients->count()<$policies)
         {
             session(["info"=>"7"]);
-            return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
+            return redirect()->to(url('/clients/create'))->withErrors('Las politicas no han sido diligenciadas ')
+            ->withInput(['client_id'=>$client->id]);
         }
         if($autorizationclients->count()<$autorizations)
         {
             session(["info"=>"8"]);
-            return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
-        }
-        if($documents->count()==0){
-            session(["info"=>"9"]);
-            return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
+            return redirect()->to(url('/clients/create'))->withErrors('Las autorizaciones no ha sido diligenciaciada')
+            ->withInput(['client_id'=>$client->id]);
         }
         $data =
         [
+
             'documenttypes'=> $documenttypes->get(),
             'policiesclients'=> $policiesclients->get(),
             'autorizationclients'=> $autorizationclients->get(),
             'client'=> $client
         ];
+        session([ 'message'=>"Su solicitud de credito ha sido enviada con referencia $loan->reference. a continuacion estaremos enviando un correo con los pasos a seguir de esta soicitud"]);
         session(['client' => $client]);
         return view('Client.show',$data);
     }
@@ -509,6 +523,7 @@ class ClientController extends Controller
         $arra=$this->getArray($autorizationclients->get());
         $data=[
             'client'=>$client,
+            'loantypes'=>$this->loantypes->get(),
             'policiesCount'=>$this->policies->count(),
             'autorizationsCount'=>$this->autorizations->count(),
             'documenttypes'=> $documenttypes->get(),
@@ -517,6 +532,7 @@ class ClientController extends Controller
             'policyclients'=>$policiesclients->get(),
             'autorizationsclients'=>$autorizationclients->get(),
             'contactInfos'=>$contactInfos->get(),
+            'occupationalposition'=>$this->occupationalposition->get(),
             'EmploymentInformation'=>$EmploymentInformation,
             'loan'=>$loan,
             'QualityHolder'=>$this-> QualityHolder->get(),

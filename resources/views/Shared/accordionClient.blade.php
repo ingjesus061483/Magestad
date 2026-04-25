@@ -176,7 +176,7 @@
     </h3>
     <div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-sm-6">
                 <div style="padding: 5px;color:rgba(180, 158, 169, 1);font-size:12px">
                     Los campos marcados con * deben ser llenados obligatoriamente
                 </div>
@@ -201,69 +201,45 @@
                             Numero de telefono*
                         </label>
                         <input type="tel" name="phone" class="form-control"style="font-size:12px;" id="phone">
-                        <button type="submit" title="Guardar" id="btnGuardar" class="btn btn-success" style="margin-top:10px">
-                            Guardar
-                        </button>
-
-
-
                     </div>
+                    <button type="submit" title="Guardar" id="btnGuardar" class="btn btn-success" style="margin-top:10px">
+                        Guardar
+                    </button>
+
                 </form>
-
             </div>
-
-        </div>
-        <div class="col-6">
-            <!--    <a class="btn btn-primary"title="Crear datos de contacto"
-        id="btnContact">
-            <i class="fa-solid fa-square-phone-flip"></i>
-        </a>-->
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach($contactInfos as $item)
-                    <tr>
-                        <td>{{$item->phone_type->name}}</td>
-                        <td>{{$item->phone_number}}</td>
-                        <td>
-                            <form class="form form-inline" action="{{url('/contactinfo')}}/{{$item->id}}" method="POST">
-                                @csrf
-                                @method('delete')
-                                <button title="Eliminar" class="btn btn-danger" type="button"
-                                    onclick="validar(this,'Desea eliminar este registro?')">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
+            <div class="col-sm-6">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($contactInfos as $item)
+                        <tr>
+                            <td>{{$item->phone_type->name}}</td>
+                            <td>{{$item->phone_number}}</td>
+                            <td>
+                                <form class="form form-inline" action="{{url('/contactinfo')}}/{{$item->id}}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button title="Eliminar" class="btn btn-danger" type="button"
+                                        onclick="validar(this,'Desea eliminar este registro?')">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
 
 
 
-            </table>
-            <ul style="padding:0; margin-top:10px">
-                @foreach($contactInfos as $item)
-                <li style="list-style:none; padding-bottom:5px; display:flex; justify-content:space-between;
-                align-items:center">
-                    <strong>{{$item->phone_type->name}}: </strong>{{$item->phone_number}}
-                    <form class="form form-inline" action="{{url('/contactinfo')}}/{{$item->id}}" method="POST">
-                        @csrf
-                        @method('delete')
-                        <button title="Eliminar" class="btn btn-danger" type="button"
-                            onclick="validar(this,'Desea eliminar este registro?')">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </form>
-                </li>
-                @endforeach
-            </ul>
+                </table>
+            </div>
         </div>
     </div>
     <h3>
@@ -282,23 +258,32 @@
             <input type="hidden" name="client_id" value="{{$client!=null? $client->id:''}}" id="client_id" >
             <div class="row">
                 <div class="col-sm-6">
-                    <div class="mb-3">
-                        <label class="form-label" for="">
-                            EMPRESA LABORA*
-                        </label>
-                        <input type="text"value="{{$EmploymentInformation!=null?$EmploymentInformation->company_works:old('company_works')}}" class="form-control" name="company_works" id="company_works" style="font-size: 12px">
-                    </div>
+                    <label for="">Posicion ocupacional* </label>
+                    <select class="form-select" name="occupational_position" id="occupational_position" style="font-size: 12px">
+                        <option value="">Selecione una opcion</option>
+                        @foreach ($occupationalposition as $item)
+                        <option value="{{$item->id}}"{{$item->id==$EmploymentInformation?->occupational_position_id?'selected':''}}{{old('occupational_position')!=''?'selected':''}} >{{$item->name}}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">
-                            NIT #*
+                            EMPRESA LABORA
                         </label>
-                        <input type="text" class="form-control" value="{{$EmploymentInformation!=null?$EmploymentInformation->nit_company_work:old('nit_company_works')}}" name="nit_company_works" id="nit_company_works"style="font-size: 12px">
+                        <input type="text"value="{{$EmploymentInformation!=null?$EmploymentInformation->company_works:old('company_works')}}" class="form-control" name="company_works" id="company_works" style="font-size: 12px">
                     </div>
                 </div>
             </div>
             <div class="row">
+                <div class="col-sm-6">
+                    <div class="mb-3">
+                        <label class="form-label" for="">
+                            NIT #
+                        </label>
+                        <input type="text" class="form-control" value="{{$EmploymentInformation!=null?$EmploymentInformation->nit_company_work:old('nit_company_works')}}" name="nit_company_works" id="nit_company_works"style="font-size: 12px">
+                    </div>
+                </div>
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">
@@ -307,6 +292,8 @@
                         <input type="text" name="main_address" class="form-control" value="{{$EmploymentInformation!=null?$EmploymentInformation->main_address:old('main_address')}}" id="main_address"style="font-size: 12px">
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">
@@ -320,8 +307,6 @@
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">
@@ -335,6 +320,8 @@
                         </select>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">
@@ -345,8 +332,6 @@
                         id="company_on_mission"style="font-size: 12px">
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">
@@ -355,6 +340,8 @@
                         <input class="form-control" type="text" name="nit_company_on_mission" value="{{$EmploymentInformation!=null?$EmploymentInformation->nit:old('nit_company_on_mission')}}" id="nit_company_on_mission"style="font-size: 12px">
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">
@@ -363,8 +350,6 @@
                         <input class="form-control" type="text" name="address_company_on_mission" value="{{$EmploymentInformation!=null?$EmploymentInformation->branch_address:old('address_company_on_mission')}}" id="address_company_on_mission"style="font-size: 12px">
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">
@@ -373,14 +358,14 @@
                         <input type="date" name="entry_date" class="form-control" value="{{$EmploymentInformation!=null?$EmploymentInformation->entry_date:old('entry_date')}}" id="entry_date"style="font-size: 12px">
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">SALARIO MENSUAL*</label>
                         <input type="text" class="currency form-control" name="average_monthly_salary" value="{{$EmploymentInformation!=null?'$'.number_format($EmploymentInformation->average_monthly_salary):old('average_monthly_salary')}}" id="average_monthly_salary"style="font-size: 12px">
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">
@@ -389,6 +374,8 @@
                         <input type="text" class="form-control" name="current_position" value="{{$EmploymentInformation!=null?$EmploymentInformation->current_position:old('current_position')}}" id="current_position"style="font-size: 12px">
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">
@@ -402,8 +389,6 @@
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">
@@ -417,6 +402,8 @@
                         </select>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">
@@ -430,8 +417,6 @@
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">TIPO DE CONTRATO*</label>
@@ -443,6 +428,8 @@
                         </select>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">EPS AFILIADA*</label>
@@ -455,8 +442,6 @@
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">ARL AFILIADA*</label>
@@ -576,10 +561,26 @@
                         <select class="form-select" name="warranty" id="warranty" style="font-size:12px">
                             <option value="">Seleccione una opción </option>
                             @foreach($Warranties as $item)
-                            <option value="{{$item->id}}"{{$item->id==$loan?->warranty_id?'selected':''}}>{{$item->name}}</option>
+                            <option value="{{$item->id}}"{{$item->id==$loan?->warranty_id?'selected':''}}{{old('warranty')!=''?'selected':''}}>{{$item->name}}</option>
                             @endforeach
                         </select>
                     </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="mb-3" >
+                        <label class="form-label" for="">
+                            TIPO DE CREDITO
+                        </label>
+                        <select class="form-select" name="loan_type" id="loan_type" style="font-size:12px">
+                            <option value="">Seleccione una opción </option>
+                            @foreach($loantypes as $item)
+                            <option value="{{$item->id}}"
+                                {{$item->id==$loan?->loan_type_id?'selected':''}}{{old('loan_type')!=''?'selected':''}}>{{$item->name}}</option>
+
+                            @endforeach
+                        </select>
+                    </div>
+
                 </div>
             </div>
 
@@ -622,7 +623,7 @@
             <div class="card-body">
                 <div style="height:300px;overflow: auto;">
                 @foreach($policies as $item)
-                    <div style="width:100%; margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
+                    <div id="{{$item->title}}" style="width:100%; margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
                         <form id="frmClientPolicy" action="{{url('/clientPolicies')}}" method="post">
                             @csrf
                             <input type="hidden"name="client_id" value="{{$client?->id}}" id="client_id">
@@ -633,17 +634,17 @@
                             </p>
                             <div class="row" style="padding:5px">
                                 <div class="col-4">
-                                    <button type="button" title="Si Acepto" onclick="submitPolicy(1)" style="width:100%; " class="btn btn-success">
+                                    <button type="button"  title="Si Acepto" data-state="1" data-panel="{{$item->title}}" onclick="submitPolicy(this)" style="width:100%; " class="btn btn-success">
                                         <i class="fa-solid fa-circle-check"></i>
                                     </button>
                                 </div>
                                 <div class="col-4">
-                                    <button type="button" title="No acepto" class="btn btn-danger"style="width:100%;" onclick="submitPolicy(2)">
+                                    <button type="button" title="No acepto" class="btn btn-danger"style="width:100%;"data-state="2" data-panel="{{$item->title}}" onclick="submitPolicy(this)">
                                         <i class="fa-solid fa-circle-xmark"></i>
                                     </button>
                                 </div>
                                 <div class="col-4">
-                                    <button type="button"title ="No entiendo" class="btn btn-warning"style="width:100%; " onclick="submitPolicy(3)">
+                                    <button type="button"title ="No entiendo"data-state="3" data-panel="{{$item->title}}" class="btn btn-warning"style="width:100%; " onclick="submitPolicy(this)">
                                         <i class="fa-solid fa-circle-question"></i>
                                     </button>
                                 </div>
@@ -703,11 +704,11 @@
             </ul>
         </div>
         @if(count($autorizations)>0)
-        <div class="card mb-4" style="width:100%;margin:10px auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5); ">
+        <div  class="card mb-4" style="width:100%;margin:10px auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5); ">
             <div class="card-body">
                 <div style="height:300px;overflow: auto;">
                 @foreach($autorizations as $item)
-                <div style="width:100%; margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
+                <div id="{{$item->title}}" style="width:100%; margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
                     <form id="frmClientPolicy" action="{{url('/clientPolicies')}}" method="post">
                         @csrf
                         <input type="hidden"name="client_id" value="{{$client?->id}}" id="client_id">
@@ -718,17 +719,17 @@
                         </p>
                         <div class="row" style="padding:5px">
                             <div class="col-4">
-                                <button type="button" title="Si Acepto" onclick="submitPolicy(1)" style="width:100%; " class="btn btn-success">
+                                <button type="button" title="Si Acepto" data-state="1" data-panel="{{$item->title}}" onclick="submitPolicy(this)" style="width:100%; " class="btn btn-success">
                                     <i class="fa-solid fa-circle-check"></i>
                                 </button>
                             </div>
                             <div class="col-4">
-                                <button type="button" title="No acepto" class="btn btn-danger"style="width:100%;" onclick="submitPolicy(2)">
+                                <button type="button" title="No acepto" class="btn btn-danger"style="width:100%;" data-state="2" data-panel="{{$item->title}}" onclick="submitPolicy(this)">
                                     <i class="fa-solid fa-circle-xmark"></i>
                                 </button>
                             </div>
                             <div class="col-4">
-                                <button type="button"title ="No entiendo" class="btn btn-warning"style="width:100%; " onclick="submitPolicy(3)">
+                                <button type="button"title ="No entiendo" class="btn btn-warning"style="width:100%; "data-state="3" data-panel="{{$item->title}}" onclick="submitPolicy(this)">
                                     <i class="fa-solid fa-circle-question"></i>
                                 </button>
                             </div>
@@ -775,54 +776,4 @@
         </div>
         @endif
     </div>
-    @if($client!=null)
-    <h3>
-          <i class="fa-solid fa-file-pen"></i>
-          ANEXOS
-      </h3>
-    <div>
-        <div style="padding: 5px ;font-size:14px; text-align: justify;">
-                <p> Estimado Sr(a).&nbsp;&nbsp;<strong>{{$client->name_last_name}}</strong>:</p>
-                <p>Para continuar con el proceso de su solicitud de crédito, es necesario que adjunte copia de los sgtes. documentos: </p>
-        </div>
-        <div style="width:100%; margin:0 auto">
-            <table class="table table-bordered" style="  table-layout: fixed; width:100%" >
-                <thead style ="font-size: 14px" >
-                    <tr>
-                        <th >&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                        <th >&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                        <th style="width:20px">#</th>
-                        <th style="text-align:center;width:100%;">TIPO DE DOCUMENTO </th>
-                        <th style="text-align:center;width:100%;" >CANTIDAD</th>
-
-                    </tr>
-                </thead>
-                <tbody style ="font-size: 12px">
-                    @foreach ($documenttypes as $item )
-                    <tr>
-                        <td style="text-align:center;">
-                            <a title="adjuntar documentos" onclick="attach({{$item->id}})" class="btn btn-primary btn-sm" id="btnAttach" >
-                                <i class="fa-solid fa-paperclip"></i>
-                            </a>
-                        </td>
-                        <td style="text-align:center;">
-                            <form action="{{url('/documents')}}" method="GET">
-                                @csrf
-                                <input type="hidden" name="client_id" value="{{$client->id}}" >
-                                <input type="hidden" name="document_type_id" value="{{$item->id}}" >
-                                <button type="submit" class="btn btn-success btn-sm">
-                                    <i class="fa-solid fa-eye"></i>
-                                </button>
-                            </form>
-                        </td>
-                        <th scope="row" style="text-align: center;width:20px  ">{{$item->id}}.</th>
-                        <td style="width:100%;">{{$item->name}}</td>
-                        <td style="text-align:center;width:20px;">{{$item->amount}} </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-    @endif
 </div>

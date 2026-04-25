@@ -11,7 +11,7 @@ class Homework extends Model
     protected$fillable = [
         'user_id',
         'date',
-        'client_id',
+        'client',
         'remark',
         'state_homework_id',
         'homework_type_id'

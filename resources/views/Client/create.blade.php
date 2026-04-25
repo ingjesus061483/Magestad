@@ -1,7 +1,5 @@
-@extends('Shared/layout')
-@section('img',url('img/CerikSoluciones.png'))
+@extends('Shared.layout')
 @section('title','Solicitud de credito')
-@section('module','Base de datos')
 @section('content')
 <style>
 .acordion {
@@ -42,30 +40,29 @@
             <input name="identification" id="identification" class="form-control" type="hidden" placeholder="Digite su CC" aria-label="Search for..." aria-describedby="btnNavbarSearch" />
             <button class="btn btn-primary" id="btnNavbarSearch" type="submit "><i class="fas fa-search"></i></button>
         </div>
-        @else
-        <div class="input-group">
-            <input name="identification" class="form-control" type="text" placeholder="Digite su CC" aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-            <button class="btn btn-primary" id="btnNavbarSearch" type="submit "><i class="fas fa-search"></i></button>
-        </div>
         @endif
-
     </form>
-    @else
-    <a href="{{url('/clients')}}/{{$client->id}}" class="btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0">
-        <i class="fa-solid fa-user-tie"></i>&nbsp;{{$client->name_last_name}}
-    </a>
     @endif
 </div>
-<div style="padding-bottom: 5px">
+<div class="card">
+    <div id="ProgressBar"></div>
+<div style="padding-bottom: 5px;padding-top:5px; ">
     @include('Shared.accordionClient')
 </div>
-@if (auth()->check())
+
 <div style="padding-top:5px;padding-bottom:5px">
+    @if (auth()->check())
     <a class="btn btn-primary" title="Regresar" href="{{url('/clients')}}">
         <i class="fa-solid fa-arrow-left"></i>
     </a>
+    @elseif($client!=null)
+ <a href="{{url('/clients')}}/{{$client->id}}" class="btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0">
+        <i class="fa-solid fa-arrow-up-from-bracket"></i>&nbsp;Enviar soñicitud
+    </a>
+    @endif
 </div>
-@endif
+
+</div>
 
 <!--<button class="acordion">
     <i class="fa-solid fa-id-card"></i>

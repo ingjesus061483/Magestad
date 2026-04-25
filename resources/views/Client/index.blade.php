@@ -1,9 +1,7 @@
 @extends('Shared/layout')
-@section('title','clientes')
-@section('module','Base de datos')
+@section('title','Clientes')
 @section('content')
-
-<div class="card mb-4" style="width: 70% ;margin:0 auto">
+<div class="card mb-4" style="margin:0 auto">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
         Clientes
@@ -37,6 +35,7 @@
                      <th style="text-align:center">EMAIL</th>
                     <th style="text-align:center">ESTADO CIVIL</th>
                     <th style="text-align:center">INFORMACION DE CONTACTO</th>
+                    <th style="text-align:center">POSICION OCUPACIONAL</th>
                     <th style="text-align:center">NIT EMPRESA</th>
                     <th style="text-align:center"> EMPRESA DONDE TRABAJA</th>
                     <th style="text-align:center">DIRECCION PRINCIPAL</th>
@@ -59,6 +58,7 @@
                     <th style="text-align:center">CREDITO SOLICITADO ($ Cop) </th>
                     <th style="text-align:center">PLAZO (Meses)   </th>
                     <th style="text-align:center">GARANTIA  </th>
+                    <th style="text-align:center">TIPO DE CEDITO</th>
                     <th style="text-align:center">P1</th>
                     <th style="text-align:center">P2</th>
                     <th style="text-align:center">P3</th>
@@ -124,6 +124,7 @@
                     <td>{{$item->email}}</td>
                     <td>{{$item->marital_status}}</td>
                     <td>{{$item->contact_informations}}</td>
+                    <TD>{{$item->occupational_position}}</TD>
                     <td>{{$item->nit}}</td>
                     <td>{{$item->Company_works}}</td>
                     <td>{{$item->main_address}}</td>
@@ -146,6 +147,7 @@
                     <td>${{number_format( $item->ammount)}}  </td>
                     <td>{{number_format($item->term)}}     </td>
                     <td>{{$item->warranty}}  </td>
+                    <td>{{$item->loan_type}}</td>
                     <td style="text-align:center" onclick="GetPolicyBytitle('P1')">
                         @switch($item->P1)
                                 @case(1)

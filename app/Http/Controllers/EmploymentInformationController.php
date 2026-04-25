@@ -13,6 +13,7 @@ class EmploymentInformationController extends Controller
         $EmploymentInformation=EmploymentInformation::find($id);
       //  $average_monthly_salary=$this->convert_to_number($request->average_monthly_salary);
         $arrEmployment=[
+            'occupational_position_id'=>$request->occupational_position,
             'nit_company_work'=>$request->nit_company_works,
             'company_works'=>$request->company_works,
             'main_address'=>$request->main_address,
@@ -45,6 +46,7 @@ class EmploymentInformationController extends Controller
         }
      //   $average_monthly_salary=$this->convert_to_number($request->average_monthly_salary);
         $arrEmployment=[
+            'occupational_position_id'=>$request->occupational_position,
             'nit_company_work'=>$request->nit_company_works,
             'company_works'=>$request->company_works,
             'main_address'=>$request->main_address,

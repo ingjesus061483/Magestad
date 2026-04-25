@@ -1,6 +1,4 @@
 @extends('Shared/layout')
-@section('img',url('img/CerikSoluciones.png'))
-@section('module','Base de datos')
 @section('title','Documentos')
 @section('content')
 <div class="card mb-4">
@@ -14,7 +12,7 @@
             <div class="col mb-5">
                 <div class="card h-100">
                     <!-- Product image-->
-                    <img class="card-img-top" src="{{url('/img')}}/{{$item->path}}" alt="..." />
+                    <img class="card-img-top" src="{{asset('storage/app/public/img')}}/{{$item->path}}" alt="{{$item->name}}" />
                     <!-- Product details-->
                     <div class="card-body p-4">
                         <div class="text-center">

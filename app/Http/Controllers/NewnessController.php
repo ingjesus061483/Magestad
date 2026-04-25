@@ -57,7 +57,7 @@ class NewnessController extends Controller
         Newness::create([
             'user_id'=>$request->user_id,
             'date'=>$request->date,
-            'client_id'=>$request->client_id,
+            'client'=>$request->client,
             'newness_type_id'=>$request->newness_type_id,
             'remark'=>$request->remark,
             'state_newness_id'=>1
@@ -99,7 +99,7 @@ class NewnessController extends Controller
         $arrNewness=[
             'user_id'=>$request->user_id,
             'date'=>$request->date,
-            'client_id'=>$request->client_id,
+            'client'=>$request->client,
             'newness_type_id'=>$request->newness_type_id,
             'remark'=>$request->remark,
         ];

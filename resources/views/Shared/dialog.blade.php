@@ -50,7 +50,7 @@
                 </div>
             </form>
         </div>
-        <div title="Tipo de documento" id="dialogDocumentType">
+        <div title="Tipos de documentos" id="dialogDocumentType">
             <form id ="frmDocumentType" action="{{url('/DocumentType')}}" method="POST" autocomplete="off">
                 @csrf
                 <div class="mb-3">

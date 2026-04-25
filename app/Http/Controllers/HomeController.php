@@ -10,17 +10,16 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     public function index(){
-      
+
         $client=session()->has('client')?session('client'):null;
-    
+
 
         if($client==null){
             return view('Home.welcome');
-        }      
+        }
         $policy=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'p%')->where('client_id',$client?->id)->count();
 
         $autorization=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'a%')->where('client_id',$client?->id)->count();
-        $documents=Document::where('client_id',$client->id);
          if($client->contact_informations->count()==0)
         {
                session(["info"=>"1"]);
@@ -51,14 +50,6 @@ class HomeController extends Controller
              return redirect()->to(url('/clients/create'))->
              withErrors("La información de autorizaciones no ha sido completada");
         }
-        else if($documents->count()==0)
-        {
-            session(["info"=>"9"]);
-             return redirect()->to(url('/clients/create'))->
-             withErrors("La información de anexos no ha sido completada");
-
-        }
-
         if(session()->has('client'))
         {
             session()->forget('client');
@@ -66,6 +57,10 @@ class HomeController extends Controller
         if (session()->has('info'))
         {
             session()->forget('info');
+        }
+         if (session()->has('message'))
+        {
+            session()->forget('message');
         }
         return view('Home.welcome');
     }

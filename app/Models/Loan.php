@@ -15,7 +15,10 @@ class Loan extends Model
         'ammount',
         'term',
         'client_id',
-        'warranty_id'
+        'warranty_id',
+        'loan_type_id',
+        'loan_status_id',
+
     ];
     public function client(){
       return $this ->belongsTo(Client::class,'client_id');
@@ -23,5 +26,5 @@ class Loan extends Model
     public function warranty(){
       return $this ->belongsTo(Warranty::class,'warranty_id');
     }
-    
+
 }

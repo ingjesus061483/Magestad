@@ -40,7 +40,10 @@ class DatabaseSeeder extends Seeder
             NewnessTypeSeeder::class,
             StatePoliciesSeeder::class,
             AuthorizationPolicySeeder::class,
-            PrioritySeeder::class
+            PrioritySeeder::class,
+            OccupationalPositionSeeder::class,
+            loanStatusSeeder::class,
+            LoanTypeSeeder::class
             ]);
 
 

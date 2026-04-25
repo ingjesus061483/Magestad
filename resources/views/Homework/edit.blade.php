@@ -1,8 +1,7 @@
 @extends('Shared/layout')
 @section('title',' Editar tarea')
-@section('module','Diario')
 @section('content')
-<div class="card mb-4" style="width: 100% ; margin:0 auto">
+<div class="card mb-4" style="margin:0 auto">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
         Editar tarea
@@ -20,7 +19,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="client_id" class="col-form-label" style="font-size:14px">Cliente</label>
-                    <input type="text"name="client_id" class="client form-control" id="client_id" style="font-size:12px" value="{{$homework->client->id.' - '.$homework->client->name_last_name}}">
+                    <input type="text"name="client" class="form-control" id="client_id" style="font-size:12px" value="{{$homework->client}}">
 
                 </div>
             </div>

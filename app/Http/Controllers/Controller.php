@@ -15,16 +15,16 @@ class Controller extends BaseController
         {
             $imagen=$request->file('file');
             $nombreimagen=Str::slug($nombre).".".$imagen->guessExtension();
-            if (!file_exists('img'))
+            $ruta=storage_path('app/public/img');
+            if (!file_exists($ruta))
             {
-                 mkdir("img");
+                 mkdir($ruta);
             }
-            $ruta=public_path("img/");
-            if(file_exists($ruta.$nombreimagen))
+            if(file_exists($ruta.'\\'.$nombreimagen))
             {
-                unlink($ruta.$nombreimagen);
+                unlink($ruta.'\\'.$nombreimagen);
             }
-            copy($imagen->getRealPath(),$ruta.$nombreimagen);
+            copy($imagen->getRealPath(),$ruta.'\\'.$nombreimagen);
         }
         return $nombreimagen;
     }

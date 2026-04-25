@@ -17,16 +17,17 @@ return new class extends Migration
             ->onDelete('cascade')
             ->onUpdate('cascade');
             $table->dateTime('date');
-            $table->foreignId('client_id') ->constrained('clients')
+           /* $table->foreignId('client_id') ->constrained('clients')
             ->onDelete('cascade')
-            ->onUpdate('cascade');
+            ->onUpdate('cascade');*/
+            $table->string('client',50);
             $table->foreignId('newness_type_id') ->constrained('newness_types')
             ->onDelete('cascade')
-            ->onUpdate('cascade');  
-            $table->string('remark',255);            
+            ->onUpdate('cascade');
+            $table->string('remark',255);
             $table->foreignId('state_newness_id') ->constrained('state_newness')
             ->onDelete('cascade')
-            ->onUpdate('cascade');  
+            ->onUpdate('cascade');
             $table->timestamps();
         });
     }

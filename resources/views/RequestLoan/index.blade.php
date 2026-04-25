@@ -1,6 +1,5 @@
 @extends('Shared/layout')
 @section('title',' Solicitud de préstamo')
-@section('module','Diario')
 @section('content')
 <div style="padding-bottom: 5px">
     <a title="Crear solicitud de préstamo" href="{{url('/requestLoan/create')}}" class="btn btn-primary ">

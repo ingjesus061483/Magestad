@@ -65,6 +65,7 @@ Route::post('homework/changeStateHomework/{id}',[HomeworkController::class,'chan
 Route::resource('arls',ArlController::class);
 Route::resource('eps',EpsController::class);
 Route ::resource('clientPolicies', ClientPolicyController::class);
+Route::get('clientPolicies/SearchPolicyClient',[ClientPolicyController::class,'SearchPolicyClient']);
 Route::resource('DocumentType',DocumentTypeController::class);
 Route::resource('documents',DocumentController::class);
 Route::get('documents/download/{id}',[DocumentController::class,'Download']);

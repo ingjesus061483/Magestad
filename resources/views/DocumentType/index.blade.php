@@ -1,9 +1,7 @@
 @extends('Shared/layout')
 @section('title','Tipos de documentos')
-@section('module','Configuracion')
 @section('content')
-
-<div class="card mb-4" style="width: 70%;margin:0 auto">
+<div class="card mb-4" style="margin:0 auto">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
         tipo de documentos

@@ -24,7 +24,7 @@
                 <td style="text-align: center;">{{$item->id}}</td>
                 <td style="text-align: center;"> {{$item->user->name}}</td>
                 <td style="text-align: center;">{{date("d/m/Y", strtotime($item->date))}}</td>
-                <td style="text-align: center;">{{$item->client->identification.' '.$item->client->name_last_name }}</td>
+                <td style="text-align: center;">{{$item->client}}</td>
                 <td style="text-align: center;">{{$item->newness_type->name}}</td>
                 <td style="text-align: center;">{{$item->remark}}</td>
                 <td style="text-align: center;">

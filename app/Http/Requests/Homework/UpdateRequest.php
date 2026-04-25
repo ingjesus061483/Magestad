@@ -16,12 +16,12 @@ class UpdateRequest extends FormRequest
     }
     public function prepareForValidation()
     {
-            $client = explode('-', $this->client_id);
+       /*     $client = explode('-', $this->client_id);
 
         $this->merge([
 
             'client_id' => trim($client[0]),
-        ]);
+        ]);*/
     }
 
     /**
@@ -34,7 +34,8 @@ class UpdateRequest extends FormRequest
         return [
             'user_id' => 'required|integer|exists:users,id',
             'date' => 'required|date',
-            'client_id' => 'required|integer|exists:clients,id',
+            //'client_id' => 'required|integer|exists:clients,id',
+            'client' => 'required',
             'remark' => 'required|string|max:255',
 
 
@@ -48,9 +49,10 @@ class UpdateRequest extends FormRequest
             'user_id.exists' => 'El :attribute no existe.',
             'date.required' => 'La :attribute es obligatoria.',
             'date.date' => 'La :attribute no es una fecha válida.',
-            'client_id.required' => 'El :attribute es obligatorio.',
+            /*'client_id.required' => 'El :attribute es obligatorio.',
             'client_id.integer' => 'El :attribute debe ser un número entero.',
-            'client_id.exists' => 'El :attribute no existe.',
+            'client_id.exists' => 'El :attribute no existe.',*/
+            'client.required' => 'El :attribute es obligatorio.',
             'remark.required' => 'La :attribute es obligatoria.',
             'remark.string' => 'La :attribute debe ser una cadena de texto.',
             'remark.max' => 'La :attribute no debe ser mayor a 255 caracteres.',
@@ -66,7 +68,7 @@ class UpdateRequest extends FormRequest
         return [
             'user_id' => 'usuario',
             'date' => 'fecha',
-            'client_id' => 'cliente',
+            'client' => 'cliente',
             'remark' => 'observación',
             'state_homework_id' => 'estado de la tarea',
             'homework_type_id' => 'tipo de tarea',

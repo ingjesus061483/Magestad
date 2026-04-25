@@ -25,13 +25,15 @@ class StoreRequest extends FormRequest
             'client_id'=>'required',
             'ammount'=>'required|max:20',
             'term'=>'required|numeric',
-            'warranty'=>'required'
+            'warranty'=>'required',
+            'loan_type'=>'required',
             //
         ];
     }
     public function messages()
     {
         return [
+            'loan_type.required'=>'El :attribute es obligatorio',
             'client_id.required' => 'El :attribute es obligatorio.',
             'ammount.required' => 'El :attribute es obligatorio.',
             'ammount.max' => 'El :attribute no debe ser mayor a 20 caracteres.',
@@ -57,6 +59,7 @@ class StoreRequest extends FormRequest
             'ammount' => 'monto',
             'term' => 'plazo',
             'warranty' => 'garantía',
+            'loan_type'=>'tipo de credto'
         ];
     }
 }

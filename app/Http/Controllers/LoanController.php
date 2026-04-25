@@ -16,7 +16,9 @@ class LoanController extends Controller
             'ammount'=>$request->ammount,
             'term'=>$request->term,
             'client_id'=>$request->client_id,
-            'warranty_id'=>$request->warranty
+            'warranty_id'=>$request->warranty,
+            'loan_type_id'=>$request->loan_type,
+
         ];
         $loan->update($arrloan);
         session(["info"=>"5"]);
@@ -32,17 +34,18 @@ class LoanController extends Controller
                                                                          sido llena");
         }
         $arrloan=[
-            'reference'=>date_timestamp_get(date_create()).$client->identification,
+            'reference'=>'SC-'. $client->identification.'-'.$client->id,
             'ammount'=>$request->ammount,
             'term'=>$request->term,
             'client_id'=>$request->client_id,
-            'warranty_id'=>$request->warranty
+            'warranty_id'=>$request->warranty,
+            'loan_type_id'=>$request->loan_type,
+            'loan_status_id'=>3,
         ];
         $loan=Loan::create($arrloan);
         session(["info"=>"6"]);
         return redirect()->to(url('/clients/create'))
-                         ->with(['message'=>'Se ha generado la solicitud de credito
-                                             con referencia '.$loan->reference.'. continue con el tratamiento de datos personales.']);
+                         ->with(['message'=>'Solicitud de credito generada correctamente. Continue con el tratamiento de datos personales.']);
 
     }
     //

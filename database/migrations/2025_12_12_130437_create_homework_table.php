@@ -17,13 +17,14 @@ return new class extends Migration
             ->onDelete('cascade')
             ->onUpdate('cascade');
             $table->dateTime('date');
-            $table->foreignId('client_id') ->constrained('clients')
+$table->string('client',50);
+           /* $table->foreignId('client_id') ->constrained('clients')
             ->onDelete('cascade')
-            ->onUpdate('cascade');
-            $table->string('remark',255);            
+            ->onUpdate('cascade');*/
+            $table->string('remark',255);
             $table->foreignId('state_homework_id') ->constrained('state_homework')
             ->onDelete('cascade')
-            ->onUpdate('cascade');  
+            ->onUpdate('cascade');
             $table->timestamps();
         });
     }

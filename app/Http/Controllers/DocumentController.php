@@ -14,9 +14,9 @@ class DocumentController extends Controller
     public function Download($id)
     {
         $document=Document::find($id);
-        return response()->download(public_path('img/'.$document->name));
+        $path=storage_path('app/public/img/').$document->path;
+        return response()->download($path);
     }
-
     /**
      * Display a listing of the resource.
      */
@@ -54,7 +54,7 @@ class DocumentController extends Controller
     {
         $client= Client::find($request->client);
         $document_type=DocumentType::find($request->document_type);
-        $document=document::where('client_id',$request->client)->where('document_type_id',$request->document_type)->orderby('id','desc')->first();
+        $document=Document::where('client_id',$request->client)->where('document_type_id',$request->document_type)->orderby('id','desc')->first();
         $id=$document? $document->id +1 :1;
         $name= "$document_type->name($id)";
         $path=$this->getImage($request,"$document_type->name $client->identification $id");
@@ -103,7 +103,7 @@ class DocumentController extends Controller
     {
         $document=Document::find($id);
         $client=$document->client;
-        $document_path=public_path('img/'.$document->name);
+        $document_path=storage_path('app/public/img/'.$document->path);
         $document->delete();
         if (file_exists($document_path)) {
             unlink($document_path);

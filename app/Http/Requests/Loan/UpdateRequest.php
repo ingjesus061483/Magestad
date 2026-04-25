@@ -34,7 +34,8 @@ class UpdateRequest extends FormRequest
             'client_id'=>'required',
             'ammount'=>'required|max:20',
             'term'=>'required|numeric',
-            'warranty'=>'required'
+            'warranty'=>'required',
+             'loan_type'=>'required'
             //
         ];
     }
@@ -47,6 +48,7 @@ class UpdateRequest extends FormRequest
             'term.required' => 'El :attribute es obligatorio.',
             'term.numeric' => 'El :attribute debe ser un número.',
             'warranty.required' => 'El :attribute es obligatorio.',
+            'loan_type.required'=>'El :attribute es obligatorio'
         ];
     }
     public function attributes()

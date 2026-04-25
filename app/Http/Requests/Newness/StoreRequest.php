@@ -10,10 +10,10 @@ class StoreRequest extends FormRequest
     public function prepareForValidation()
     {
         $newnessType = explode('-', $this->newness_type_id);
-        $client = explode('-', $this->client_id);
+       /* $client = explode('-', $this->client_id);*/
         $this->merge([
             'newness_type_id' => trim($newnessType[0]),
-            'client_id' => trim($client[0]),
+            //'client_id' => trim($client[0]),
         ]);
     }
     /**
@@ -34,7 +34,8 @@ class StoreRequest extends FormRequest
         return [
             'user_id'=>'required|exists:users,id',
             'date'=>'required|date',
-            'client_id'=>'required|exists:clients,id',
+            //'client_id'=>'required|exists:clients,id',
+            'client'=>'required',
             'newness_type_id'=>'required|exists:newness_types,id',
             'remark'=>'required|string|max:255',
                   //
@@ -47,8 +48,9 @@ class StoreRequest extends FormRequest
             'user_id.exists' => 'El :attribute no existe.',
             'date.required' => 'La :attribute es obligatoria.',
             'date.date' => 'La :attribute no es una fecha valida.',
-            'client_id.required' => 'El :attribute es obligatorio.',
-            'client_id.exists' => 'El :attribute no existe.',
+            'client.required' => 'El :attribute es obligatorio.',
+           /* 'client_id.required' => 'El :attribute es obligatorio.',
+            'client_id.exists' => 'El :attribute no existe.',*/
             'newness_type_id.required' => 'El :attribute es obligatorio.',
             'newness_type_id.exists' => 'El :attribute no existe.',
             'remark.required' => 'La :attribute es obligatoria.',
@@ -61,7 +63,7 @@ class StoreRequest extends FormRequest
         return [
             'user_id' => 'usuario',
             'date' => 'fecha',
-            'client_id' => 'cliente',
+            'client' => 'cliente',
             'newness_type_id' => 'tipo de novedad',
             'remark' => 'observacion',
 

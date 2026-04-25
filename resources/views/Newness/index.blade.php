@@ -1,6 +1,5 @@
 @extends('Shared/layout')
 @section('title','Novedades')
-@section('module','Diario')
 @section('content')
 <div style="padding-bottom: 5px">
     <a  title="Crear Novedad" href="{{url('/Newness/create')}}" class="btn btn-primary" >

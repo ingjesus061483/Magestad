@@ -1,8 +1,7 @@
 @extends('Shared/layout')
 @section('title',' Crear tarea')
-@section('module','Diario')
 @section('content')
-<div class="card mb-4" style="width: 100% ; margin:0 auto">
+<div class="card mb-4" style=" margin:0 auto">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
         Crear tarea
@@ -17,7 +16,9 @@
                     <input type="date"name="date" class="form-control" id="date" style="font-size:12px" value="{{date('Y-m-d')}}">
                 </div>
                 <div class="col-sm-6">
-                   @include('Shared.searchClient')
+                     <label for="date" class="col-form-label" style="font-size:14px">Cliente</label>
+                    <input type="text"name="client" class="form-control" id="date" style="font-size:12px" value="{{old('client')}}">
+
                 </div>
             </div>
              <div class="row mb-3">
@@ -25,13 +26,15 @@
                     <label for="homework_type_id" class="col-form-label" style="font-size:14px">Tipo de Tarea</label>
                    <select class="form-select" name="homework_type_id" style="font-size:12px" id="homework_type_id">
                         @foreach ($homework_types as $type)
-                            <option value="{{$type->id}}">{{$type->name}}</option>
+                            <option value="{{$type->id}} {{$type->id==old('homework_type_id')?'selected':''}}">{{$type->name}}</option>
                         @endforeach
                     </select>
                 </div>
                  <div class="col-sm-6">
                     <label for="remark" class="col-form-label" style="font-size:14px">Tarea</label>
-                    <textarea class="form-control" name="remark" id="remark" rows="3" class="form-control" style="font-size:12px" ></textarea>
+                    <textarea class="form-control" name="remark" id="remark" rows="3" class="form-control" style="font-size:12px" >
+                        {{old('remark')}}
+                    </textarea>
                 </div>
             </div>
             <div class="mb-3">

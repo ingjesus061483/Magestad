@@ -56,7 +56,7 @@ class HomeworkController extends Controller
         Homework::create([
             'user_id'=>$request->user_id,
             'date'=>$request->date,
-            'client_id'=>$request->client_id,
+            'client'=>$request->client,
             'remark'=>$request->remark,
             'state_homework_id'=>1,
             'homework_type_id'=>$request->homework_type_id
@@ -94,10 +94,10 @@ class HomeworkController extends Controller
         $homework->update([
             'user_id'=>$request->user_id,
             'date'=>$request->date,
-            'client_id'=>$request->client_id,
+            'client'=>$request->client,
             'remark'=>$request->remark,
             'state_homework_id'=>$request->state_homework_id,
-            'homework_type_id'=>$request->homework_type_id
+           // 'homework_type_id'=>$request->homework_type_id
         ]);
         return redirect()->to('/homework')->with(['message'=>'Tarea actualizada correctamente']);
 

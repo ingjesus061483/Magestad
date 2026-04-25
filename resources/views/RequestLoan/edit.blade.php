@@ -1,8 +1,7 @@
 @extends('Shared/layout')
-@section('module','Diario')
 @section('title','Editar solicitud')
 @section('content')
-<div class="card mb-4" style="width: 70%;margin:0 auto">
+<div class="card mb-4" style="margin:0 auto">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
         Editar solicitud de préstamo
@@ -38,7 +37,7 @@
                         <select name="priority" id="" class="form-select" style="font-size:12px">
                             <option value="">Seleccione una opcion</option>
                             @foreach($priorities as $priority)
-                            <option value="{{ $priority->id }}" {{ old('priority') == $priority->id ? 'selected' : '' }}
+                            <option value="{{ $priority->id }}" {{$requestLoan->priority_id == $priority->id ? 'selected' : '' }}
                                  @switch($priority->id)
                                     @case(1)
                                         style="color:rgba(0, 100, 0, 0.8); font-weight: bold;"

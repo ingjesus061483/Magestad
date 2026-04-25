@@ -31,9 +31,10 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'occupational_position'=>'required|exists:occupational_positions,id',
             'client_id'=>'required',
-            'company_works'=>'required|max:100',
-            'nit_company_works'=>'required|max:50',
+//            'company_works'=>'required|max:100',
+  //          'nit_company_works'=>'required|max:50',
             'main_address'=>'required|max:50',
             'city'=>'required',
             'state'=>'required',
@@ -70,6 +71,7 @@ class UpdateRequest extends FormRequest
             'contract_type.required' => 'El :attribute es obligatorio.',
             'eps_affiliate.required' => 'El :attribute es obligatorio.',
             'arl_affiliate.required' => 'El :attribute es obligatorio.',
+            'occupational_position.required'=>'La :attribute es obligatorio'
         ];
     }
     public function attributes()
@@ -90,6 +92,7 @@ class UpdateRequest extends FormRequest
             'contract_type' => 'tipo de contrato',
             'eps_affiliate' => 'afiliación EPS',
             'arl_affiliate' => 'afiliación ARL',
+            'occupational_position'=>'posicion ocupacional'
         ];
     }
 }

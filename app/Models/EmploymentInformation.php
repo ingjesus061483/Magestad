@@ -13,7 +13,7 @@ class EmploymentInformation extends Model
         return $this->belongsTo(Client::class,'client_id');
     }
     protected $fillable=[
-        
+
         'id',
         'nit_company_work',
         'company_works',
@@ -32,8 +32,14 @@ class EmploymentInformation extends Model
         'customer_payment_date_id',
         'contract_type_id',
         'eps_affiliate_id',
-        'arl_affiliate_id' 
+        'arl_affiliate_id' ,
+        'occupational_position_id'
     ];
+    public function occupational_position()
+    {
+        return $this->belongsTo(OccupationalPosition::class,'occupational_position_id');
+
+    }
     public function city(){
         return $this->belongsTo(City::class,'city_id');
     }
@@ -58,5 +64,5 @@ class EmploymentInformation extends Model
     public function arl_affiliate(){
         return $this->belongsTo(ArlAffiliate::class,'arl_affiliate_id');
     }
-   
+
 }
