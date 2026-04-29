@@ -23,24 +23,25 @@ class StoreRequest extends FormRequest
     {
         return [
             'client_id' => 'required|exists:clients,id',
-            'policy_id' => 'required|exists:authorization_policies,id',
+            'policyClients' => 'required|json',
             //
         ];
     }
     public function messages(): array
     {
         return [
-            'client_id.required' => 'El campo cliente es obligatorio.',
-            'client_id.exists' => 'El cliente seleccionado no existe.',
-            'policy_id.required' => 'El campo política es obligatorio.',
-            'policy_id.exists' => 'La política seleccionada no existe.',
+            'client_id.required' => 'El :attribute es obligatorio.',
+            'client_id.exists' => 'El :attribute seleccionado no existe.',
+            'policyClients.required' => 'las :attribute son obligatorias.',
+            'policyClients.json' => 'Las :attribute debe ser un formato json reconocido',
         ];
     }
     public function attributes(): array
     {
         return [
             'client_id' => 'cliente',
-            'policy_id' => 'política',
+            'policyClients' => 'políticas o autorizaciones',
         ];
     }
+
 }

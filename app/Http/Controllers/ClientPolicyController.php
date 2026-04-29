@@ -19,8 +19,27 @@ class ClientPolicyController extends Controller
         ->where('policy_id',$request->policy_id)->first();
         return response()->json($search);
     }
+public function store(StoreRequest $request)
+{
+    $title=$request->title;
+    $Clientpolicies=json_decode($request->policyClients,true);
+    ClientPolicy::insert($Clientpolicies);
+    $message='';
+    if($title=='P')
+    {
+        $sesion="8";
+        $message='has registrado todas las politicas. Ahora es necesario completar las autorizaciones';
+    }
+    else if($title=='A')
+    {
+        $sesion="";
+        $message='has registrado todas las autorizaciones. ahora pulsa el boton enviar solicitud para terminar el proceso';
 
-    public function store(StoreRequest $request)
+    }
+    session(["info"=>$sesion]);
+    return response()->json(["message"=>$message,"info"=>$sesion]);
+}
+   /* public function store(StoreRequest $request)
     {
         $sesion="";
         $Clientpolicy=Clientpolicy::create([
@@ -73,7 +92,7 @@ class ClientPolicyController extends Controller
         session(["info"=>$sesion]);
         return back()->with(["message"=>$message]);
         //
-    }
+    }*/
 
 
     //

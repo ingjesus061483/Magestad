@@ -444,7 +444,7 @@ class ClientController extends Controller
         if($EmploymentInformation==null)
         {
             session(["info"=>"2"]);
-            return redirect()->to(url('/clients/create'))->withErrors('La informacion empleo no ha sido diligenciaciada')
+            return redirect()->to(url('/clients/create'))->withErrors('La informacion laboral no ha sido diligenciaciada')
             ->withInput(['client_id'=>$client->id]);
         }
         if($loan==null&& $client->quality_holder_id==1)
@@ -462,12 +462,11 @@ class ClientController extends Controller
         if($autorizationclients->count()<$autorizations)
         {
             session(["info"=>"8"]);
-            return redirect()->to(url('/clients/create'))->withErrors('Las autorizaciones no ha sido diligenciaciada')
+            return redirect()->to(url('/clients/create'))->withErrors('Las autorizaciones no han sido diligenciaciada')
             ->withInput(['client_id'=>$client->id]);
         }
         $data =
         [
-
             'documenttypes'=> $documenttypes->get(),
             'policiesclients'=> $policiesclients->get(),
             'autorizationclients'=> $autorizationclients->get(),

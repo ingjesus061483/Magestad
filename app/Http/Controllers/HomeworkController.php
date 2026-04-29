@@ -41,7 +41,8 @@ class HomeworkController extends Controller
     public function create(AutorizeRequest $request)
     {
         $data=[
-            'homework_types'=>HomeworkType::all()
+            'homework_types'=>HomeworkType::all(),
+            'state_homework'=>StateHomework::all()
         ];
         return view('Homework.create',$data);
 
@@ -58,7 +59,7 @@ class HomeworkController extends Controller
             'date'=>$request->date,
             'client'=>$request->client,
             'remark'=>$request->remark,
-            'state_homework_id'=>1,
+            'state_homework_id'=>$request->state_homework,
             'homework_type_id'=>$request->homework_type_id
         ]);
         return redirect()->to('/homework')->with(['message'=>'Tarea creada correctamente']);

@@ -598,20 +598,21 @@
             @method('patch')
             @csrf
           <!--  <iframe src="{{url('Politicas/Politicadedatos.pdf')}}" style="width:100%; height:500px;" frameborder="0"></iframe>-->
-            <div style="padding: 5px; font-size:14px">
-                <input type="checkbox" name="accept_data_treatment" id="accept_data_treatment"
+
+            <div class="form-check" style="font-size:14px">
+                <input class="form-check-input" type="checkbox" name="accept_data_treatment" id="accept_data_treatment"
                 {{$client!=null&&$client->acept_data_processing_policies?'checked':''}}>
-                <label for="accept_data_treatment">
+                <label class="form-check-label" for="accept_data_treatment">
                     Acepto los <a href="#"> terminos y condiciones</a>, he leido y comprendido la <a href="#"> politica de privacidad </a> y autorizo el tratamiento de mis datos personales para los fines relacionados con la gestion del credito solicitado, asi como para el envio de comunicaciones comerciales relacionadas con los productos y servicios ofrecidos por la entidad.
                 </label>
             </div>
             <button type="submit" class="btn btn-success">Actualizar</button>
         </form>
     </div>
-      <h3>
-          <i class="fa-solid fa-building-shield"></i>
-          POLITICAS {{count($policyclients).' | '.$policiesCount}}
-      </h3>
+    <h3>
+        <i class="fa-solid fa-building-shield"></i>
+        POLITICAS <span id="policyclientcount" ></span> | {{$policiesCount}}
+    </h3>
     <div>
         <div>
             <ul style="font-size:10px">
@@ -620,10 +621,14 @@
                 <li style="list-style:none;font-weight:bold; color:orange"><i class="fa-solid fa-circle-question"></i> No entiendo</li>
             </ul>
         </div>
+        <div class="form-check">
+            <input type="checkbox"id="chkallPolicy" class="form-check-input"{{count($policyclients)==count($policies)?'checked disabled':''}}  >
+            <label class="form-check-label" for=""> Al marcar la casilla se entiende que he leido aceptado todas las <a class="btn btn-primary" title="Mostrar politicas" data-panel="policy" id="appearPolicies" style="cursor: pointer;"> politicas</a></label> de esta empresa
+        </div>
         @if(count($policies)>0)
-        <div class="card mb-4" style="width:100%;margin:0 auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5);">
+        <div class="policy card mb-4" style="width:100%;margin:0 auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5);display:none " >
             <div class="card-body">
-                <div style="height:300px;overflow: auto;">
+                <div id="policies" style="height:300px;overflow: auto;">
                 @foreach($policies as $item)
                     <div id="{{$item->title}}" style="width:100%; margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
                         <form id="frmClientPolicy" action="{{url('/clientPolicies')}}" method="post">
@@ -636,17 +641,19 @@
                             </p>
                             <div class="row" style="padding:5px">
                                 <div class="col-4">
-                                    <button type="button"  title="Si Acepto" data-state="1" data-panel="{{$item->title}}" onclick="submitPolicy(this)" style="width:100%; " class="btn btn-success">
+                                    <button type="button"  title="Si Acepto" data-policiescount="{{$policiesCount}}"
+                                            data-state="1" data-policy="{{$item->id}}" data-panel="{{$item->title}}"
+                                            onclick="submitPolicy(this)" style="width:100%; " class="btn btn-success">
                                         <i class="fa-solid fa-circle-check"></i>
                                     </button>
                                 </div>
                                 <div class="col-4">
-                                    <button type="button" title="No acepto" class="btn btn-danger"style="width:100%;"data-state="2" data-panel="{{$item->title}}" onclick="submitPolicy(this)">
+                                    <button type="button" title="No acepto" class="btn btn-danger"style="width:100%;"data-state="2" data-panel="{{$item->title}}" data-policiescount="{{$policiesCount}}" onclick="submitPolicy(this)">
                                         <i class="fa-solid fa-circle-xmark"></i>
                                     </button>
                                 </div>
                                 <div class="col-4">
-                                    <button type="button"title ="No entiendo"data-state="3" data-panel="{{$item->title}}" class="btn btn-warning"style="width:100%; " onclick="submitPolicy(this)">
+                                    <button type="button"title ="No entiendo"data-state="3" data-panel="{{$item->title}}" class="btn btn-warning"style="width:100%;" data-policiescount="{{$policiesCount}}" onclick="submitPolicy(this)">
                                         <i class="fa-solid fa-circle-question"></i>
                                     </button>
                                 </div>
@@ -695,7 +702,7 @@
     </div>
     <h3>
           <i class="fa-solid fa-file-pen"></i>
-          AUTORIZACIONES {{count($autorizationsclients).' | '.$autorizationsCount}}
+          AUTORIZACIONES <span id="autorizationclientcount" ></span> |{{$autorizationsCount}}
       </h3>
     <div>
         <div>
@@ -705,12 +712,16 @@
                 <li style="list-style:none;font-weight:bold; color:orange"><i class="fa-solid fa-circle-question"></i> No entiendo</li>
             </ul>
         </div>
+        <div class="form-check">
+            <input type="checkbox"id="chkallAutorization" class="form-check-input"{{count($autorizationsclients)==count($autorizations)?'checked disabled':''}}  >
+            <label class="form-check-label" for=""> Al marcar la casilla se entiende que he leido aceptado todas las <a class="btn btn-primary" data-panel="autorization" id="appearAutorizations" style="cursor: pointer;"> autorizaciones</a></label> de esta empresa
+        </div>
         @if(count($autorizations)>0)
-        <div  class="card mb-4" style="width:100%;margin:10px auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5); ">
+        <div class="autorization card mb-4" style="width:100%;margin:10px auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5); display:none">
             <div class="card-body">
-                <div style="height:300px;overflow: auto;">
+                <div id="autorizations" style="height:300px;overflow: auto;">
                 @foreach($autorizations as $item)
-                <div id="{{$item->title}}" style="width:100%; margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
+                <div id="{{$item->title}}" style="width:100%; margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px;">
                     <form id="frmClientPolicy" action="{{url('/clientPolicies')}}" method="post">
                         @csrf
                         <input type="hidden"name="client_id" value="{{$client?->id}}" id="client_id">
@@ -721,17 +732,23 @@
                         </p>
                         <div class="row" style="padding:5px">
                             <div class="col-4">
-                                <button type="button" title="Si Acepto" data-state="1" data-panel="{{$item->title}}" onclick="submitPolicy(this)" style="width:100%; " class="btn btn-success">
-                                    <i class="fa-solid fa-circle-check"></i>
+                                <button type="button"  title="Si Acepto" data-autorizationcount="{{$autorizationsCount}}"
+                                            data-state="1" data-policy="{{$item->id}}" data-panel="{{$item->title}}"
+                                            onclick="submitautorization(this)" style="width:100%; " class="btn btn-success">
+                                        <i class="fa-solid fa-circle-check"></i>
                                 </button>
                             </div>
                             <div class="col-4">
-                                <button type="button" title="No acepto" class="btn btn-danger"style="width:100%;" data-state="2" data-panel="{{$item->title}}" onclick="submitPolicy(this)">
+                                <button type="button" title="No acepto" class="btn btn-danger"style="width:100%;" data-autorizationcount="{{$autorizationsCount}}"
+                                            data-state="2" data-policy="{{$item->id}}" onclick="submitautorization(this)"
+                                            data-panel="{{$item->title}}">
                                     <i class="fa-solid fa-circle-xmark"></i>
                                 </button>
                             </div>
                             <div class="col-4">
-                                <button type="button"title ="No entiendo" class="btn btn-warning"style="width:100%; "data-state="3" data-panel="{{$item->title}}" onclick="submitPolicy(this)">
+                                <button type="button"title ="No entiendo" class="btn btn-warning"style="width:100%;" data-autorizationcount="{{$autorizationsCount}}"
+                                            data-state="3" data-policy="{{$item->id}}" data-panel="{{$item->title}}"
+                                            onclick="submitautorization(this)">
                                     <i class="fa-solid fa-circle-question"></i>
                                 </button>
                             </div>
@@ -744,10 +761,8 @@
         </div>
         @endif
         @if(count($autorizationsclients)>0 && count($autorizations)==0 )
-         <div style="width:100%;margin:0 auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5);">
-            <div class="card-header">
-                &nbsp;
-            </div>
+         <div class="autorization card mb-4"  style="width:100%;margin:0 auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5); display:none">
+
             <div class="card-body">
                 <div style="height:300px; overflow: auto;">
                     @foreach ($autorizationsclients as $item )

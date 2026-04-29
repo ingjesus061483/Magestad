@@ -16,11 +16,8 @@
                     <input type="date"name="date" class="form-control" id="date" style="font-size:12px" value="{{date('Y-m-d')}}">
                 </div>
                 <div class="col-sm-6">
-
                      <label for="date" class="col-form-label" style="font-size:14px">Cliente</label>
                     <input type="text"name="client" class="form-control" id="date" style="font-size:12px" value="{{old('client')}}">
-
-
                 </div>
             </div>
             <div class="row mb-3">
@@ -34,6 +31,18 @@
                     <textarea class="form-control" name="remark" id="remark" rows="3" class="form-control" style="font-size:12px" >
                         {{old('remark')}}
                     </textarea>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-6">
+                    <div class="mb-3">
+                    <label class="form-label" for="">Status</label>
+                    <select class="form-select" name="state_newness" id="">
+                        @foreach ($state_newnesses as $item)
+                        <option value="{{$item->id}}">{{explode('|', $item->name)[1]}} </option>
+                        @endforeach
+                    </select>
+                    </div>
                 </div>
             </div>
 

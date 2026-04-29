@@ -37,6 +37,18 @@
                     </textarea>
                 </div>
             </div>
+            <div class="row mb-3">
+                <div class="col-sm-6">
+                    <label class="form-label" for="">Status</label>
+                    <select class="form-select" name="state_homework" id="">
+                        @foreach ($state_homework as $item)
+                        <option value="{{$item->id}}">{{explode('|', $item->name)[1]}}</option>
+                        @endforeach
+
+
+                    </select>
+                </div>
+            </div>
             <div class="mb-3">
                 <button type="submit" class="btn btn-success">Guardar</button>
             </div>

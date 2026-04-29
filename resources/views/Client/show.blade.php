@@ -177,7 +177,7 @@
                         <label class="form-label" style="font-weight: bold" for="">
                             DEPARTAMENTO:
                         </label>
-                        {{$item->state->name}}
+                        {{$item->state?->name}}
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -185,7 +185,7 @@
                         <label class="form-label"style="font-weight: bold" for="">
                             CIUDAD:
                         </label>
-                        {{$item->city->name}}
+                        {{$item->city?->name}}
                     </div>
                 </div>
                 <div class="col-sm-4">

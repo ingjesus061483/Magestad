@@ -23,6 +23,10 @@
         <script type="text/javascript">
             var user=$("#user").val();
 
+            $("#policyclientcount").html({{isset($policyclients)?count($policyclients):0}});
+            $("#autorizationclientcount").html({{isset($autorizationsclients)?count($autorizationsclients):0}})
+            var policyClients=[];
+            var autorizationClients=[];
             var client=$("#client").val();
             var app=$("#info").val()==""?$("#info").val():parseInt($("#info").val());
             var urlBase=$("#base_url").val();
@@ -30,6 +34,18 @@
                 var fileName = $(this).val().split("\\").pop();
                 $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
             });
+             if($("#occupational_position").val()==1)
+            {
+                $(".asalariado").fadeOut();
+                $("#ingreso").html("INGRESOS *");
+                $("#actividad_economica").html("ACTIVIDAD ECONOMICA*");
+            }
+            else if($("#occupational_position").val()==2)
+            {
+                $(".asalariado").fadeIn();
+                $("#ingreso").html("SALARIO MENSUAL *");
+                $("#actividad_economica").html("CARGO ACTUAL*");
+            }
             $("#ProgressBar").progressbar({
             classes: {
             "ui-progressbar": "highlight"
@@ -546,16 +562,138 @@
                     return true;
                 }
             }
+            function buttons(panel,button){
+                $(panel).find('form').find('button').each(function(index,element){
+                    $(element).removeAttr('onclick');
+                    console.log(element);
+                    if(button!=element)
+                    {
+                        $(element).removeAttr('onclick')
+                        $(element).addClass('btn-dark');
+                    }
+                });
+            }
+            function fillArray(client_id,button,policies){
+                var state=$(button).data('state');
+                var policy=$(button).data('policy');
+                policyClient=
+                {
+                    state_policy_id:state,
+                    client_id:client_id,
+                    policy_id:policy,
+                };
+                 policies.push(policyClient);
+            }
+            function submitautorization(button){
+                 var panel=$(button).data('panel');
+                var letra=panel.charAt(0);
+                var autorizationcount=$(button).data('autorizationcount');
+                var client_id= $("#frmClientPolicy #client_id").val();
+                buttons("#"+panel,button);
+                fillArray(client_id,button,autorizationClients);
+                 $("#autorizationclientcount").html(autorizationClients.length);
+                 console.log(autorizationClients);
+                 console.log(autorizationcount);
+                 if(autorizationClients.length==autorizationcount)
+                 {
+                    $.ajax({
+                        url:urlBase+'clientPolicies',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            _token:"{{csrf_token()}}",
+                            title:letra,
+                            client_id:client_id,
+                            policyClients:JSON.stringify(autorizationClients),
+                        },
+                        success: function (result){
+                            Swal.fire({
+                                title: "Información",
+                                icon: "info",
+                                text:result.message,
+                                draggable: true
+                            });
+                            var app=result.info==""?result.info:parseInt(result.info);
+                            $("#accordion").accordion( "option", "active",app );
+
+                           // window.location.href=urlBase+'clients/create'
+                        },
+                        error: function (ajaxContext)
+                        {
+                            var object=JSON.parse(ajaxContext.responseText);
+                            console.log(object.errors);
+
+                            Swal.fire({
+                                title: "Se han encontrado los siguientes errores:",
+                                icon: "error",
+                                text:object.message,
+                                draggable: true
+                            });
+                          window.location.reload();
+                        //alert(ajaxContext.responseText)
+                        }
+
+                    });
+
+                 }
+            }
             function submitPolicy(button)
             {
-                $(button).removeAttr('onclick');
-                console.log($(button).data('state'));
-                console.log($(button).data('panel'));
-                var panel=$(button).data('panel');
-                var state=$(button).data('state');
-                $("#"+panel).css('display','none');
-                $("#frmClientPolicy #state_policy_id").val(state);
-                $("#frmClientPolicy").submit();
+                 var panel=$(button).data('panel');
+                var letra=panel.charAt(0);
+                var policiesCount=$(button).data('policiescount');
+                var client_id= $("#frmClientPolicy #client_id").val();
+               buttons("#"+panel,button);
+               fillArray(client_id,button,policyClients);
+                $("#policyclientcount").html(policyClients.length);
+                console.log(policyClients);
+                console.log(policiesCount);
+                if(policyClients.length==policiesCount)
+                {
+                    console.log( JSON.stringify(policyClients));
+                    $.ajax({
+                        url:urlBase+'clientPolicies',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            _token:"{{csrf_token()}}",
+                            title:letra,
+                            client_id:client_id,
+                            policyClients:JSON.stringify(policyClients),
+                        },
+                        success: function (result){
+                            Swal.fire({
+                                title: "Información",
+                                icon: "info",
+                                text:result.message,
+                                draggable: true
+                            });
+                            var app=result.info==""?result.info:parseInt(result.info);
+                            $("#accordion").accordion( "option", "active",app );
+
+                           // window.location.href=urlBase+'clients/create'
+                        },
+                        error: function (ajaxContext)
+                        {
+                            var object=JSON.parse(ajaxContext.responseText);
+                            console.log(object.errors);
+                            Swal.fire({
+                                title: "Se han encontrado los siguientes errores:",
+                                icon: "error",
+                                text:object.message,
+                                draggable: true
+                            });
+                            window.location.reload();
+                        //alert(ajaxContext.responseText)
+                        }
+
+                    });
+                }
+                else{
+
+                }
+                //$("#frmClientPolicy #state_policy_id").val(state);
+                //$("#frmClientPolicy").submit();
             }
             function viewDocuments(client,document_type)
             {
@@ -830,18 +968,7 @@
                     }
                 });
             }
-            if($("#occupational_position").val()==1)
-            {
-                $(".asalariado").fadeOut();
-                $("#ingreso").html("INGRESOS *");
-                $("#actividad_economica").html("ACTIVIDAD ECONOMICA*");
-            }
-            else if($("#occupational_position").val()==2)
-            {
-                $(".asalariado").fadeIn();
-                $("#ingreso").html("SALARIO MENSUAL *");
-                $("#actividad_economica").html("CARGO ACTUAL*");
-            }
+
             $("#occupational_position").change(function()
             {
                 $('#company_works').val('');
@@ -871,6 +998,50 @@
                 }
 
 
+            });
+            $("#appearAutorizations").click(function(){
+                var panel=$(this).data('panel');
+                $("."+panel).fadeIn();
+               var grandpa=$(this).parent().parent();
+               var check=grandpa.find("#chkallAutorization")
+               $(check).attr("disabled", true);
+                console.log(check)
+
+            });
+            $("#chkallAutorization").change(function(){
+               if(this.checked)
+               {
+                   $("#autorizations").children().each(function(index,element)
+                   {
+                        var buttonSuccess =$(element).find(".row").find('.btn-success')[0];
+                        submitautorization(buttonSuccess);
+                        console.log( buttonSuccess);
+
+                    });
+               }
+               $(this).attr("disabled", true);
+            });
+            $("#appearPolicies").click(function(){
+                var panel=$(this).data('panel');
+                $("."+panel).fadeIn();
+               var grandpa=$(this).parent().parent();
+               var check=grandpa.find("#chkallPolicy")
+               $(check).attr("disabled", true);
+                console.log(check)
+
+            });
+            $("#chkallPolicy").change(function(){
+               if(this.checked)
+               {
+                   $("#policies").children().each(function(index,element)
+                   {
+                        var buttonSuccess =$(element).find(".row").find('.btn-success')[0];
+                        submitPolicy(buttonSuccess);
+                        console.log( buttonSuccess);
+
+                    });
+               }
+               $(this).attr("disabled", true);
             });
             $("#eps_affiliate").change(function(){
                 if(this.value == "-1")

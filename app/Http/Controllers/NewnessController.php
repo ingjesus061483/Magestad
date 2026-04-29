@@ -60,7 +60,7 @@ class NewnessController extends Controller
             'client'=>$request->client,
             'newness_type_id'=>$request->newness_type_id,
             'remark'=>$request->remark,
-            'state_newness_id'=>1
+            'state_newness_id'=>$request->state_newness
         ]);
         return redirect()->to('/Newness')->with(['message'=>'Novedad creada correctamente']);
         //

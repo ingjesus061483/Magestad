@@ -28,7 +28,9 @@
                 <td style="text-align: center;">{{$item->newness_type->name}}</td>
                 <td style="text-align: center;">{{$item->remark}}</td>
                 <td style="text-align: center;">
-                    <input type="checkbox" name="" id=""{{$item->state_newness->id==2?'checked':''}} onchange="cambiarEstadoNewness({{$item->id}},this)">
+                    <input type="checkbox" class="form-check-input" name="" id=""{{$item->state_newness->id==2?'checked':''}}
+                     onchange="cambiarEstadoNewness({{$item->id}},this)">
+                     <label class="form-check-label" for="">{{explode('|', $item->state_newness->name)[1]}}
                 </td>
 
             </tr>
