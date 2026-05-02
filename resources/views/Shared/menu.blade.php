@@ -11,11 +11,6 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
-
-
-
-
  @if(auth()->check())
      <li class="nav-item active">
                 <a class="nav-link" href="index.html">

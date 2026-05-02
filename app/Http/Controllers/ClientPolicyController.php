@@ -25,6 +25,7 @@ public function store(StoreRequest $request)
     $Clientpolicies=json_decode($request->policyClients,true);
     ClientPolicy::insert($Clientpolicies);
     $message='';
+    $sesion="";
     if($title=='P')
     {
         $sesion="8";
@@ -32,7 +33,6 @@ public function store(StoreRequest $request)
     }
     else if($title=='A')
     {
-        $sesion="";
         $message='has registrado todas las autorizaciones. ahora pulsa el boton enviar solicitud para terminar el proceso';
 
     }

@@ -3,13 +3,13 @@
     <script src="{{asset('resources/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="{{asset('resourses/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+    <script src="{{asset('resources/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="{{asset('resources/js/sb-admin-2.min.js')}}"></script>
 
     <!-- Page level plugins -->
-    <script src="{{asset('resourses/vendor/chart.js/Chart.min.js')}}"></script>
+    <script src="{{asset('resources/vendor/chart.js/Chart.min.js')}}"></script>
 
     <!-- Page level custom scripts -->
     <script src="{{asset('resources/js/demo/chart-area-demo.js')}}"></script>
@@ -50,7 +50,7 @@
             classes: {
             "ui-progressbar": "highlight"
             },
-            max:9,
+            max:7,
             value:app
             });
             var city=$('#city_name').autocomplete({
@@ -336,6 +336,11 @@
                     }],      */
                 });
             }
+            $("#accordionPolicy").accordion({
+                collapsible:true,
+                heightStyle: "content",
+                active:""
+            });
             $( "#accordion" ).accordion({
                 collapsible:true,
                 heightStyle: "content",
@@ -999,12 +1004,18 @@
 
 
             });
+            $(".btnterm").click(function(){
+                dialogPolicies.dialog('open');
+                var active=parseInt( $(this).data('active'));
+                $("#accordionPolicy").accordion( "option", "active",active );
+
+            });
             $("#appearAutorizations").click(function(){
                 var panel=$(this).data('panel');
                 $("."+panel).fadeIn();
                var grandpa=$(this).parent().parent();
                var check=grandpa.find("#chkallAutorization")
-               $(check).attr("disabled", true);
+             //  $(check).attr("disabled", true);
                 console.log(check)
 
             });
@@ -1026,9 +1037,53 @@
                 $("."+panel).fadeIn();
                var grandpa=$(this).parent().parent();
                var check=grandpa.find("#chkallPolicy")
-               $(check).attr("disabled", true);
+              // $(check).attr("disabled", true);
                 console.log(check)
 
+            });
+            $("#accept_data_treatment").change(function(){
+                var client=$(this).data('client');
+                if(this.checked&& client!='')
+                {
+                   $.ajax({
+                        url:urlBase+'clients/UpdateDataProccess/'+client,
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            _method:'PATCH',
+                            accept_data_treatment:this.checked,
+                            _token:"{{csrf_token()}}",
+                        },
+                        success: function (result){
+                            Swal.fire({
+                                title: "Información",
+                                icon: "info",
+                                text:result.message,
+                                draggable: true
+                            });
+                            var app=result.info==""?result.info:parseInt(result.info);
+                            $("#accordion").accordion( "option", "active",app );
+
+                           // window.location.href=urlBase+'clients/create'
+                        },
+                        error: function (ajaxContext)
+                        {
+                            var object=JSON.parse(ajaxContext.responseText);
+                            console.log(object.errors);
+                            Swal.fire({
+                                title: "Se han encontrado los siguientes errores:",
+                                icon: "error",
+                                text:object.message,
+                                draggable: true
+                            });
+                           // window.location.reload();
+                        //alert(ajaxContext.responseText)
+                        }
+                   })
+                }
+                else{
+                    this .checked=false;
+                }
             });
             $("#chkallPolicy").change(function(){
                if(this.checked)
@@ -1122,7 +1177,7 @@
                         //alert(ajaxContext.responseText)
                     }
                 });
-            })
+            });
             $("#seizure").change(function(){
                 console.log( this.checked);
                 this.checked?$("#divCompanySeizure").fadeIn():$("#divCompanySeizure").fadeOut();
@@ -1248,6 +1303,21 @@
                     //allFields.removeClass("ui-state-error");
 
                 }
+            });
+            var dialogPolicies=$("#dialogPolicies").dialog({
+                autoOpen: false,
+                height: "auto",
+                width: 350,
+                modal: true,
+                buttons:
+                [{
+                    icon:'fa-solid fa-arrow-left',
+                    title: "Regresar",
+                    class: 'btn btn-primaary',
+                    click: function () {
+                        dialogPolicies.dialog("close");
+                    }
+                }],
             });
             var dialogfilter=$("#dialogfilter").dialog({
                 title: $(".btnfilter").data('title'),

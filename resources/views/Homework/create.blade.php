@@ -42,7 +42,7 @@
                     <label class="form-label" for="">Status</label>
                     <select class="form-select" name="state_homework" id="">
                         @foreach ($state_homework as $item)
-                        <option value="{{$item->id}}">{{explode('|', $item->name)[1]}}</option>
+                        <option value="{{$item->id}}">{{explode(' ', explode('|', $item->name)[1])[2]}}</option>
                         @endforeach
 
 

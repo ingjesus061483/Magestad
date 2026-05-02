@@ -23,6 +23,37 @@
                 </div>
             </form>
         </div>
+        <div title="Terminos, condiciones y tratamiento de datos personales" id="dialogPolicies">
+            <div id="accordionPolicy">
+                <h3>
+                    <i class="fa-solid fa-id-card"></i>
+                    POLITICAS Y AUTORIZACIONES
+                </h3>
+                <div>
+                    <div class=" card mb-4" style="width:100%;margin:0 auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5);" >
+                        <div class="card-body">
+                            <div style="height:300px;overflow: auto;">
+                                @if(isset($autorizationPolicy))
+                                @foreach($autorizationPolicy as $item)
+                                <div id="{{$item->title}}" style="width:100%; margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
+                                    <p style="font-size:14px; text-align: justify; padding:5px">
+                                        <strong> {{$item->title}}</strong>&nbsp;|&nbsp;{{$item->description}}
+                                    </p>
+                                </div>
+                                @endforeach
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h3>
+                    TRATAMIENTOS DE DATOS PERSONALES
+                </h3>
+                <div>
+                    <iframe src="{{url('Politicas/Politicadedatos.pdf')}}" style="width:100%; height:500px;" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
         <div title="Usuarios" id="dialogUser" style="padding-top:10px">
             <form action="{{url('/users')}}" method="POST"autocommplete="off" id="frmUser">
                 @csrf

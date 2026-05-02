@@ -33,6 +33,7 @@ use Illuminate\Support\Facades\Auth;
 class ClientController extends Controller
 {
     protected $loantypes;
+    protected $autorizationPolicy;
     protected $occupationalposition;
     protected $QualityHolder;
     protected $ArlAffiliates;
@@ -53,6 +54,7 @@ class ClientController extends Controller
     protected $documenttypes;
     function __construct()
     {
+        $this->autorizationPolicy=AuthorizationPolicy::select('*');
         $this->occupationalposition=OccupationalPosition::select('id','name');
         $this->documenttypes=DocumentType::select('id','name');
         $this->cities=City::orderby('name','asc');
@@ -246,14 +248,33 @@ class ClientController extends Controller
         if($client==null)
         {
             session(["info"=>"0"]);
-            return redirect()->to(url('/clients/create'))
+            return response()->json()
                              ->withErrors('No se ha encontrado el cliente');
+            //return redirect()->to(url('/clients/create'))
+              //               ->withErrors('No se ha encontrado el cliente');
         }
         $client ->acept_data_processing_policies=$accept_data_treatment;
         $client ->update();
-        session(["info"=>"7"]);
+        $autorizationPolicies=$this->autorizationPolicy->get();
+        $clientPolicies=[];
+        foreach($autorizationPolicies as $item)
+        {
+            $clientPolicies[]=[
+                "client_id"=>$id,
+                "policy_id"=>$item->id,
+                "state_policy_id"=>1
+            ];
+        }
+      //  Print_r($clientPolicies);
+      //  exit;
+        ClientPolicy::insert($clientPolicies);
+        session(["info"=>""]);
         session(['client' => $client]);
-        return back() ->with(['message'=>$client ->acept_data_processing_policies?'Has aceptado las politicas de datos. Continua con las politicas ':'No has aceptado las politicas de datos']);
+        return response()->json([
+                            'message'=>$client ->acept_data_processing_policies?'Has aceptado las politicas de datos. Ahora envia la solicitud para terminar la solicitud':'No has aceptado las politicas de datos',
+                            'info'=>"",
+                            "countpolicies"=>count($autorizationPolicies)
+                            ]);
     }
     public function UpdateLawInformation(Request $request ,$id)
     {
@@ -348,6 +369,7 @@ class ClientController extends Controller
         $arrp=$this->getArray($policiesclients->get());
         $arra=$this->getArray($autorizationclients->get());
         $data=[
+            'autorizationPolicy'=>$this->autorizationPolicy->get(),
             'loantypes'=>$this->loantypes->get(),
             'occupationalposition'=>$this->occupationalposition->get(),
             'policiesCount'=>$this->policies->count(),
@@ -421,10 +443,11 @@ class ClientController extends Controller
                                                         WHERE
                                                         client_id={$client?->id} and
                                                         document_type_id=`document_types`.id) amount ");
+        $autorizationPolicy=AuthorizationPolicy::count();
         $policies=AuthorizationPolicy::where('title', 'like', 'p%')->count();
         $autorizations=AuthorizationPolicy::where('title', 'like', 'a%')->count();
         $documents=Document::where('client_id',$client?->id);
-        $policiesclients=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'p%')->where('client_id',$client?->id);
+        $policiesclients=ClientPolicy::where('client_id',$client?->id);
         $autorizationclients=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'a%')->where('client_id',$client?->id);
         $contactInfos=ContactInformation::where ('client_id',$client?->id);
         $EmploymentInformation=EmploymentInformation::where ('client_id',$client?->id)->first();
@@ -453,16 +476,10 @@ class ClientController extends Controller
             return redirect()->to(url('/clients/create'))->withErrors('La informacion dl credito no ha sido diligenciado')
             ->withInput(['client_id'=>$client->id]);
         }
-        if($policiesclients->count()<$policies)
+        if($policiesclients->count()<$autorizationPolicy)
         {
-            session(["info"=>"7"]);
-            return redirect()->to(url('/clients/create'))->withErrors('Las politicas no han sido diligenciadas ')
-            ->withInput(['client_id'=>$client->id]);
-        }
-        if($autorizationclients->count()<$autorizations)
-        {
-            session(["info"=>"8"]);
-            return redirect()->to(url('/clients/create'))->withErrors('Las autorizaciones no han sido diligenciaciada')
+            session(["info"=>"6"]);
+            return redirect()->to(url('/clients/create'))->withErrors('No has aceptado los termino y condiciones')
             ->withInput(['client_id'=>$client->id]);
         }
         $data =
@@ -472,7 +489,9 @@ class ClientController extends Controller
             'autorizationclients'=> $autorizationclients->get(),
             'client'=> $client
         ];
-        session([ 'message'=>"Su solicitud de credito ha sido enviada con referencia $loan->reference. a continuacion estaremos enviando un correo con los pasos a seguir de esta soicitud"]);
+        session([ 'message'=>"Su solicitud de credito ha sido enviada con referencia
+                              $loan->reference. a continuacion estaremos enviando un
+                              correo con los pasos a seguir de esta soicitud"]);
         session(['client' => $client]);
         return view('Client.show',$data);
     }

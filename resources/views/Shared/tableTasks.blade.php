@@ -30,7 +30,7 @@
                 <td style="text-align: center;">
                     <input type="checkbox" class="form-check-input" name="" id=""{{$item->state_homework->id==2?'checked':''}}
                     onchange="cambiarEstadoHomework({{$item->id}},this)">
-                    <label class="form-check-label" for="">{{explode('|',$item->state_homework->name)[1] }}</label>
+                    <label class="form-check-label" for="">{{exPLODE(' ', explode('|',$item->state_homework->name)[1])[2] }}</label>
                 </td>
 
             </tr>
