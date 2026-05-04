@@ -599,10 +599,7 @@
             {{$client!=null&&$client->acept_data_processing_policies?'checked disabled':''}}>
             <label class="form-check-label" for="accept_data_treatment" style="text-align: justify;text-align-last: justify;">
                 Acepto los <button type="button"  data-active="0" class="btn btnterm" style="font-weight:bold;padding:0; text-decoration:underline"> terminos y condiciones</button>,
-                he leido y comprendido la politica de privacidad y autorizo el
-                <button type="button" class="btn btnterm" data-active="1" style="font-weight:bold;padding:0; text-decoration: underline"> tratamiento de mis datos personales</button>
-                para los fines relacionados con la gestion del credito solicitado,
-                asi como para el envio de comunicaciones comerciales relacionadas con los productos y servicios ofrecidos por la entidad.
+                y autorizo el <button type="button" class="btn btnterm" data-active="1" style="font-weight:bold;padding:0; text-decoration: underline"> tratamiento de mis datos personales.</button>
             </label>
         </div>
     </div>

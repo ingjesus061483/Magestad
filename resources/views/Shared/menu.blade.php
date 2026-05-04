@@ -8,15 +8,14 @@
                 </div>
                 <div class="sidebar-brand-text mx-3">{{env('APP_NAME')}}</div>
             </a>
-
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
- @if(auth()->check())
-     <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+        @if(auth()->check())
+            <li class="nav-item active">
+                <button id="btnSearch"  class="btn nav-link">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <span>BUSQUEDA RAPIDA</span>
-                </a>
+                </button>
             </li>
 
  <!-- Nav Item - Pages Collapse Menu -->
@@ -30,8 +29,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="{{url('clients')}}">Clientes</a>
-                        <a class="collapse-item" href="cards.html">Proveedores</a>
+                        <a class="collapse-item" href="{{url('clients')}}"> BD | Clientes</a>
+                        <a class="collapse-item" href="">Proveedores</a>
                     </div>
                 </div>
             </li>
@@ -74,11 +73,11 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
                         <a class="collapse-item" href="{{url('/NewnessType')}}">Tipos de novedades</a>
-        <a class="collapse-item" href="{{url('/DocumentType')}}">Tipos de documentos</a>
-        <a class="collapse-item" href="{{url('/arls')}}"> ARL</a>
-        <a class="collapse-item" href="{{url('/eps')}}">EPS</a>
-        <a class="collapse-item" href="{{url('/authorizationPolicies')}}"> Politicas y autorizaciones</a>
-        <a class="collapse-item" href="{{url('/users')}}">Usuarios</a>
+                        <a class="collapse-item" href="{{url('/DocumentType')}}">Tipos de documentos</a>
+                        <a class="collapse-item" href="{{url('/arls')}}"> ARL</a>
+                        <a class="collapse-item" href="{{url('/eps')}}">EPS</a>
+                        <a class="collapse-item" href="{{url('/authorizationPolicies')}}"> Politicas y autorizaciones</a>
+                        <a class="collapse-item" href="{{url('/users')}}">Usuarios</a>
 
                     </div>
                 </div>

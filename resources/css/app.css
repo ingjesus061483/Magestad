@@ -1,0 +1,11 @@
+.none{
+    display: none;
+}
+.TitleBar{
+  color: #fff;
+  background-color: #4e73df;
+  border-color: #4e73df;
+}
+.hidden{
+     visibility: hidden;
+}

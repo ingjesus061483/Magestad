@@ -54,6 +54,14 @@
                 </div>
             </div>
         </div>
+        <div title="" id="dialogSearch" style="padding-top:10px">
+            <div style="overflow: auto;height:100px">
+                <ul id="searchlist">
+
+                </ul>
+            </div>
+
+        </div>
         <div title="Usuarios" id="dialogUser" style="padding-top:10px">
             <form action="{{url('/users')}}" method="POST"autocommplete="off" id="frmUser">
                 @csrf

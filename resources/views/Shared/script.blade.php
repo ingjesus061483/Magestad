@@ -944,6 +944,29 @@
                 dialogAttach.dialog("open");
 
             }
+            function loadModule()
+            {
+                 var ul=$("#searchlist");
+                 ul.empty();
+                console.log( $("#accordionSidebar").find('li') );
+                $("#accordionSidebar").find('li').each(function(index,element){
+                    console.log($(element).find('span')[0].innerHTML)
+                    if($(element).find('.collapse-inner').length>0&&$(element).find('span')[0].innerHTML!="CONFIGURACION")
+                    {
+                        console.log($(element).find('.collapse-inner')[0]);
+                       var div =$(element).find('.collapse-inner')[0];
+                       $(div).find('a').each(function(index1,element1)
+                       {
+                            console.log(element1.href)
+
+                            ul.append("<li style='list-style-type: none' >"+ element1.outerHTML + '</li>');
+                       });
+                    }
+                });
+
+                console.log(ul)
+
+            }
             function editarEps(id)
             {
                 url=urlBase+"eps/"+id;// "{{url('/eps')}}/"+id;
@@ -1080,9 +1103,6 @@
                         //alert(ajaxContext.responseText)
                         }
                    })
-                }
-                else{
-                    this .checked=false;
                 }
             });
             $("#chkallPolicy").change(function(){
@@ -1270,6 +1290,12 @@
                 $("#cardInfoCrediticia").fadeIn();
 
             });
+            $("#btnSearch").click(function(){
+                loadModule();
+                dialogSearch.dialog('option','classes.ui-dialog','background:red')
+                console.log(dialogSearch.dialog('option','classes.ui-dialog'))
+                dialogSearch.dialog('open');
+            })
 
             $("#btnContact").click(function()
             {
@@ -1280,6 +1306,9 @@
                 height: "auto",
                 width: 300,
                 modal: true,
+                 classes:{
+                    "ui-dialog-titlebar-close":"hidden"
+                },
                 buttons:
                 [{
 
@@ -1304,8 +1333,30 @@
 
                 }
             });
+            var dialogSearch=$("#dialogSearch").dialog({
+                autoOpen: false,
+                height: "auto",
+                width: 350,
+                modal: true,
+                classes:{
+                    "ui-dialog-titlebar":"none"
+                },
+
+                buttons:
+                [{
+                    icon:'fa-solid fa-arrow-left',
+                    title: "Regresar",
+                    class: 'btn btn-primary',
+                    click: function () {
+                        dialogSearch.dialog("close");
+                    }
+                }],
+            });
             var dialogPolicies=$("#dialogPolicies").dialog({
                 autoOpen: false,
+                  classes:{
+                    "ui-dialog-titlebar-close":"hidden"
+                },
                 height: "auto",
                 width: 350,
                 modal: true,
@@ -1313,7 +1364,7 @@
                 [{
                     icon:'fa-solid fa-arrow-left',
                     title: "Regresar",
-                    class: 'btn btn-primaary',
+                    class: 'btn btn-primary',
                     click: function () {
                         dialogPolicies.dialog("close");
                     }
@@ -1322,6 +1373,9 @@
             var dialogfilter=$("#dialogfilter").dialog({
                 title: $(".btnfilter").data('title'),
                 autoOpen: false,
+                 classes:{
+                    "ui-dialog-titlebar-close":"hidden"
+                },
                 height: "auto",
                 width: 300,
                 modal: true,
@@ -1335,9 +1389,9 @@
                     }
                 },
                 {
-                    icon:'fa-solid fa-door-open',
+                    icon:'fa-solid fa-arrow-left',
                     title: "Salir",
-                    class: 'btn btn-danger',
+                    class: 'btn btn-primary',
                     click: function () {
                         dialogfilter.dialog("close");
                     }
@@ -1354,6 +1408,9 @@
                 autoOpen: false,
                 height: "auto",
                 width: 300,
+                 classes:{
+                    "ui-dialog-titlebar-close":"hidden"
+                },
                 modal: true,
                 buttons:
                 [{
@@ -1365,9 +1422,9 @@
                     }
                 },
                 {
-                    icon: 'fa-solid fa-door-open',
+                    icon:'fa-solid fa-arrow-left',
                     title: "Salir",
-                    "class": 'btn btn-danger',
+                    "class": 'btn btn-primary',
                     click: function () {
                         dialogNewnessType.dialog("close");
                     }
@@ -1385,6 +1442,9 @@
                 height: "auto",
                 width: 300,
                 modal: true,
+                 classes:{
+                    "ui-dialog-titlebar-close":"hidden"
+                },
                 buttons:
                 [{
                     text: "Salir",
@@ -1404,6 +1464,9 @@
             var dialogDocumentType= $("#dialogDocumentType").dialog({
                 autoOpen: false,
                 height: "auto",
+                 classes:{
+                    "ui-dialog-titlebar-close":"hidden"
+                },
                 width: 300,
                 modal: true,
                 buttons:
@@ -1416,9 +1479,9 @@
                     }
                 },
                 {
-                    icon: 'fa-solid fa-door-open',
+                      icon:'fa-solid fa-arrow-left',
                     title: "Salir",
-                    "class": 'btn btn-danger',
+                    "class": 'btn btn-primary',
                     click: function () {
                         dialogDocumentType.dialog("close");
                     }
@@ -1434,6 +1497,9 @@
             var dialogUser=$("#dialogUser").dialog({
                 autoOpen: false,
                 height: "auto",
+                classes:{
+                    "ui-dialog-titlebar-close":"hidden"
+                },
                 width: 300,
                 modal: true,
                 buttons:
@@ -1446,9 +1512,9 @@
                     }
                 },
                 {
-                    icon: 'fa-solid fa-door-open',
+                      icon:'fa-solid fa-arrow-left',
                     title: "Salir",
-                    "class": 'btn btn-danger',
+                    "class": 'btn btn-primary',
                     click: function () {
                         dialogUser.dialog("close");
                     }
@@ -1466,6 +1532,9 @@
                 height: "auto",
                 width: 300,
                 modal: true,
+                 classes:{
+                    "ui-dialog-titlebar-close":"hidden"
+                },
                 buttons:
                 [{
                     icon: 'fa-solid fa-paperclip',
@@ -1476,9 +1545,9 @@
                     }
                 },
                 {
-                    icon: 'fa-solid fa-door-open',
+                      icon:'fa-solid fa-arrow-left',
                     title: "Salir",
-                    "class": 'btn btn-danger',
+                    "class": 'btn btn-primary',
                     click: function () {
                         dialogAttach.dialog("close");
                     }
@@ -1496,6 +1565,9 @@
                 height: "auto",
                 width: 300,
                 modal: true,
+                 classes:{
+                    "ui-dialog-titlebar-close":"hidden"
+                },
                 buttons:
                 [{
                     icon: 'fa-solid fa-save',
@@ -1506,9 +1578,9 @@
                     }
                 },
                 {
-                    icon: 'fa-solid fa-door-open',
+                      icon:'fa-solid fa-arrow-left',
                     title: "Salir",
-                    "class": 'btn btn-danger',
+                    "class": 'btn btn-primary',
                     click: function () {
                         dialogPolicy.dialog("close");
                     }
@@ -1519,6 +1591,9 @@
                 height: "auto",
                 width: 300,
                 modal: true,
+                 classes:{
+                    "ui-dialog-titlebar-close":"hidden"
+                },
                 buttons:
                 [{
                     icon: 'fa-solid fa-save',
@@ -1529,9 +1604,9 @@
                     }
                 },
                 {
-                    icon: 'fa-solid fa-door-open',
+                      icon:'fa-solid fa-arrow-left',
                     title: "Salir",
-                    "class": 'btn btn-danger',
+                    "class": 'btn btn-primary',
                     click: function () {
                         dialogArl.dialog("close");
                     }
@@ -1545,6 +1620,9 @@
                 height: "auto",
                 width: 300,
                 modal: true,
+                 classes:{
+                    "ui-dialog-titlebar-close":"hidden"
+                },
                 buttons:
                 [{
                     icon: 'fa-solid fa-save',
@@ -1555,9 +1633,9 @@
                     }
                 },
                 {
-                    icon: 'fa-solid fa-door-open',
+                      icon:'fa-solid fa-arrow-left',
                     title: "Salir",
-                    "class": 'btn btn-danger',
+                    "class": 'btn btn-primary',
                     click: function () {
                         dialogEps.dialog("close");
                     }
@@ -1572,6 +1650,9 @@
             dialogContact= $("#dialogContact").dialog({
                 autoOpen: false,
                 height: "auto",
+                 classes:{
+                    "ui-dialog-titlebar-close":"hidden"
+                },
                 width: 300,
                 modal: true,
                 buttons:

@@ -10,6 +10,7 @@
     <meta name="author" content="">
 
     <title>{{env('APP_NAME')}}&nbsp;-&nbsp;@yield('title')</title>
+    <link rel="stylesheet" href="{{asset('resources/css/app.css')}}">
  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
         <link href="{{url('/css/styles.css')}}" rel="stylesheet" />
@@ -203,7 +204,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                                        <img class="rounded-circle" src="{{asset('resources/img/undraw_profile_3.svg')}}"
                                             alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
