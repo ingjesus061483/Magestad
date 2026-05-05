@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AutorizeRequest;
+use App\Http\Requests\Newness\IndexRequest;
 use App\Models\Newness;
 use Illuminate\Http\Request;
 use App\Http\Requests\Newness\StoreRequest;
@@ -12,14 +13,58 @@ use App\Models\NewnessType;
 use App\Models\StateNewness;
 class NewnessController extends Controller
 {
+    protected $pendingNewnesses;
+    protected $doneNewnesses;
+ public function __construct() {
+        $this->pendingNewnesses =Newness::where('state_newness_id',1);
+        $this->doneNewnesses=Newness::where('state_newness_id',2);
+    }
     /**
      * Display a listing of the resource.
      */
 
-    public function index(AutorizeRequest $request)
+    public function index (IndexRequest $request)
     {
-        $pendingNewnesses=Newness::where('state_newness_id',1)->get();
-        $doneNewnesses=Newness::where('state_newness_id',2)->get();
+        $pendingNewnesses=[];
+        $doneNewnesses=[];
+        if($request->newnesstype!=null)
+        {
+
+            $pendingNewnesses=$this->pendingNewnesses->where('client','like',"%$request->client%")
+                                                 ->orwherebetween('date', [
+                                                        $request->firstdate,
+                                                        $request->enddate
+                                                    ])
+                                                 ->where('newness_type_id','=',$request->newnesstype)
+                                                 ->get();
+            $doneNewnesses=$this->doneNewnesses->where('client','like',"%$request->client%")
+                                            ->orwherebetween('date',
+                                                    [
+                                                        $request->firstdate,
+                                                        $request->enddate
+                                                    ])
+                                            ->where('newness_type_id','=',$request->newnesstype)
+                                            ->get();
+        }
+        else
+        {
+            $pendingNewnesses=$this->pendingNewnesses->where('client','like',"%$request->client%")
+                                                 ->orwherebetween('date', [
+                                                        $request->firstdate,
+                                                        $request->enddate
+                                                    ])
+                                                 ->get();
+            $doneNewnesses=$this->doneNewnesses->where('client','like',"%$request->client%")
+                                               ->orwherebetween('date',
+                                                    [
+                                                        $request->firstdate,
+                                                        $request->enddate
+                                                    ])
+                                                ->get();
+
+
+        }
+
         $data=[
             'pendingNewnesses'=>$pendingNewnesses,
             'doneNewnesses'=>$doneNewnesses,

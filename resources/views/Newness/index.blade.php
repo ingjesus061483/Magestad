@@ -23,7 +23,7 @@
     @endswitch>
         &nbsp;&nbsp;
     </a>
-      <strong >&nbsp; {{ explode('|',$item->name)[0]}} </strong>&nbsp;|&nbsp;{{ explode('|',$item->name)[1] }}, {{ number_format($item->newnesses->count()) }}
+      <strong >&nbsp; {{ explode('|',$item->name)[0]}} </strong>&nbsp;|&nbsp;{{ explode('|',$item->name)[1] }}, {{ number_format($item->id==1?count($pendingNewnesses):count($doneNewnesses)) }}
     </h3>
     <div>
         @switch($item->id)

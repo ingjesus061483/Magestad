@@ -187,20 +187,20 @@
 
                 <div class="mb-3">
                     <label for=""style="font-size:14px" >Fecha inicio</label>
-                    <input type="date" class="form-control" name="dateStart" style="font-size:12px; " value="{{date('Y-m-d')}}" id="deteStart">
+                    <input type="text" class="form-control" name="firstdate" style="font-size:12px; " value="{{date('Y-m-d')}}" id="deteStart">
                 </div>
                          <div class="mb-3">
                     <label for=""style="font-size:14px" >Fecha final</label>
-                    <input type="date" class="form-control" name="dateEnd" style="font-size:12px; " value="{{date('Y-m-d')}}" id="dateEnd">
+                    <input type="text" class="form-control" name="enddate" style="font-size:12px; " value="{{date('Y-m-d')}}" id="dateEnd">
                 </div>
                 <div class="mb-3">
                     <label for=""style="font-size:14px" >Cliente*</label>
-                    <input type="text" class="client form-control" name="client_id" style="font-size:12px;" />
+                    <input type="text" class="client form-control" name="client" style="font-size:12px;" />
                 </div>
                 @if(isset($newnesstypes))
                 <div class="mb-3">
                     <label for=""style="font-size:14px" >Tipo de novedad</label>
-                    <select name="newnesstype_id" class="form-select" style="font-size:12px; ">
+                    <select name="newnesstype" class="form-select" style="font-size:12px; ">
                         <option value="">Seleccione una opcion</option>
                         @foreach($newnesstypes as $item)
                         <option value="{{$item->id}}">{{$item->name}}</option>
