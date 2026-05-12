@@ -9,3 +9,6 @@
 .hidden{
      visibility: hidden;
 }
+.boton :hover{
+    color: #4e73df;
+}

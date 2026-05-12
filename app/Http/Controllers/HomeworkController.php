@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AutorizeRequest;
+use App\Http\Requests\Homework\IndexRequest;
 use App\Models\Homework;
 use Illuminate\Http\Request;
 use App\Http\Requests\Homework\StoreRequest;
@@ -12,7 +13,13 @@ use App\Models\Client;
 use App\Models\HomeworkType;
 class HomeworkController extends Controller
 {
-    public function changeStateHomework( Request $request, $id)
+        protected  $pendingTasks;
+        protected $doneTasks;
+    public function __construct() {
+        $this->pendingTasks  =Homework::where('state_homework_id',1);
+        $this->doneTasks=Homework::where('state_homework_id',2);
+    }
+    public function changeStateHomework( Request $request,int $id)
     {
         $homework=Homework::find($id);
         $homework->update(['state_homework_id'=>$request->state_homework_id]);
@@ -21,10 +28,20 @@ class HomeworkController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(AutorizeRequest $request)
+    public function index(IndexRequest $request)
     {
-        $pendingTasks=Homework::where('state_homework_id',1)->get();
-        $doneTasks=Homework::where('state_homework_id',2)->get();
+        $pendingTasks=$this->pendingTasks->where('client','like',"%$request->client%")
+                                         ->orwherebetween('date', [
+                                                        $request->firstdate,
+                                                        $request->enddate
+                                                    ])
+                                        ->get();
+        $doneTasks=$this->doneTasks->where('client','like',"%$request->client%")
+                                   ->orwherebetween('date', [
+                                                        $request->firstdate,
+                                                        $request->enddate
+                                                    ])
+                                   ->get();
          $data=[
             'pendingTasks'=>$pendingTasks,
             'doneTasks'=>$doneTasks,
@@ -70,7 +87,7 @@ class HomeworkController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show( $id)
+    public function show(int $id)
     {
         return response()->json(Homework::find($id));
         //
@@ -79,7 +96,7 @@ class HomeworkController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit( int $id)
     {
         $homework=Homework::find($id);
         return view('Homework.edit',['homework'=>$homework]);
@@ -89,7 +106,7 @@ class HomeworkController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request,  $id)
+    public function update(UpdateRequest $request,int  $id)
     {
         $homework=Homework::find($id);
         $homework->update([
@@ -109,7 +126,7 @@ class HomeworkController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $homework=Homework::find($id);
         $homework->delete();

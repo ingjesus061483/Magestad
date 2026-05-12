@@ -45,7 +45,7 @@ class DocumentTypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show( $id)
+    public function show(int $id)
     {
         return response()->json(DocumentType::find($id));
 
@@ -63,7 +63,7 @@ class DocumentTypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, $id)
+    public function update(UpdateRequest $request,int $id)
     {
         $documentType=DocumentType::find($id);
         $arrDocumentType=[
@@ -78,7 +78,7 @@ class DocumentTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $id)
+    public function destroy(int $id)
     {
         $documentType=DocumentType::find($id);
         $documentType->delete();

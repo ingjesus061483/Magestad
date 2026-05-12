@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Arl\StoreRequest;
 use App\Http\Requests\Arl\UpdateRequest;
 use App\Http\Requests\AutorizeRequest;
-use Illuminate\Http\Request;
 use App\Models\ArlAffiliate;
 class ArlController extends Controller
 {
-    public function show($id)
+    public function show( int $id)
     {
         return response()->json(ArlAffiliate::find($id));
         //
@@ -34,7 +33,7 @@ class ArlController extends Controller
             return back()->with(['error'=>$e->getMessage()]);
         }
     }
-    public function destroy($id)
+    public function destroy(int $id)
     {
         try{
         $ArlAffiliate=ArlAffiliate::find($id);
@@ -44,7 +43,7 @@ class ArlController extends Controller
             return back()->with(['error'=>$e->getMessage()]);
         }
     }
-    public function update(UpdateRequest $request ,$id)
+    public function update(UpdateRequest $request ,int $id)
     {
         try{
         $ArlAffiliate=ArlAffiliate::find($id);

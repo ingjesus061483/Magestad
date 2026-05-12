@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Loan;
 class LoanController extends Controller
 {
-    public function update(UpdateRequest $request,$id)
+    public function update(UpdateRequest $request,int $id)
     {
         $loan=Loan::find($id);
        // $ammount=$this->convert_to_number($request->ammount);

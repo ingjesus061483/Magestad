@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\EmploymentInformation;
 class EmploymentInformationController extends Controller
 {
-    public function update(UpdateRequest $request ,$id)
+    public function update(UpdateRequest $request , int $id)
     {
         $EmploymentInformation=EmploymentInformation::find($id);
       //  $average_monthly_salary=$this->convert_to_number($request->average_monthly_salary);

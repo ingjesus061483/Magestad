@@ -13,7 +13,7 @@ use App\Http\Requests\Users\LoginRequest;
 use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
-    public function show($id)
+    public function show(int $id)
     {
          return response()->json(User::find($id));
     }
@@ -22,7 +22,7 @@ class UserController extends Controller
         $data=['users'=>User::all()];
         return view('Auth.index',$data);
     }
-    public function update (UpdateRequest $request,  $id)
+    public function update (UpdateRequest $request, int  $id)
     {
         $user=User::find($id);
         $user->update(
@@ -46,7 +46,7 @@ class UserController extends Controller
          ]);
         return back()->with(['message'=>'Usuario creado correctamente']);
     }
-    public function destroy($id){
+    public function destroy(int $id){
         $user=User::find($id);
         $user->delete($id);
         return back()->with(['message'=>'Usuario eliminado correctamente']);
@@ -77,7 +77,6 @@ class UserController extends Controller
             return redirect()->to('/');
         }
         return back()->withErrors('Usuario o contraseña inválido');
-
     }
     //
 }

@@ -11,7 +11,7 @@ use App\Models\DocumentType;
 
 class DocumentController extends Controller
 {
-    public function Download($id)
+    public function Download(int $id)
     {
         $document=Document::find($id);
         $path=storage_path('app/public/img/').$document->path;
@@ -73,7 +73,7 @@ class DocumentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(int $id)
     {
         $document=Document::find($id);
         return response()->json($document);
@@ -99,7 +99,7 @@ class DocumentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $document=Document::find($id);
         $client=$document->client;

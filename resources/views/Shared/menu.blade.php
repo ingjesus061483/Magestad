@@ -9,7 +9,7 @@
                 <div class="sidebar-brand-text mx-3">{{env('APP_NAME')}}</div>
             </a>
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+      <!--      <hr class="sidebar-divider my-0">
         @if(auth()->check())
             <li class="nav-item active">
                 <button id="btnSearch"  class="btn nav-link">
@@ -18,7 +18,7 @@
                 </button>
             </li>
 
- <!-- Nav Item - Pages Collapse Menu -->
+ <!-- Nav Item - Pages Collapse Menu
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
@@ -35,7 +35,7 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
+            <!-- Nav Item - Utilities Collapse Menu
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
@@ -54,15 +54,15 @@
                 </div>
             </li>
 
-            <!-- Divider -->
+            <!-- Divider
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
+            <!-- Heading
+                <div class="sidebar-heading">
                 Addons
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- Nav Item - Pages Collapse Menu
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">

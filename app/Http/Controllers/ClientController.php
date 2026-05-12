@@ -51,7 +51,7 @@ class ClientController extends Controller
     protected $cities;
     protected $policies;
     protected $autorizations;
-    protected $documenttypes;
+     protected $documenttypes;
     function __construct()
     {
         $this->autorizationPolicy=AuthorizationPolicy::select('*');
@@ -242,7 +242,7 @@ class ClientController extends Controller
                       ->get();
         return response()->json($clients);
     }
-    public function UpdateDataProccess(Request $request ,$id){
+    public function UpdateDataProccess(Request $request,int $id){
         $accept_data_treatment=$request->accept_data_treatment==null?0:(bool)$request->accept_data_treatment;
         $client=Client::find($id);
         if($client==null)
@@ -276,7 +276,7 @@ class ClientController extends Controller
                             "countpolicies"=>count($autorizationPolicies)
                             ]);
     }
-    public function UpdateLawInformation(Request $request ,$id)
+    public function UpdateLawInformation(Request $request ,int $id)
     {
         $seizure=$request->seizure==null?0:(bool)$request->seizure;
         if($seizure==1 && ($request->company_seizure==null || trim($request->company_seizure)==""))
@@ -299,7 +299,7 @@ class ClientController extends Controller
         return back() ->with(['message'=>'Se ha actualizado la información legal. Continue con la información del crédito.']);
        // return redirect()->to(url('/clients/create'))->withInput(["client_id"=>$client->id]);
     }
-    public function UpdatePatrimonialInformation(Request $request ,$id)
+    public function UpdatePatrimonialInformation(Request $request ,int $id)
     {
         $client=Client::find($id);
         if($client==null)
@@ -433,7 +433,7 @@ class ClientController extends Controller
         return redirect()->to(url('/clients/create'))->with(['message'=>'Se ha creado un cliente. Ahora  debes ingresar la información de contacto']);
         //
     }
-    public function redirectToClient($client)
+    public function redirectToClient(Client $client)
     {
         session(['client' => $client]);
         $documenttypes=$this->documenttypes->selectRaw("(SELECT
@@ -499,7 +499,7 @@ class ClientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(int $id)
     {
         if(request()-> has('identification'))
         {
@@ -582,7 +582,7 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, $id)
+    public function update(UpdateRequest $request,int $id)
     {
         if(!Auth::check())
         {
@@ -621,7 +621,7 @@ class ClientController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $id)
+    public function destroy(int $id)
     {
         $client = Client::find($id);
         $client->delete();

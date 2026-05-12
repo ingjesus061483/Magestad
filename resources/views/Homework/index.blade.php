@@ -29,7 +29,8 @@
         &nbsp;&nbsp;
 
     </a>
-      <strong >&nbsp; {{ explode('|',$item->name)[0]}} </strong>&nbsp;|&nbsp;{{ explode('|',$item->name)[1] }}, {{ number_format($item->homeworks->count()) }}
+      <strong >&nbsp; {{ explode('|',$item->name)[0]}} </strong>&nbsp;|&nbsp;{{ explode('|',$item->name)[1] }},
+       {{ number_format($item->id==1?count($pendingTasks):count($doneTasks)) }}
     </h3>
     <div>
         @switch($item->id)

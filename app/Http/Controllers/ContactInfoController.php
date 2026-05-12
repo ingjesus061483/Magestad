@@ -24,7 +24,7 @@ class ContactInfoController extends Controller
         session(["info"=>"2"]);
         return back()->with(['message'=>'Información de contacto creada correctamente. Si deeseas agregar más información de contacto, hazlo ahora. De lo contrario, continua con la información laboral.']);
    }
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $ContactInfo=ContactInformation::find($id);
         $ContactInfo->delete();

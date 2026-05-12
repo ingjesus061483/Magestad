@@ -6,7 +6,7 @@ class ClientExport implements FromArray
 {
     protected $clients=[];
     protected $arr=[];
-    public function __construct($clients)
+    public function __construct( $clients)
     {
        $this->arr=
        [

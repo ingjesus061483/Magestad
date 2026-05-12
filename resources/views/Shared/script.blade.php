@@ -944,6 +944,7 @@
                 dialogAttach.dialog("open");
 
             }
+
             function loadModule()
             {
                  var ul=$("#searchlist");

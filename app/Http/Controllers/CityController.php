@@ -17,7 +17,7 @@ class CityController extends Controller
             ->orderby('cities.name','asc')
             ->get());
     }
-    public function GetCitiesByState($stateId)
+    public function GetCitiesByState(int $stateId)
     {
         return response()->json(City::where('state_id',$stateId)->orderby('name','asc')->get());
     }

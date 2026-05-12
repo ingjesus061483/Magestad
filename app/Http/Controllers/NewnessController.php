@@ -29,7 +29,6 @@ class NewnessController extends Controller
         $doneNewnesses=[];
         if($request->newnesstype!=null)
         {
-
             $pendingNewnesses=$this->pendingNewnesses->where('client','like',"%$request->client%")
                                                  ->orwherebetween('date', [
                                                         $request->firstdate,
@@ -77,7 +76,7 @@ class NewnessController extends Controller
 
         //
     }
-    public function changeStateNewness( Request $request, $id)
+    public function changeStateNewness( Request $request, int $id)
     {
         $newness=Newness::find($id);
         $newness->update(['state_newness_id'=>$request->state_newness_id]);
@@ -114,7 +113,7 @@ class NewnessController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show( $id)
+    public function show(int $id)
     {
         return response()->json(Newness::find($id));    //
     }
@@ -122,7 +121,7 @@ class NewnessController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit( $id)
+    public function edit(int $id)
     {
         $data=[
             'newness'=>Newness::find($id),
@@ -137,7 +136,7 @@ class NewnessController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, $id)
+    public function update(UpdateRequest $request, int $id)
     {
 
         $newness=Newness::find($id);
@@ -157,7 +156,7 @@ class NewnessController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $id)
+    public function destroy(int  $id)
     {
         $newness=Newness::find($id);
         $newness->delete();

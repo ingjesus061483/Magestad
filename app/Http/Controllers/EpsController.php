@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\EpsAffiliate;
 class EpsController extends Controller
 {
-    public function show($id)
+    public function show(int $id)
     {
         return response()->json(EpsAffiliate::find($id));
         //
@@ -30,13 +30,13 @@ class EpsController extends Controller
         $EpsAffiliate->save();
         return back()->with(['message'=>'EPS afiliada creada correctamente']);
     }
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $EpsAffiliate=EpsAffiliate::find($id);
         $EpsAffiliate->delete();
         return back()->with(['message'=>'EPS afiliada eliminada correctamente']);
     }
-    public function update(UpdateRequest $request ,$id)
+    public function update(UpdateRequest $request ,int $id)
     {
         $EpsAffiliate=EpsAffiliate::find($id);
         $arrEps=[

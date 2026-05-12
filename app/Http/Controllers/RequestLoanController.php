@@ -86,7 +86,7 @@ class RequestLoanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit ( AutorizeRequest $request, string $id)
+    public function edit ( AutorizeRequest $request, int $id)
     {
         $requestLoan=RequestLoan::find($id);
         $data=[
@@ -100,7 +100,7 @@ class RequestLoanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, string $id)
+    public function update(UpdateRequest $request, int $id)
     {
         $requestLoan=RequestLoan::find($id);
         $arrRequestLoan=[
@@ -117,7 +117,7 @@ class RequestLoanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AutorizeRequest $request, string $id)
+    public function destroy(AutorizeRequest $request, int $id)
     {
         $requestLoan=RequestLoan::find($id);
         $requestLoan->delete();
