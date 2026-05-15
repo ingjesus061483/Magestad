@@ -519,7 +519,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="asalariado col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">TIPO DE CONTRATO*</label>
                         <select class="form-select" name="contract_type" id="contract_type"style="font-size: 12px">

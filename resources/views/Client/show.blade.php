@@ -271,7 +271,7 @@
                         <label class="form-label" style="font-weight: bold" for="">
                             TIPO DE CONTRATO:
                         </label>
-                        {{$item->contract_type->name}}
+                        {{$item->contract_type?->name}}
                     </div>
                 </div>
             </div>

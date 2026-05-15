@@ -34,11 +34,11 @@
                 var fileName = $(this).val().split("\\").pop();
                 $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
             });
-             if($("#occupational_position").val()==1)
+            if($("#occupational_position").val()==1)
             {
                 $(".asalariado").fadeOut();
                 $("#ingreso").html("INGRESOS *");
-                $("#actividad_economica").html("ACTIVIDAD ECONOMICA*");
+                $("#actividad_economica").html("A QUE SE DEDICA*");
             }
             else if($("#occupational_position").val()==2)
             {
@@ -969,6 +969,7 @@
                 $('#main_address').val('');
                 $('#city').val('');
                 $('#state').val('');
+                $('#contract_type').val('');
                 $('#entry_date').val('');
                 $("#company_on_mission").val('');
                 $("#nit_company_on_mission").val('');
