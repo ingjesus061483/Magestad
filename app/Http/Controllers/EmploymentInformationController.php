@@ -67,7 +67,7 @@ class EmploymentInformationController extends Controller
             'arl_affiliate_id'=>$request->arl_affiliate
         ];
         $EmploymentInformation=EmploymentInformation::create($arrEmployment);
-        session(["info"=>"3"]);
+        session(["info"=>"4"]);
         return back()->with(['message'=>'Información de empleo guardada correctamente. Continua con la informacion patrimonial.']);
     }
     //

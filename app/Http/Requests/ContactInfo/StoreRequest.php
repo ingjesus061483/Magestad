@@ -21,10 +21,16 @@ class StoreRequest extends FormRequest
      */
     public function rules(): array
     {
+       if($this->action=="guardar")
+       {
+            return [
+                'client_id'=>'required',
+                'phone'=>'required|max:20',
+                'phone_type'=>'required|max:50',
+                //
+            ];
+       }
         return [
-            'client_id'=>'required',
-            'phone'=>'required|max:20',
-            'phone_type'=>'required|max:50',
             //
         ];
     }

@@ -14,8 +14,8 @@ class HomeworkStateSeeder extends Seeder
     public function run(): void
     {
         DB::table("state_homework")->insert([
-            ["name"=>"TP | Tarea Pendiente"],
-            ["name"=>"TR | Tarea Realizada"]
+            ["name"=>"Tarea Pendiente"],
+            ["name"=>"Tarea Realizada"]
         ]);
         //
     }

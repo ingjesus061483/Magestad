@@ -12,7 +12,7 @@ class StoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::check();
+        return true;
     }
 
     /**
@@ -27,12 +27,12 @@ class StoreRequest extends FormRequest
             //
         ];
     }
-    protected function failedAuthorization()
+   /* protected function failedAuthorization()
     {
 
         throw new HttpResponseException(response()->redirectTo(url('/UnAutorize'))
             ->with(['error' => 'Esta accion no esta autorizada!']));
-    }
+    }*/
     public function messages()
     {
         return [

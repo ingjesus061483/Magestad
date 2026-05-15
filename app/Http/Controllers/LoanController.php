@@ -21,7 +21,7 @@ class LoanController extends Controller
 
         ];
         $loan->update($arrloan);
-        session(["info"=>"5"]);
+        session(["info"=>"6"]);
         return back()->with(['message'=>'Información del prestamo actualizada correctamente']);
     }
     public function store(StoreRequest $request)
@@ -43,7 +43,7 @@ class LoanController extends Controller
             'loan_status_id'=>3,
         ];
         $loan=Loan::create($arrloan);
-        session(["info"=>"6"]);
+        session(["info"=>"7"]);
         return redirect()->to(url('/clients/create'))
                          ->with(['message'=>'Solicitud de credito generada correctamente. Continue con el tratamiento de datos personales.']);
 

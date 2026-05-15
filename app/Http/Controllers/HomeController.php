@@ -9,47 +9,38 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index(){
-
+    public function index()
+    {
         $client=session()->has('client')?session('client'):null;
-
-
         if($client==null){
             return view('Home.welcome');
         }
-        $policy=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'p%')->where('client_id',$client?->id)->count();
-
-        $autorization=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'a%')->where('client_id',$client?->id)->count();
-         if($client->contact_informations->count()==0)
+        $policy=ClientPolicy::where('client_id',$client?->id)->count();
+        if($client->contact_informations->count()==0)
         {
-               session(["info"=>"1"]);
+               session(["info"=>"2"]);
             return redirect()->to(url('/clients/create'))->
             withErrors("La información personal no ha sido completada");
         }
         else if($client->employment_informations->count()==0)
         {
-             session(["info"=>"2"]);
+             session(["info"=>"3"]);
             return redirect()->to(url('/clients/create'))->
             withErrors("La información laboral no ha completada");
         }
         else if($client->loans->count()==0 && $client->quality_holder_id==1)
         {
-            session(["info"=>"5"]);
+            session(["info"=>"6"]);
             return redirect()->to(url('/clients/create'))->
             withErrors("La información de préstamos no ha sido completada");
         }
-        else if($policy<AuthorizationPolicy::where('title','like','p%')->count() )
+        else if($policy<AuthorizationPolicy::count() )
         {
             session(["info"=>"7"]);
             return redirect()->to(url('/clients/create'))->
             withErrors("La información de políticas no ha sido completada");
         }
-        else if($autorization<AuthorizationPolicy::where('title','like','a%')->count())
-        {
-             session(["info"=>"8"]);
-             return redirect()->to(url('/clients/create'))->
-             withErrors("La información de autorizaciones no ha sido completada");
-        }
+
         if(session()->has('client'))
         {
             session()->forget('client');

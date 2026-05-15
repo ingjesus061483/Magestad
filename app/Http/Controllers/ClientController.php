@@ -268,11 +268,10 @@ class ClientController extends Controller
       //  Print_r($clientPolicies);
       //  exit;
         ClientPolicy::insert($clientPolicies);
-        session(["info"=>""]);
+        session(["info"=>"7"]);
         session(['client' => $client]);
         return response()->json([
-                            'message'=>$client ->acept_data_processing_policies?'Has aceptado las politicas de datos. Ahora envia la solicitud para terminar la solicitud':'No has aceptado las politicas de datos',
-                            'info'=>"",
+                            'info'=>"7",
                             "countpolicies"=>count($autorizationPolicies)
                             ]);
     }
@@ -294,7 +293,7 @@ class ClientController extends Controller
         $client->seizure=$seizure;
         $client->company_seizure=$request->company_seizure;
         $client->update();
-        session(["info"=>"5"]);
+        session(["info"=>"6"]);
         session(['client' => $client]);
         return back() ->with(['message'=>'Se ha actualizado la información legal. Continue con la información del crédito.']);
        // return redirect()->to(url('/clients/create'))->withInput(["client_id"=>$client->id]);
@@ -312,7 +311,7 @@ class ClientController extends Controller
         $client->vehicle=$request->vehicle==null?0:(bool)$request->vehicle;
         $client->estate=$request->estate==null?0:(bool)$request->estate;
         $client->update();
-        session(["info"=>"4"]);
+        session(["info"=>"5"]);
         session(['client' => $client]);
       //  return redirect()->to(url('/clients/create'))->withInput(["client_id"=>$client->id]);
         return back() ->with(['message'=>'Se ha actualizado la información patrimonial. Continue con la información legal.']);
@@ -349,6 +348,7 @@ class ClientController extends Controller
      */
     public function create()
     {
+
         $arrp=[];
         $arra=[];
         $client=session()->has('client')?session('client'):null;
@@ -365,7 +365,7 @@ class ClientController extends Controller
         $contactInfos=ContactInformation::where ('client_id',$client?->id);
         $EmploymentInformation=EmploymentInformation::where ('client_id',$client?->id)->first();
         $loan=Loan::where('client_id',$client?->id)->first();
-        $info=session()->has("info")?session('info'):'';
+        $info=session()->has("info")?session('info'):'1';
         $arrp=$this->getArray($policiesclients->get());
         $arra=$this->getArray($autorizationclients->get());
         $data=[
@@ -429,7 +429,7 @@ class ClientController extends Controller
         ];
         $client = Client::create($arrclient);
         session(['client' => $client]);
-        session(["info"=>"1"]);
+        session(["info"=>"2"]);
         return redirect()->to(url('/clients/create'))->with(['message'=>'Se ha creado un cliente. Ahora  debes ingresar la información de contacto']);
         //
     }
@@ -454,31 +454,31 @@ class ClientController extends Controller
         $loan=Loan::where('client_id',$client?->id)->first();
         if($client==null)
         {
-            session(["info"=>"0"]);
+            session(["info"=>"1"]);
             return redirect()->to(url('/clients/create'))->withErrors('La informacion personal no ha sido diligenciaciada')
             ->withInput(['client_id'=>$client?->id]);
         }
         if($contactInfos->count()==0)
         {
-            session(["info"=>"1"]);
+            session(["info"=>"2"]);
             return redirect()->to(url('/clients/create'))->withErrors('La informacion de contacto no ha sido diligenciaciada')
             ->withInput(['client_id'=>$client?->id]);
         }
         if($EmploymentInformation==null)
         {
-            session(["info"=>"2"]);
+            session(["info"=>"3"]);
             return redirect()->to(url('/clients/create'))->withErrors('La informacion laboral no ha sido diligenciaciada')
             ->withInput(['client_id'=>$client->id]);
         }
         if($loan==null&& $client->quality_holder_id==1)
         {
-            session(["info"=>"5"]);
+            session(["info"=>"6"]);
             return redirect()->to(url('/clients/create'))->withErrors('La informacion dl credito no ha sido diligenciado')
             ->withInput(['client_id'=>$client->id]);
         }
         if($policiesclients->count()<$autorizationPolicy)
         {
-            session(["info"=>"6"]);
+            session(["info"=>"7"]);
             return redirect()->to(url('/clients/create'))->withErrors('No has aceptado los termino y condiciones')
             ->withInput(['client_id'=>$client->id]);
         }
@@ -501,6 +501,7 @@ class ClientController extends Controller
      */
     public function show(int $id)
     {
+
         if(request()-> has('identification'))
         {
             $client=Client::where('identification','=',request()->identification)->first();
@@ -528,6 +529,7 @@ class ClientController extends Controller
      */
     public function edit( AutorizeRequest $request,int $id)
     {
+
         $client=Client::find($id);
         $arrp=[];
         $arra=[];

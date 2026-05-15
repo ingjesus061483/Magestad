@@ -12,14 +12,14 @@ class StoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::check();
+        return true;
     }
-    protected function failedAuthorization()
+   /* protected function failedAuthorization()
     {
 
         throw new HttpResponseException(response()->redirectTo(url('/UnAutorize'))
             ->with(['error' => 'Esta accion no esta autorizada!']));
-    }
+    }*/
     /**
      * Get the validation rules that apply to the request.
      *

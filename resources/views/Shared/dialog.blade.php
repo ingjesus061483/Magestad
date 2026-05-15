@@ -228,27 +228,29 @@
             </form>
         </div>
         <div title="Información de contacto" id="dialogContact">
-
-                    <form action="{{url('/contactinfo')}}" autocomplete="off" method="POST" id="frmContact">
-                            @csrf
-                            <input type="hidden"  value="{{isset($client)? $client->id:''}}" name="client_id" id="client_id" >
-                            <div class="mb-3">
-                                <label class="form-label" for="" style="font-size: 14px;"> Tipo de contacto</label>
-                                <select class="form-select" name="phone_type" style="width:80;font-size:12px " id="phone_type">
-                                    <option value="">Seleccione una opcion</option>
-                                    @if(isset($phonetypes))
-                                    @foreach($phonetypes as $item)
-                                    <option value="{{$item->id}}">{{ $item->name}}</option>
-                                    @endforeach
-                                    @endif
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="" style="font-size:14px" >
-                                    Numero de telefono
-                                </label>
-                                <input type="tel" name="phone" class="form-control"style="width:80%; font-size:12px;" id="phone">
-                            </div>
-                        </form>
-
+            <div style="padding: 5px;color:rgba(180, 158, 169, 1);font-size:12px">
+                Los campos marcados con * deben ser llenados obligatoriamente
+            </div>
+            <form action="{{url('/contactinfo')}}" autocomplete="off" method="POST" id="frmContact">
+                @csrf
+                <input type="hidden" value="Guardar" name="action" id="action">
+                <input type="hidden"  value="{{isset($client)? $client->id:''}}" name="client_id" id="client_id" >
+                <div class="mb-3">
+                    <label class="form-label" for="" style="font-size: 14px;"> Tipo de contacto</label>
+                    <select class="form-select" name="phone_type" style="width:80;font-size:12px " id="phone_type">
+                        <option value="">Seleccione una opcion</option>
+                        @if(isset($phonetypes))
+                            @foreach($phonetypes as $item)
+                            <option value="{{$item->id}}">{{ $item->name}}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="" style="font-size:14px" >
+                        Numero de telefono
+                    </label>
+                    <input type="tel" name="phone" class="form-control"style="font-size:12px;" id="phone">
+                </div>
+            </form>
         </div>

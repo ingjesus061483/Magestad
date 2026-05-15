@@ -26,7 +26,7 @@
 </head>
 
 <body class="bg-gradient-primary">
-
+     <input type="hidden" id="token" value="{{csrf_token()}}">
     <div class="container">
 
         <!-- Outer Row -->

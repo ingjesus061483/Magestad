@@ -30,7 +30,7 @@
                 <td style="text-align: center;">
                     <input type="checkbox" class="form-check-input" name="" id=""{{$item->state_newness->id==2?'checked':''}}
                      onchange="cambiarEstadoNewness({{$item->id}},this)">
-                     <label class="form-check-label" for="">{{explode(' ', explode('|', $item->state_newness->name)[1])[2]}}
+                     <label class="form-check-label" for="">{{ $item->state_newness->name}}
                 </td>
 
             </tr>

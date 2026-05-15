@@ -28,7 +28,7 @@
             var policyClients=[];
             var autorizationClients=[];
             var client=$("#client").val();
-            var app=$("#info").val()==""?$("#info").val():parseInt($("#info").val());
+            var app=$("#info").val()==""?$("#info").val():parseInt($("#info").val())-1;
             var urlBase=$("#base_url").val();
             $(".custom-file-input").on("change", function() {
                 var fileName = $(this).val().split("\\").pop();
@@ -46,13 +46,24 @@
                 $("#ingreso").html("SALARIO MENSUAL *");
                 $("#actividad_economica").html("CARGO ACTUAL*");
             }
+              progressLabel = $( ".progress-label" );
+              progressbar = $("#ProgressBar");
             $("#ProgressBar").progressbar({
             classes: {
-            "ui-progressbar": "highlight"
+            "ui-progressbar": "highlight",
+            "ui-progressbar-value": "bg-success"
             },
             max:7,
-            value:app
+            value:app,
+            change: function() {
+               var progress=(parseInt( progressbar.progressbar("option", "value" ))+1)/ parseInt( progressbar.progressbar( "option", "max" ));
+               progressLabel.text( progress + "%" );
+            },
+            complete: function() {
+                progressLabel.text( "La solicitud ha sido llena. pulsa el boton enviar solicitud para continuar." );
+            }
             });
+
             var city=$('#city_name').autocomplete({
                     select:function(event,ui){
                         $("#city_name").val( ui.item.label );
@@ -266,56 +277,9 @@
                     $("#age").val(age +" años");
                 }
             }
-            switch(app)
+            for(var i=1;i<=app;i++)
             {
-                case "client":
-                {
-                    if(abrirInfopersonal(user ,client))
-                    {
-                        $("#cardInfoPersonal").fadeIn();
-                    }
-                    else
-                    {
-                        $("#cardInfoPersonal").fadeOut();
-                    }
-
-
-
-                    break;
-                }
-                case "contact":
-                {
-                    $("#cardDatosContacto").fadeIn();
-                    break;
-                }
-                case 'law':
-                {
-                    $("#cardInfoLegal").fadeIn();
-                    break;
-                }
-                case 'patrimonial':
-                {
-                    $("#cardInfoPatrimonial").fadeIn();
-                    break;
-                }
-                case  'loan':
-                {
-                    $("#cardInfoCrediticia").fadeIn();
-                    break;
-                }
-                case 'employment':
-                {
-                    $("#cardInfoLaboral").fadeIn();
-                    break;
-                }
-                case 'AuthorizeProtocol':
-                {
-                    $("#cardPolAutorizaciones").fadeIn();
-                    break;
-                }
-                case 'PersonData':{
-                   $("#cardPoltrataDatosPers").fadeIn()
-                }
+                $("#step"+i).removeClass('progtrckr-todo').addClass('progtrckr-done');
             }
             if($(".table"))
             {
@@ -1013,7 +977,7 @@
                 {
                     $(".asalariado").fadeOut();
                     $("#ingreso").html("INGRESOS *");
-                    $("#actividad_economica").html("ACTIVIDAD ECONOMICA*");
+                    $("#actividad_economica").html("A QUE SE DEDICA*");
 
                 }
                 else if(this.value==2)
@@ -1079,16 +1043,11 @@
                             _token:"{{csrf_token()}}",
                         },
                         success: function (result){
-                            Swal.fire({
-                                title: "Información",
-                                icon: "info",
-                                text:result.message,
-                                draggable: true
-                            });
-                            var app=result.info==""?result.info:parseInt(result.info);
-                            $("#accordion").accordion( "option", "active",app );
-
-                           // window.location.href=urlBase+'clients/create'
+                            progressbar.progressbar("option", "value",parseInt( result.info));
+                            $("#step7").removeClass('progtrckr-todo').addClass('progtrckr-done');
+                            setTimeout(function(){
+                                window.location.href=urlBase+'clients/'+client;
+                            }, 5000);
                         },
                         error: function (ajaxContext)
                         {
@@ -1659,7 +1618,8 @@
                 buttons:
                 [
                     {
-                        text: "Guardar",
+                        icon: 'fa-solid fa-save',
+                        title: "Guardar",
                         "class": 'btn btn-success',
                         click: function()
                         {
@@ -1667,10 +1627,12 @@
                         }
                     },
                     {
-                        text: "Salir",
-                        "class": 'btn btn-danger',
+                        icon: 'fa-solid fa-arrow-left',
+                        title: "Salir",
+                        "class": 'btn btn-primary',
                         click: function ()
                         {
+                             $("#frmContact")[0].reset();
                             dialogContact.dialog("close");
                         }
 

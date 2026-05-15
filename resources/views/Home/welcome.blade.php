@@ -118,12 +118,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center align-items-center mb-3">
-                    <img src="{{url('/ImagenSistema/Magestad_azul.png')}}" class="img-fluid mx-auto d-block" style="width:100px; height:100px;" alt="">
+                <div class="text-center">
+                    <h1 id="welcome-title" class="h4 text-gray-900 mb-4" style="font-style: italic">Bienvenidos a Magestad</h1>
                 </div>
                 <div class="p-3">
-                    <div class="text-center">
-                        <h1 id="welcome-title" class="h4 text-gray-900 mb-4" style="font-style: italic">Bienvenidos a Magestad</h1>
+                    <div class="d-flex justify-content-center align-items-center mb-3">
+                        <img src="{{url('/ImagenSistema/Magestad_azul.png')}}" class="img-fluid mx-auto d-block" style="width:100px; height:100px;" alt="">
                     </div>
                     @if(auth()->check())
                     <div class="module row" style="justify-content: center;align-items: center;">
@@ -156,23 +156,24 @@
                         </div>
                     </div>
                     <div class="module row" style=" justify-content: center;align-items: center;">
-                    <div class="col-6" style="display:grid; justify-content: center;align-items: center;">
-                        <button class="btn boton"  style="text-align:center; color:gray;">
-                            <i class="fa-solid fa-calendar-days"style="font-size: 30px"></i><br>
-                            <span style="color: black; " > AGENDA</span>
-                        </button>
-                    </div>
-                    <div class="col-6" style="display:grid; justify-content: center;align-items: center;">
-                        <button class="btn boton"  style="text-align:center; color:gray;" >
-                            <i class="fa-regular fa-newspaper" style="font-size: 30px"></i><br>
-                            <span style="color: black; " > REPORTES</span>
-                        </button>
-                    </div>
+                        <div class="col-6" style="display:grid; justify-content: center;align-items: center;">
+                            <button class="btn boton"  style="text-align:center; color:gray;">
+                                <i class="fa-solid fa-calendar-days"style="font-size: 30px"></i><br>
+                                <span style="color: black; " > AGENDA</span>
+                            </button>
+                        </div>
+                        <div class="col-6" style="display:grid; justify-content: center;align-items: center;">
+                            <button class="btn boton"  style="text-align:center; color:gray;" >
+                                <i class="fa-regular fa-newspaper" style="font-size: 30px"></i><br>
+                                <span style="color: black; " > REPORTES</span>
+                            </button>
+                        </div>
                     </div>
                     <div class="module row" style=" justify-content: center;align-items: center;">
                         <div class="col-6" style="display:grid; justify-content: center;align-items: center;">
                             <button class="btn boton" style="text-align:center; color:gray;">
-                                <i class="fa-solid fa-bell" style="font-size: 30px"></i><br>
+                                <i class="fa-solid fa-bell" style="font-size: 30px"></i><span class="badge badge-danger badge-counter">+9</span><br>
+
                                  <span style="color: black; " >ALERTAS</span>
                                <!-- <span class="badge badge-danger badge-counter">3+</span>-->
                             </button>

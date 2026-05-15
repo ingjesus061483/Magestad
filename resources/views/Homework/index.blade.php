@@ -29,7 +29,7 @@
         &nbsp;&nbsp;
 
     </a>
-      <strong >&nbsp; {{ explode('|',$item->name)[0]}} </strong>&nbsp;|&nbsp;{{ explode('|',$item->name)[1] }},
+      <strong >&nbsp; </strong>&nbsp;|&nbsp;{{ $item->name }},
        {{ number_format($item->id==1?count($pendingTasks):count($doneTasks)) }}
     </h3>
     <div>
