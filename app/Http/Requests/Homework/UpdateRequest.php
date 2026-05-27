@@ -34,9 +34,8 @@ class UpdateRequest extends FormRequest
         return [
             'user_id' => 'required|integer|exists:users,id',
             'date' => 'required|date',
-            //'client_id' => 'required|integer|exists:clients,id',
-            'client' => 'required',
-            'remark' => 'required|string|max:255',
+            'client_id' => 'required|integer|exists:clients,id',
+            'task' => 'required|string',
 
 
             //
@@ -49,13 +48,12 @@ class UpdateRequest extends FormRequest
             'user_id.exists' => 'El :attribute no existe.',
             'date.required' => 'La :attribute es obligatoria.',
             'date.date' => 'La :attribute no es una fecha válida.',
-            /*'client_id.required' => 'El :attribute es obligatorio.',
+            'client_id.required' => 'El :attribute es obligatorio.',
             'client_id.integer' => 'El :attribute debe ser un número entero.',
-            'client_id.exists' => 'El :attribute no existe.',*/
-            'client.required' => 'El :attribute es obligatorio.',
-            'remark.required' => 'La :attribute es obligatoria.',
-            'remark.string' => 'La :attribute debe ser una cadena de texto.',
-            'remark.max' => 'La :attribute no debe ser mayor a 255 caracteres.',
+            'client_id.exists' => 'El :attribute no existe.',
+            'task.required' => 'La :attribute es obligatoria.',
+            'task.string' => 'La :attribute debe ser una cadena de texto.',
+
             'state_homework_id.required' => 'El :attribute es obligatorio.',
             'state_homework_id.integer' => 'El :attribute debe ser un número entero.',
             'state_homework_id.exists' => 'El :attribute no existe.',
@@ -68,8 +66,8 @@ class UpdateRequest extends FormRequest
         return [
             'user_id' => 'usuario',
             'date' => 'fecha',
-            'client' => 'cliente',
-            'remark' => 'observación',
+            'client_id' => 'cliente',
+            'task' => 'tarea',
             'state_homework_id' => 'estado de la tarea',
             'homework_type_id' => 'tipo de tarea',
         ];

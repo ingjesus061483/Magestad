@@ -16,12 +16,12 @@ return new class extends Migration
             $table->foreignId('user_id') ->constrained('users')
             ->onDelete('cascade')
             ->onUpdate('cascade');
-            $table->dateTime('date');
-$table->string('client',50);
-           /* $table->foreignId('client_id') ->constrained('clients')
+            $table->date('date');
+//$table->string('client',50);
+            $table->foreignId('client_id') ->constrained('clients')
             ->onDelete('cascade')
-            ->onUpdate('cascade');*/
-            $table->string('remark',255);
+            ->onUpdate('cascade');
+            $table->longText('task');
             $table->foreignId('state_homework_id') ->constrained('state_homework')
             ->onDelete('cascade')
             ->onUpdate('cascade');

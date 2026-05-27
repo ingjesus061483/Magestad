@@ -16,8 +16,7 @@
                     <input type="date"name="date" class="form-control" id="date" style="font-size:12px" value="{{date('Y-m-d')}}">
                 </div>
                 <div class="col-sm-6">
-                     <label for="date" class="col-form-label" style="font-size:14px">Cliente</label>
-                    <input type="text"name="client" class="form-control" id="date" style="font-size:12px" value="{{old('client')}}">
+                     @include('Shared.searchClient', ['client' => null])
 
                 </div>
             </div>
@@ -32,8 +31,8 @@
                 </div>
                  <div class="col-sm-6">
                     <label for="remark" class="col-form-label" style="font-size:14px">Tarea</label>
-                    <textarea class="form-control" name="remark" id="remark" rows="3" class="form-control" style="font-size:12px" >
-                        {{old('remark')}}
+                    <textarea class="form-control" name="task" id="task" rows="3" class="form-control" style="font-size:12px" >
+                        {{old('task')}}
                     </textarea>
                 </div>
             </div>
@@ -47,6 +46,12 @@
 
 
                     </select>
+                </div>
+                 <div class="col-sm-6">
+                    <label for="remark" class="col-form-label" style="font-size:14px">Observación</label>
+                    <textarea class="form-control" name="remark" id="remark" rows="3" class="form-control" style="font-size:12px" >
+                        {{old('remark')}}
+                    </textarea>
                 </div>
             </div>
             <div class="mb-3">

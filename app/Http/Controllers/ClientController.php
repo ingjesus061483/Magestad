@@ -29,29 +29,30 @@ use App\Models\ClientPolicy;
 use App\Models\DocumentType;
 use App\Models\LoanType;
 use App\Models\OccupationalPosition;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 class ClientController extends Controller
 {
-    protected $loantypes;
-    protected $autorizationPolicy;
-    protected $occupationalposition;
-    protected $QualityHolder;
-    protected $ArlAffiliates;
-    protected $EpsAffiliates;
-    protected $CompanyPaymentDates;
-    protected $CustomerPaymentDates;
-    protected $PaymentFrecuencies;
-    protected $ContractTypes;
-    protected $studylevels;
-    protected $maritalstatus;
-    protected $phonetypes;
-    protected $clients;
-    protected $Warranties;
-    protected $States;
-    protected $cities;
-    protected $policies;
-    protected $autorizations;
-     protected $documenttypes;
+    protected Builder $loantypes;
+    protected Builder $autorizationPolicy;
+    protected Builder $occupationalposition;
+    protected Builder $QualityHolder;
+    protected Builder $ArlAffiliates;
+    protected Builder $EpsAffiliates;
+    protected Builder $CompanyPaymentDates;
+    protected Builder $CustomerPaymentDates;
+    protected Builder $PaymentFrecuencies;
+    protected Builder $ContractTypes;
+    protected Builder $studylevels;
+    protected Builder $maritalstatus;
+    protected Builder $phonetypes;
+    protected Builder $clients;
+    protected Builder $Warranties;
+    protected Builder $States;
+    protected Builder $cities;
+    protected Builder $policies;
+    protected Builder $autorizations;
+    protected Builder $documenttypes;
     function __construct()
     {
         $this->autorizationPolicy=AuthorizationPolicy::select('*');
@@ -211,10 +212,10 @@ class ClientController extends Controller
                                              `authorization_policies` ap ON ap.id=cp.policy_id WHERE
                                              cp.client_id=clients.id AND ap.title='A15')as A15")
                                 ->leftjoin("quality_holders as q","q.id","=","quality_holder_id")
-                                ->join('cities as city','city.id','=','city_id' )
-                                ->join('states as st','st.id','=','city.state_id'  )
-                                ->join("marital_status as ms","ms.id","=","marital_status_id")
-                                ->join("level_studies as ls","ls.id","=","clients.level_study_id")
+                                ->leftjoin('cities as city','city.id','=','city_id' )
+                                ->leftjoin('states as st','st.id','=','city.state_id'  )
+                                ->leftjoin("marital_status as ms","ms.id","=","marital_status_id")
+                                ->leftjoin("level_studies as ls","ls.id","=","clients.level_study_id")
                                 ->leftjoin("employment_informations as einf","clients.id","=","einf.client_id")
                                 ->leftjoin("occupational_positions as op","op.id","=","einf.occupational_position_id")
                                 ->leftjoin("eps_affiliates as eps","eps.id","=","einf.eps_affiliate_id" )
@@ -229,16 +230,17 @@ class ClientController extends Controller
     }
     public function GetClients(Request $request)
     {
-        $clients=Client::select('identification')->selectRaw("name_last_name as name")
-                        ->where ('clients.name_last_name','like','%'.$request->name.'%')
-                        ->orderby('name_last_name','asc')->get();
+        $clients=Client::select('identification')->selectRaw("reference as name")
+                        ->where ('clients.reference','like','%'.$request->name.'%')
+                        ->orderby('reference','asc')->get();
         return response()->json($clients);
     }
     public function SearchByName(Request $request)
     {
-        $clients=Client::where('clients.name_last_name','like','%'.$request->name.'%')
+        $clients=Client::where('clients.reference','like','%'.$request->name.'%')
                       ->select( "id","identification")
-                      ->selectRaw("name_last_name as name")
+                      ->selectRaw("reference as name")
+                        ->orderby('reference','asc')
                       ->get();
         return response()->json($clients);
     }
@@ -329,14 +331,21 @@ class ClientController extends Controller
         {
             session()->forget('info');
         }
-        $data=['clients'=>$this-> clients->get()];
-        return view('Client.index',$data);
+        $rows_per_page=env('ROWS_PER_PAGE');
+        $clients = $this->clients->paginate($rows_per_page);
+        $clients->setPath(url('/clients'));
+        $data=[
+            "rows_per_page"=>$rows_per_page,
+            "clients" => $clients
+        ];
+        return view('Client.index', $data);
         //
     }
-    public function getArray( $policiesclients):array
+    public function getArray(Builder $policiesclients):array
     {
+        $policies=$policiesclients->get();
         $arr=[];
-        foreach($policiesclients as $pc)
+        foreach($policies as $pc)
         {
             $arr[]=$pc->policy_id;
         }
@@ -366,8 +375,8 @@ class ClientController extends Controller
         $EmploymentInformation=EmploymentInformation::where ('client_id',$client?->id)->first();
         $loan=Loan::where('client_id',$client?->id)->first();
         $info=session()->has("info")?session('info'):'1';
-        $arrp=$this->getArray($policiesclients->get());
-        $arra=$this->getArray($autorizationclients->get());
+        $arrp=$this->getArray($policiesclients);
+        $arra=$this->getArray($autorizationclients);
         $data=[
             'autorizationPolicy'=>$this->autorizationPolicy->get(),
             'loantypes'=>$this->loantypes->get(),
@@ -507,7 +516,7 @@ class ClientController extends Controller
             $client=Client::where('identification','=',request()->identification)->first();
             if($client==null)
             {
-                session(["info"=>"0"]);
+                session(["info"=>"1"]);
                 return redirect()->to(url('/clients/create'))->withErrors('No se ha encontrado un cliente
                                                                         con la identificación ingresada');
             }
@@ -529,6 +538,7 @@ class ClientController extends Controller
      */
     public function edit( AutorizeRequest $request,int $id)
     {
+ $info=$request->info;
 
         $client=Client::find($id);
         $arrp=[];
@@ -545,7 +555,7 @@ class ClientController extends Controller
         $contactInfos=ContactInformation::where ('client_id',$client?->id);
         $EmploymentInformation=EmploymentInformation::where ('client_id',$client!=null?$client->id:0)->first();
         $loan=Loan::where('client_id',$client!=null?$client->id:0)->first();
-        $info=session()->has("info")?session('info'):'0';
+ session(["info"=> $info]);
         $arrp=$this->getArray($policiesclients->get());
         $arra=$this->getArray($autorizationclients->get());
         $data=[
@@ -614,9 +624,9 @@ class ClientController extends Controller
         ];
         $client = Client::find($id);
         $client->update($arrclient);
-        session(['client' => $client]);
+     //   session(['client' => $client]);
         session(["info"=>"0"]);
-        return back()->with(['message'=>'Se ha actualizado la información del cliente']);
+        return redirect()->to(url('/clients'))->with(['message'=>'Se ha actualizado la información del cliente']);
         //
     }
 
@@ -632,6 +642,6 @@ class ClientController extends Controller
     }
     public function downloadExcel($id)
     {
-        return Excel::download(new ClientExport($this->clients->get()), "Masterclientes.xlsx");
+        return Excel::download(new ClientExport($this->clients), "Masterclientes.xlsx");
     }
 }

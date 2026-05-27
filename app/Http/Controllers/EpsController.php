@@ -16,8 +16,9 @@ class EpsController extends Controller
     }
     public function index(AutorizeRequest $request)
     {
+        $rows_per_page=env('ROWS_PER_PAGE');
         $data=[
-            'eps'=>EpsAffiliate::orderby('name','asc')->get()
+            'eps'=>EpsAffiliate::orderby('name','asc')->paginate($rows_per_page),
         ];
         return view('EPS.index',$data);
         //

@@ -5,10 +5,11 @@
     <a title="Crear solicitud de préstamo" href="{{url('/requestLoan/create')}}" class="btn btn-primary ">
         <i class="fa-solid fa-plus"></i>
     </a>
-    <button title="Filtrar solicitud" class="btnfilter btn btn-secondary" data-title="Filtrar Solicitudes" data-url="{{url('/requestLoan')}}">
-        <i class="fa-solid fa-filter"></i>
+    <button title="filtrar por..." class="filter btn btn-secondary" >
+        <i class="filter fa-solid fa-filter"></i>
     </button>
 </div>
+@include('Shared.filter',['action'=>url('/requestLoan')])
 <div id="accordion">
     @foreach ($priorities as $item)
 
@@ -29,7 +30,19 @@
     @endswitch >
         &nbsp;&nbsp;
     </a>
-      <strong >&nbsp; {{explode(" | ", $item->name)[0]}} |</strong>&nbsp;{{explode(" | ", $item->name)[1]}},  ${{ number_format($item->loan_sum) }}
+      <strong >&nbsp; {{explode(" | ", $item->name)[0]}} |</strong>&nbsp;{{explode(" | ", $item->name)[1]}},
+      @switch($item->id)
+          @case(1)
+       ${{ number_format($requestLoansPr1->sum('amountRequested'))}}
+              @break
+          @case(2)
+            ${{number_format( $requestLoansPr2->sum('amountRequested'))}}
+            @break
+          @case(3)
+            ${{number_format( $requestLoansPr3->sum('amountRequested'))}}
+            @break
+      @endswitch
+
     </h3>
     <div>
         @switch($item->id)

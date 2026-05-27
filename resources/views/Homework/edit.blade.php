@@ -18,15 +18,18 @@
                     <input type="date"name="date" class="form-control" id="date" style="font-size:12px" value="{{ date('Y-m-d', strtotime($homework->date)) }}">
                 </div>
                 <div class="col-md-6">
-                    <label for="client_id" class="col-form-label" style="font-size:14px">Cliente</label>
-                    <input type="text"name="client" class="form-control" id="client_id" style="font-size:12px" value="{{$homework->client}}">
-
+                        @include('Shared.searchClient',['client'=>$homework->client])
                 </div>
             </div>
             <div class="mb-3">
-                <label for="remark" class="col-form-label" style="font-size:14px">Tarea</label>
+                <label for="task" class="col-form-label" style="font-size:14px">Tarea</label>
+                <textarea class="form-control" name="task" id="task" rows="3" class="form-control" style="font-size:12px" >{{$homework->task}}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="remark" class="col-form-label" style="font-size:14px">Observación</label>
                 <textarea class="form-control" name="remark" id="remark" rows="3" class="form-control" style="font-size:12px" >{{$homework->remark}}</textarea>
             </div>
+
             <div class="mb-3">
                 <button type="submit" class="btn btn-success">Guardar</button>
             </div>

@@ -14,8 +14,9 @@ class DocumentTypeController extends Controller
      */
     public function index(AutorizeRequest $request)
     {
+        $rows_per_page=env('ROWS_PER_PAGE');
         $data=[
-            "documentTypes"=> DocumentType::all(),
+            "documentTypes"=> DocumentType::paginate($rows_per_page),
              ];
             return view("DocumentType.index",$data);
         //

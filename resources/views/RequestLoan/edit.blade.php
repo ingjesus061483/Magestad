@@ -19,8 +19,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="mb-3">
-                        <label for="" class="form-label" style="font-size:14px">Nombre del cliente</label>
-                        <input type="text" name="clientName" class="form-control" value="{{$requestLoan->clientName}}" style="font-size:12px" id="">
+                       @include('Shared.searchClient', ['client' => $requestLoan->client])
                     </div>
                 </div>
             </div>

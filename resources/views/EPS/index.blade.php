@@ -1,17 +1,8 @@
 @extends('Shared/layout')
 @section('title','EPS')
 @section('content')
-<div class="card mb-4" style=" margin:0 auto">
-    <div class="card-header">
-        <i class="fas fa-table me-1"></i>
-        EPS
-    </div>
-    <div class="card-body">
-        <div style="padding: 5px">
-            <a  title="Crear Eps" class="btnEps btn btn-primary" ><i class="fa-solid fa-plus"></i></a>
-        </div>
-
-        <table  class="table table-hover table-bordered" style="width: 100%" >
+    <div class="tableFixHead card">
+        <table  class=" table-hover table-bordered" style="width: 100%" >
             <thead style ="font-size: 14px" >
                 <tr>
                     <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
@@ -42,5 +33,8 @@
             </tbody>
         </table>
     </div>
+    <div style="padding: 5px">
+        {{$eps->links('pagination::bootstrap-5')}}
+
 </div>
 @endsection

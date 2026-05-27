@@ -1,3 +1,17 @@
+  <div id="dialogEditClient" title="EDitar clientes" >
+    <form id="frmEditClient"  method="get" autocomplete="off">
+        <div class="d-flex justify-content-center">
+            <ul style="list-style: none">
+                <li style="padding: 5px"> <input id="btnEditClient" name="info" class="btn btn-primary" type="submit" value="1 - Informacion personal    "></li>
+                <li style="padding: 5px"> <input id="btnEditContactInfo" name="info" class="btn btn-secondary"  type="submit" value="2 - Informacion de contacto"></li>
+                <li style="padding: 5px"> <input id="btnEditEmploymentInformation" name="info" class="btn btn-success"  type="submit" value="3 - Informacion laboral        "></li>
+                <li style="padding: 5px"> <input id="btnEditstatement" name="info" class="btn btn-warning"  type="submit" value="4 - Informacion patrimonial "></li>
+                <li style="padding: 5px"> <input id="btnEditLegalInformation" name="info" class="btn btn-danger" type="submit" value="5 - Informacion legal           "></li>
+                <li style="padding: 5px"> <input id="btnEditLoanInformation" name="info" class="btn btn-info" type="submit" value="6 - Acerca del credito          "></li>
+            </ul>
+        </div>
+    </form>
+  </div>
   <div id="dialogHomework" title="Tareas" >
             <form id="frmHomework" action="{{url('homework')}}" method="POST" autocomplete="off">
                 @csrf
@@ -194,8 +208,7 @@
                     <input type="text" class="form-control" name="enddate" style="font-size:12px; " value="{{date('Y-m-d')}}" id="dateEnd">
                 </div>
                 <div class="mb-3">
-                    <label for=""style="font-size:14px" >Cliente*</label>
-                    <input type="text" class="client form-control" name="client" style="font-size:12px;" />
+                   @include('Shared.searchClient',['client'=>null])
                 </div>
                 @if(isset($newnesstypes))
                 <div class="mb-3">

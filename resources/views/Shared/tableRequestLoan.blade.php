@@ -1,5 +1,6 @@
-  <table class="table table-hover table-bordered" style="width: 100%">
-                <thead>
+  <div class="tableFixHead card">
+  <table class=" table-hover table-bordered" style="width: 100%">
+                 <thead style ="font-size: 14px" >
                     <tr>
                         <th></th>
                         <th></th>
@@ -9,7 +10,7 @@
                         <th style="text-align: center" >STATUS</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style ="font-size: 12px" >
                     @foreach ($requestLoansPr as $item)
                     <tr>
                         <td>
@@ -27,10 +28,14 @@
                             </form>
                         </td>
                         <td>{{date("d/m/Y", strtotime($item->date)) }}</td>
-                        <td>{{ $item->clientName }}</td>
+                        <td>{{ $item->client->name_last_name.' '.$item->client->reference }}</td>
                         <td>${{ number_format($item->amountRequested) }}</td>
                         <td>{{ $item->priorityName }}</td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
+        </div>
+        <div style="padding: 5px">
+            {{$requestLoansPr->appends(request()->input())->links('pagination::bootstrap-5')}}
+        </div>

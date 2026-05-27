@@ -63,5 +63,8 @@ class Client extends Model
     {
         return $this ->hasMany(Document::class,'client_id');
     }
+    public function newness(){
+        return $this->hasMany(Newness::class,'client_id');
+    }
 
 }

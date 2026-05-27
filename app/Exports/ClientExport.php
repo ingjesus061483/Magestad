@@ -1,12 +1,13 @@
 <?php
 namespace App\Exports;
 use App\Models\Client;
+use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Concerns\FromArray;
 class ClientExport implements FromArray
 {
     protected $clients=[];
     protected $arr=[];
-    public function __construct( $clients)
+    public function __construct(Builder $clients)
     {
        $this->arr=
        [
@@ -79,10 +80,10 @@ class ClientExport implements FromArray
             "A14",
             "A15"]
         ];
-        $this->clients=$clients;
+        $this->clients=$clients->get();
     }
     /**
-    * @return \Illuminate\Support\Collection
+    * @return array
     */
     public function array(): array
     {

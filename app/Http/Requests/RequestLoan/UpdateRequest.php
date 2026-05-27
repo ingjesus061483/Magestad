@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
     {
         return [
                 'date' => 'required|date',
-                'clientName' => 'required|string|max:50',
+                'client_id' => 'required|exists:clients,id',
                 'amountRequested' => 'required|numeric|min:0',
                 'priority' => 'required|exists:priorities,id',
              //
@@ -36,9 +36,8 @@ class UpdateRequest extends FormRequest
         return [
             'date.required' => 'La :attribute es obligatoria.',
             'date.date' => 'La :attribute debe ser una fecha válida.',
-            'clientName.required' => 'El :attribute es obligatorio.',
-            'clientName.string' => 'El :attribute debe ser una cadena de texto.',
-            'clientName.max' => 'El :attribute no puede exceder los 50 caracteres.',
+            'client_id.required' => 'El :attribute es obligatorio.',
+            'client_id.exists' => 'El :attribute seleccionado no es válido.',
             'amountRequested.required' => 'El :attribute es obligatorio.',
             'amountRequested.numeric' => 'El :attribute debe ser un número.',
             'amountRequested.min' => 'El :attribute debe ser al menos 0.',
@@ -49,7 +48,7 @@ class UpdateRequest extends FormRequest
     public function attributes()
     {        return [
             'date' => 'fecha',
-            'clientName' => 'nombre del cliente',
+            'client_id' => 'cliente',
             'amountRequested' => 'monto solicitado',
             'priority_id' => 'prioridad',
         ];

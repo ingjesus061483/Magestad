@@ -19,8 +19,12 @@ class UserController extends Controller
     }
     public function index(AutorizeRequest $request)
     {
-        $data=['users'=>User::all()];
-        return view('Auth.index',$data);
+            $rows_per_page=env('ROWS_PER_PAGE');
+            $data=[
+                'users'=>User::orderby('name','asc')->paginate($rows_per_page),
+            ];
+            return view('Auth.index',$data);
+
     }
     public function update (UpdateRequest $request, int  $id)
     {

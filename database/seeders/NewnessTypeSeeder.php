@@ -39,6 +39,11 @@ class NewnessTypeSeeder extends Seeder
             ["name"=>"Master"],
             ["name"=>"Oficio de embargo"],
             ["name"=>"Propuesta de pago"],
+            ["name"=>"Saldo de cartera"],
+            ["name"=>"Simulador de credito"],
+            ["name"=>"Tasa de interes"],
+            ["name"=>"Visita de cobro"]
+
         ]);
         //
     }

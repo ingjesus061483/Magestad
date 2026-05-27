@@ -10,12 +10,16 @@ class RequestLoan extends Model
     use HasFactory;
     protected $fillable = [
         'date',
-        'clientName',
+        'client_id',
         'amountRequested',
         'priority_id',
         'comments'
     ];
     public function priorities(){
         return $this->belongsTo(Priority::class,'priority_id');
+
+    }
+    public function client(){
+        return $this->belongsTo(Client::class,'client_id');
     }
 }

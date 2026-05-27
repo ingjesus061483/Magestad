@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('loans', function (Blueprint $table) {
             $table->after('warranty_id',function(Blueprint $table){
-                $table->foreignId('loan_type_id')->constrained('Loan_types')
+                $table->foreignId('loan_type_id')->constrained('loan_types')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
                 $table->foreignId('loan_status_id')->constrained('loan_statuses')->onDelete('cascade')

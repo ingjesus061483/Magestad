@@ -145,18 +145,18 @@
                 if(client_identification!=undefined)
                 {
                     client_identification._renderItem = function( ul, item ) {
-                        return $( "<li>" ).append( "<div style='font-size:10px;padding:5px' ><strong>Idnetificacion:</strong>" + item.value + "<br/><strong>Nombre:</strong>" + item.label + "</div>" )
+                        return $( "<li>" ).append( "<div style='font-size:10px;padding:5px' ><strong>Identificación:</strong>" + item.value + "<br/><strong>Nombre:</strong>" + item.label + "</div>" )
                                         .appendTo( ul );
                     };
                 }
-            var newnesstype=$("#newness_type").autocomplete({
+            var newsnesstype=$("#newsness_type").autocomplete({
                     select:function(event,ui){
-                        $("#newness_type").val( ui.item.label );
-                        $("#newness_type_id").val( ui.item.value );
+                        $("#newsness_type").val( ui.item.label );
+                        $("#newsness_type_id").val( ui.item.value );
                         return false;
                     },
                     focus: function( event, ui ) {
-                        $( "#newness_type" ).val( ui.item.label );
+                        $( "#newsness_type" ).val( ui.item.label );
                         return false;
                     },
                     source: function( request, response )
@@ -177,7 +177,7 @@
                                     {
                                         return{
                                             label: item.name,
-                                            value: item.id+" - "+item.name,
+                                            value: item.id,
                                         }
                                  }));
                             }
@@ -185,10 +185,10 @@
                     },
                     minLength: 0,
                 }).autocomplete( "instance" );
-            console.log(newnesstype);
-            if(newnesstype!=undefined)
+            console.log(newsnesstype);
+            if(newsnesstype!=undefined)
             {
-                newnesstype._renderItem = function( ul, item ) {
+                newsnesstype._renderItem = function( ul, item ) {
                     return $( "<li>" ).append( "<div style='font-size:10px;padding:5px' >" + item.label + "</div>" )
                                     .appendTo( ul );
                 };
@@ -218,7 +218,7 @@
                                     {
                                         return{
                                             label: item.name,
-                                            value: item.id+" - "+item.name,
+                                            value: item.id,
                                             desc:item.identification
                                         }
                                  }));
@@ -232,6 +232,7 @@
                     select: function( event, ui ) {
                         $( ".client" ).val( ui.item.label );
                         $("#client_id").val( ui.item.value );
+                        //alert($("#client_id").val());
                         /*$( "#project-description" ).html( ui.item.desc );
                         $( "#project-icon" ).attr( "src", "images/" + ui.item.icon );*/
 
@@ -240,7 +241,9 @@
                     minLength: 0,
                 })
                 .autocomplete( "instance" )._renderItem = function( ul, item ) {
-                    return $( "<li>" ).append( "<div style='font-size:10px;padding:5px' ><strong>Idnetificacion:</strong>" + item.desc + "<br/><strong>Nombre:</strong>" + item.label + "</div>" )
+                    var html="<div style='font-size:10px;padding:5px' ><strong>Nombre:</strong> " + item.label +
+                                                "<br><strong>Identificación:</strong> " + item.desc +  "</div>" ;
+                    return $( "<li>" ).append( html )
                                     .appendTo( ul );
                 };
             }
@@ -606,6 +609,19 @@
 
                  }
             }
+            function download(modul)
+            {
+                var token="{{csrf_token()}}";
+                 var dateStart=  $("#dateStart").val();
+                var dateEnd =$("#dateEnd").val();
+                var client= $("#client_id").val();
+                var newness_type=modul=='Homework'?'': $("#newsness_type_id").val();
+                window.location.href=urlBase+modul+"/download/0?_token="+token+
+                                                                "&firstdate="+dateStart+
+                                                                "&enddate="+dateEnd+
+                                                                "&client_id="+client+
+                                                                "&newness_type_id="+newness_type
+            }
             function submitPolicy(button)
             {
                  var panel=$(button).data('panel');
@@ -827,6 +843,18 @@
                     }
                 });
             }
+            function dropFilters()
+            {
+                $("#dateStart").val('');
+                $("#dateEnd").val('');
+                $("#client_name").val('');
+                $("#client_id").val('');
+                $("#newsness_type").val('');
+                $("#newsness_type_id").val('');
+                $("#rows_per_page").val('');
+                $("#frmfilter").submit();
+            }
+
             function editarPolicy(id)
             {
                 url=urlBase+"authorizationPolicies/"+id;//"{{url('/authorizationPolicies')}}/"+id;
@@ -961,6 +989,51 @@
                     }
                 });
             }
+            function remark(id)
+            {
+                //alert(id);
+                 var url =urlBase+'homework/'+id;
+                 $.ajax({
+                    url: url,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (result)
+                    {
+                        console.log(result);
+                        //alert(result.remark)
+                        if(result.remark!='')
+                        {
+                            Swal.fire({
+                            title: "Comentario:",
+                            icon: "info",
+                            html:'<div>'+result.remark+'</div>',
+                            draggable: true
+                            });
+
+                        }
+                        else{
+                            Swal.fire({
+                            title: "Se han encontrado los siguientes errores:",
+                            icon: "warning",
+                            text:'No se han encontrado comentarios',
+                            draggable: true
+                            });
+
+                        }
+                    },
+                    error: function (ajaxContext)
+                    {
+                        Swal.fire({
+                            title: "Se han encontrado los siguientes errores:",
+                            icon: "error",
+                            text:ajaxContext.responseText,
+                            draggable: true
+                        });
+                        //alert(ajaxContext.responseText)
+                    }
+                });
+
+            }
 
             $("#occupational_position").change(function()
             {
@@ -1065,6 +1138,15 @@
                         }
                    })
                 }
+            });
+
+            $(".filter").click(function(){
+
+                $("#filterForm").fadeIn();
+
+            })
+            $("#btnCloseFilter").click(function(){
+                $("#filterForm").fadeOut();
             });
             $("#chkallPolicy").change(function(){
                if(this.checked)
@@ -1261,6 +1343,39 @@
             $("#btnContact").click(function()
             {
                 dialogContact.dialog("open");
+            });
+            $(".btnEditClient").click(function()
+            {
+                client_id=$(this).data('id');
+                $("#frmEditClient").attr('action',urlBase+"clients/"+client_id+"/edit");
+                dialogEditClient.dialog("open");
+            });
+             var dialogEditClient= $("#dialogEditClient").dialog({
+                autoOpen: false,
+                height: "auto",
+                width: "auto",
+                 title: "¿Qué desea editar?",
+                modal: true,
+                 classes:{
+                    "ui-dialog-titlebar-close":"hidden"
+                },
+                buttons:
+                [{
+                    title:"Regresar",
+                    icon: 'fa-solid fa-arrow-left',
+                    "class": 'btn btn-primary',
+                    click: function () {
+                        dialogEditClient.dialog("close");
+                    }
+                }],
+
+                close: function ()
+                {
+
+                   //form[0].reset();
+                    //allFields.removeClass("ui-state-error");
+
+                }
             });
             var  dialogHomework= $("#dialogHomework").dialog({
                 autoOpen: false,

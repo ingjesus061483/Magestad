@@ -3,43 +3,61 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AutorizeRequest;
+use App\Http\Requests\FilterRequest;
 use App\Models\Priority;
 use Illuminate\Http\Request;
 use App\Models\RequestLoan;
 use App\Http\Requests\RequestLoan\StoreRequest;
 
 use App\Http\Requests\RequestLoan\UpdateRequest;
+use Illuminate\Database\Eloquent\Builder;
+
 class RequestLoanController extends Controller
 {
+    protected Builder $requestLoansPr1;
+    protected Builder $requestLoansPr2;
+    protected Builder $requestLoansPr3;
+    protected Builder $requestLoansAll;
+    function __construct(    )
+    {
+        $this-> requestLoansPr1=RequestLoan::select('request_loans.*','priorities.name as priorityName')->join('priorities', 'request_loans.priority_id', '=', 'priorities.id')->
+                                      where('request_loans.priority_id', 1);
+
+        $this-> requestLoansPr2=RequestLoan::select('request_loans.*','priorities.name as priorityName')->join('priorities', 'request_loans.priority_id', '=', 'priorities.id')->
+                                      where('request_loans.priority_id', 2);
+
+        $this-> requestLoansPr3=RequestLoan::select('request_loans.*','priorities.name as priorityName')->join('priorities', 'request_loans.priority_id', '=', 'priorities.id')->
+                                      where('request_loans.priority_id', 3);
+
+        $this-> requestLoansAll=RequestLoan::select('request_loans.*','priorities.name as priorityName')->join('priorities', 'request_loans.priority_id', '=', 'priorities.id')
+                                          ->orderBy('priorities.name', 'asc');
+    }
+
+
     /**
      * Display a listing of the resource.
      */
-    public function index(AutorizeRequest $request)
+    public function index(FilterRequest $request)
     {
-        $requestLoansPr1=RequestLoan::select('request_loans.*','priorities.name as priorityName')->join('priorities', 'request_loans.priority_id', '=', 'priorities.id')->
-                                      where('request_loans.priority_id', 1)->orderBy('priorities.name', 'asc');
-
-        $requestLoansPr2=RequestLoan::select('request_loans.*','priorities.name as priorityName')->join('priorities', 'request_loans.priority_id', '=', 'priorities.id')->
-                                      where('request_loans.priority_id', 2)->orderBy('priorities.name', 'asc');
-
-        $requestLoansPr3=RequestLoan::select('request_loans.*','priorities.name as priorityName')->join('priorities', 'request_loans.priority_id', '=', 'priorities.id')->
-                                      where('request_loans.priority_id', 3)->orderBy('priorities.name', 'asc');
-
-
-        $requestLoanall=RequestLoan::select('request_loans.*','priorities.name as priorityName')->join('priorities', 'request_loans.priority_id', '=', 'priorities.id')->
-                                     orderBy('priorities.name', 'asc');
-
-
-        $data=[
+    $rows_per_page=$request->rows_per_page!=null?$request->rows_per_page: env('ROWS_PER_PAGE');
+       $requestLoansPr1=$this->filterBy($request,$this->requestLoansPr1);
+       $requestLoansPr2=$this->filterBy($request,$this->requestLoansPr2);
+       $requestLoansPr3=$this->filterby($request,$this->requestLoansPr3);
+       $requestLoansAll=$this->filterby($request,$this->requestLoansAll);
+       $data=[
+              'rows_per_page'=>$rows_per_page,
+            'firstdate'=>$request->firstdate ? date('Y-m-d', strtotime($request->firstdate)) : null,
+            'enddate'=>$request->enddate ? date('Y-m-d', strtotime($request->enddate)) : null,
+            'client_name'=>$request->client,
+            'client_id'=>$request->client_id,
             'priorities'=>Priority::leftjoin('request_loans', 'priorities.id', '=', 'request_loans.priority_id')->
                           select('priorities.id', 'priorities.name')->
                           selectraw('(CASE WHEN  ISNULL( SUM(amountRequested)) THEN 0 ELSE SUM(amountRequested) END) as loan_sum')->
                           groupBy('priorities.id', 'priorities.name')->get(),
-
-            'requestLoansPr1'=>$requestLoansPr1->get(),
-            'requestLoansPr2'=>$requestLoansPr2->get(),
-            'requestLoansPr3'=>$requestLoansPr3->get(),
-            'requestLoansAll'=>$requestLoanall->get()
+            'requestLoansPr1'=>$requestLoansPr1->paginate($rows_per_page),
+            'requestLoansPr2'=>$requestLoansPr2->paginate($rows_per_page),
+            'requestLoansPr3'=>$requestLoansPr3->paginate($rows_per_page),
+            'requestLoansAll'=>$requestLoansAll->paginate($rows_per_page)
 
         ];
         return view('RequestLoan.index', $data);
@@ -65,7 +83,7 @@ class RequestLoanController extends Controller
     {
         $arrRequestLoan=[
             'date'=>$request->date,
-            'clientName'=>$request->clientName,
+            'client_id'=>$request->client_id,
             'amountRequested'=>$request->amountRequested,
             'priority_id'=>$request->priority,
             'comments'=>$request->comments
@@ -105,7 +123,7 @@ class RequestLoanController extends Controller
         $requestLoan=RequestLoan::find($id);
         $arrRequestLoan=[
             'date'=>$request->date,
-            'clientName'=>$request->clientName,
+            'client_id'=>$request->client_id,
             'amountRequested'=>$request->amountRequested,
             'priority_id'=>$request->priority,
             'comments'=>$request->comments

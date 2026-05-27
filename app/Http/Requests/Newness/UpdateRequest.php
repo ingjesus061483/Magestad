@@ -7,15 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UpdateRequest extends FormRequest
 {
-    public function prepareForValidation()
-    {
-        $newnessType = explode('-', $this->newness_type_id);
-      //  $client = explode('-', $this->client_id);
-        $this->merge([
-            'newness_type_id' => trim($newnessType[0]),
-        //    'client_id' => trim($client[0]),
-        ]);
-    }
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -37,7 +29,7 @@ class UpdateRequest extends FormRequest
               'client'=>'required',
           //  'client_id'=>'required|exists:clients,id',
             'newness_type_id'=>'required|exists:newness_types,id',
-            'remark'=>'required|string|max:255',
+            'remark'=>'required|string',
             //
         ];
     }
@@ -48,14 +40,12 @@ class UpdateRequest extends FormRequest
             'user_id.exists' => 'El :attribute no existe.',
             'date.required' => 'La :attribute es obligatoria.',
             'date.date' => 'La :attribute no es una fecha valida.',
-            /*'client_id.required' => 'El :attribute es obligatorio.',
-            'client_id.exists' => 'El :attribute no existe.',*/
-            'client.required' => 'El :attribute es obligatorio.',
+           'client.required' => 'El :attribute es obligatorio.',
             'newness_type_id.required' => 'El :attribute es obligatorio.',
             'newness_type_id.exists' => 'El :attribute no existe.',
             'remark.required' => 'La :attribute es obligatoria.',
             'remark.string' => 'La :attribute debe ser una cadena de texto.',
-            'remark.max' => 'La :attribute no debe ser mayor a 255 caracteres.',
+
         ];
     }
     public function attributes()

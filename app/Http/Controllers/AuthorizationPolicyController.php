@@ -14,11 +14,14 @@ class AuthorizationPolicyController extends Controller
      */
     public function index(AutorizeRequest $request)
     {
-       $data=[
-        "policies"=> AuthorizationPolicy::all(),
-       ];
-       return view("AuthorizationPolicies.index",$data);
-        //
+        $rows_per_page=env('ROWS_PER_PAGE');
+        $data=[
+            "policies"=> AuthorizationPolicy::paginate($rows_per_page),
+        ];
+        return view("AuthorizationPolicies.index",$data);
+
+
+
     }
 
     /**

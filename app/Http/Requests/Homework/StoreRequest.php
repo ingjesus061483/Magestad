@@ -33,9 +33,9 @@ public function prepareForValidation()
         return [
             'user_id' => 'required|integer|exists:users,id',
             'date' => 'required|date',
-            'client'=>'required',
-           // 'client_id' => 'required|integer|exists:clients,id',
-            'remark' => 'required|string|max:255',
+
+            'client_id' => 'required|integer|exists:clients,id',
+            'task' => 'required|string|max:255',
 
 
 
@@ -49,7 +49,12 @@ public function prepareForValidation()
             'user_id.exists' => 'El :attribute no existe.',
             'date.required' => 'La :attribute es obligatoria.',
             'date.date' => 'La :attribute no es una fecha válida.',
-            'client.required' => 'El :attribute es obligatorio.',
+            'client_id.required' => 'El :attribute es obligatorio.',
+            'client_id.integer' => 'El :attribute debe ser un número entero.',
+            'client_id.exists' => 'El :attribute no existe.',
+            'task.required' => 'La :attribute es obligatoria.',
+            'task.string' => 'La :attribute debe ser una cadena de texto.',
+            'task.max' => 'La :attribute no debe ser mayor a 255 caracteres.',
             /*'client_id.required' => 'El :attribute es obligatorio.',
             'client_id.integer' => 'El :attribute debe ser un número entero.',
             'client_id.exists' => 'El :attribute no existe.',*/
@@ -67,9 +72,9 @@ public function prepareForValidation()
         return [
             'user_id' => 'usuario',
             'date' => 'fecha',
-             'client' => 'cliente',
+             'client_id' => 'cliente',
           /*  'client_id' => 'cliente',*/
-            'remark' => 'observación',
+            'task' => 'tarea',
             'homework_type_id' => 'tipo de tarea',
 
         ];

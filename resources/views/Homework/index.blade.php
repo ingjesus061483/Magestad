@@ -5,12 +5,14 @@
     <a  title="Crear Tarea" href="{{url('/homework/create')}}" class="btn btn-primary" >
         <i class="fa-solid fa-plus"></i>
     </a>
-    <button  title="Filtrar tarea" class="btnfilter btn btn-secondary"  data-title="Filtrar Tareas" data-url="{{url('/homework')}}">
-         <i class="fa-solid fa-filter"></i>
-
+    <button title="filtrar por..." class="filter btn btn-secondary" >
+        <i class="filter fa-solid fa-filter"></i>
     </button>
-
+     <button title="Exportar a excel" onclick="download('Homework')"  class="btn btn-success">
+        <i class="fa-solid fa-file-excel"></i>
+     </button>
 </div>
+@include('Shared.filter',['action'=>url('/homework')])
 <div id="accordion">
     @foreach ($state_homeworks as $item)
     <h3>
@@ -30,7 +32,7 @@
 
     </a>
       <strong >&nbsp; </strong>&nbsp;|&nbsp;{{ $item->name }},
-       {{ number_format($item->id==1?count($pendingTasks):count($doneTasks)) }}
+       {{ number_format($item->id==1?$countpendingTasks:$countdoneTasks) }}
     </h3>
     <div>
         @switch($item->id)
@@ -46,7 +48,5 @@
     </div>
 @endforeach
 </div>
-
-
 
 @endsection

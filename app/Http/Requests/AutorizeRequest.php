@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Auth;
+use Override;
 
 class AutorizeRequest extends FormRequest
 {
@@ -19,12 +20,19 @@ class AutorizeRequest extends FormRequest
 // Posted by dgregory
 // Retrieved 4/11/2025, License - CC-BY-SA 4.0
     protected function failedAuthorization()
-    {    
+    {
         throw new HttpResponseException(response()->redirectTo(url('/UnAutorize'))
         ->with(['error' => 'Esta accion no esta autorizada!']));
     }
+     public function prepareForValidation(){
+        if($this->has('info'))
+        {
+            $this->merge([
+                'info' =>trim(explode('-',$this->info)[0])
+            ]);
+        }
+     }
 
-      
     /**
      * Get the validation rules that apply to the request.
      *

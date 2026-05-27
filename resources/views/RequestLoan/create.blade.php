@@ -18,8 +18,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="mb-3">
-                        <label for="" class="form-label" style="font-size:14px">Nombre del cliente</label>
-                        <input type="text" name="clientName" class="form-control" value="{{old('clientName')}}" style="font-size:12px" id="">
+                        @include('Shared.searchClient', ['client' => null])
                     </div>
                 </div>
             </div>
@@ -27,7 +26,7 @@
                 <div class="col-sm-6" >
                     <div class="mb-3">
                         <label for="" class="form-label" style="font-size:14px">Monto solicitado</label>
-                        <input type="text" name="amountRequested" class="currency form-control" value="{{number_format(old('amountRequested'))}}" style="font-size:12px" id="">
+                        <input type="text" name="amountRequested" class="currency form-control" value="{{old('amountRequested')}}" style="font-size:12px" id="">
                     </div>
                 </div>
                 <div class="col-sm-6 ">

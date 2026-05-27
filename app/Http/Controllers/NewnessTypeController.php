@@ -24,7 +24,10 @@ class NewnessTypeController extends Controller
      */
     public function index(AutorizeRequest $request)
     {
-        $data=['NewnessTypes'=>$this->newnessTypes->get()];
+        $rows_per_page=env('ROWS_PER_PAGE');
+         $data=[
+            'NewnessTypes'=>$this->newnessTypes->paginate($rows_per_page),
+        ];
         return view('NewnessType.index',$data);
         //
     }

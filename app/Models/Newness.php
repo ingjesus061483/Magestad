@@ -9,8 +9,9 @@ class Newness extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id','date','client','newness_type_id','remark','state_newness_id'
+        'user_id','date','client_id','newness_type_id','remark','state_newness_id'
     ];
+
     public function user (){
         return $this->belongsTo(User::class,'user_id');
     }

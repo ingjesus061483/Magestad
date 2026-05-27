@@ -5,10 +5,14 @@
     <a  title="Crear Novedad" href="{{url('/Newness/create')}}" class="btn btn-primary" >
         <i class="fa-solid fa-plus"></i>
     </a>
-    <button title="Filtrar novedad" class="btnfilter btn btn-secondary" data-title="Filtrar Novedades" data-url="{{url('/Newness')}}">
-         <i class="fa-solid fa-filter"></i>
+     <button title="filtrar por..." class="filter btn btn-secondary" >
+        <i class="filter fa-solid fa-filter"></i>
     </button>
+     <button title="Exportar a excel" onclick="download('Newness')"  class="btn btn-success">
+        <i class="fa-solid fa-file-excel"></i>
+     </button>
 </div>
+@include('Shared.filter',['action'=>url('/Newness'), 'newness'=>true])
 <div id="accordion">
     @foreach($state_newnesses as $item)
     <h3>
@@ -23,7 +27,7 @@
     @endswitch>
         &nbsp;&nbsp;
     </a>
-      <strong >&nbsp; |  </strong>&nbsp;{{ $item->name }}, {{ number_format($item->id==1?count($pendingNewnesses):count($doneNewnesses)) }}
+      <strong >&nbsp; |  </strong>&nbsp;{{ $item->name }}, {{ number_format($item->id==1?$countpendingNewness:$countdoneNewness) }}
     </h3>
     <div>
         @switch($item->id)

@@ -1,5 +1,5 @@
 @extends('Shared/layout')
-@section('title','solicitud de credito')
+@section('title','Editar solicitud de credito')
 @section('content')
 <div style="padding-bottom: 5px">
     @include('Shared.accordionClient')
@@ -10,6 +10,14 @@
         <i class="fa-solid fa-arrow-left"></i>
     </a>
 </div>
+<script type="text/javascript">
+
+var info= document.getElementById('info');
+var cards=document.getElementsByClassName('card');
+var card=document.getElementById( info.value);
+var i=parseInt( info.value);
+card.style.display='block';
+</script>
 <!--<div style="padding:5px;" >
     <div class="row" style="margin-top:5px">
         <div class="col-4">

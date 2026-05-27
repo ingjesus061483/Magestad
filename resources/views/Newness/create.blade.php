@@ -16,15 +16,12 @@
                     <input type="date"name="date" class="form-control" id="date" style="font-size:12px" value="{{date('Y-m-d')}}">
                 </div>
                 <div class="col-sm-6">
-                     <label for="date" class="col-form-label" style="font-size:14px">Cliente</label>
-                    <input type="text"name="client" class="form-control" id="date" style="font-size:12px" value="{{old('client')}}">
+                     @include('Shared.searchClient', ['client' => null])
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-sm-6">
-                    <label for="newness_type_id" class="col-form-label" style="font-size:14px">Tipo de Novedad</label>
-                    <input type="text" value="{{old('newness_type')}}"  class="form-control" name="newness_type" style="font-size:12px" id="newness_type">
-                    <input type="hidden"  class="form-control"value="{{old('newness_type_id')}}" name="newness_type_id" style="font-size:12px" id="newness_type_id">
+                    @include('Shared.newnesstype', ['newness_type' => null])
                 </div>
                 <div class="col-sm-6">
                     <label for="remark" class="col-form-label" style="font-size:14px">Novedad</label>

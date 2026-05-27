@@ -60,6 +60,9 @@ Route::resource('loans', LoanController::class);
 Route::get('users/login/{id}',[UserController::class,'login']);
 Route::post('users/sigin',[UserController::class,'storelogin']);
 Route::post('users/logout',[UserController::class,'logout']);
+Route::get('Newness/download/{id}',[NewnessController::class,'downloadExcel']);
+Route::get('Homework/download/{id}',[HomeworkController::class,'downloadExcel']);
+
 Route::post('Newness/changeStateNewness/{id}',[NewnessController::class,'changeStateNewness']);
 Route::post('homework/changeStateHomework/{id}',[HomeworkController::class,'changeStateHomework']);
 Route::resource('arls',ArlController::class);

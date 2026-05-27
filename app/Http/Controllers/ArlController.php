@@ -15,10 +15,12 @@ class ArlController extends Controller
     }
     public function index(AutorizeRequest $request)
     {
-        $data=[
-            'arls'=>ArlAffiliate::orderby('name','asc')->get()
+         $rows_per_page=env('ROWS_PER_PAGE');
+         $data=[
+            'arls'=>ArlAffiliate::orderby('name','asc')->paginate($rows_per_page),
         ];
         return view('Arl.index',$data);
+
         //
     }
     public function store(StoreRequest $request)

@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
         <link href="{{asset('resources/js/jquery-ui-1.12.1.custom/jquery-ui.css')}}" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+          <link href="{{asset('resources/css/app.css')}}" rel="stylesheet">
     <!-- Custom fonts for this template-->
     <link href="{{asset('resources/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link
