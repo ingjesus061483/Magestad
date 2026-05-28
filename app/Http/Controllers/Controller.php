@@ -14,22 +14,20 @@ class Controller extends BaseController
     use AuthorizesRequests, ValidatesRequests;
     public function filterBy(FilterRequest $request,Builder $builder ): Builder
     {
+        $build=$builder;
         if($request->firstdate!=null&&$request->enddate!=null)//dates
         {
             $build=$builder->wherebetween('date', [
                                                         $request->firstdate,
                                                         $request->enddate
                                                     ]);
-
             if($request->client_id!=null)
             {
                 $build=$build->where('client_id',$request->client_id);
-
             }
             if($request->newness_type_id!=null)
             {
                 $build=$build->where('newness_type_id',$request->newness_type_id);
-
             }
         }
         else if($request->client_id!=null && $request->newness_type_id!=null)
@@ -40,18 +38,10 @@ class Controller extends BaseController
         else if($request->client_id!=null )
         {
             $build=$builder->where('client_id',$request->client_id);
-
         }
         else if($request->newness_type_id!=null)
         {
             $builder=$builder->where('newness_type_id',$request->newness_type_id);
-
-
-        }
-        else
-        {
-            $build=$builder;
-
         }
         return $build;
 

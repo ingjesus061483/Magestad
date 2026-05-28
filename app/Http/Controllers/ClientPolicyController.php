@@ -5,10 +5,11 @@ use App\Http\Requests\ClientPolicy\StoreRequest;
 use App\Models\AuthorizationPolicy;
 use App\Models\ClientPolicy;
 use App\Models\Loan;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 class ClientPolicyController extends Controller
 {
-    protected $ClientpolicyAut;
+    protected Builder $ClientpolicyAut;
     public function __construct()
     {
         $this->ClientpolicyAut=ClientPolicy::join('authorization_policies as p','p.id','=','policy_id');
