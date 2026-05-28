@@ -65,7 +65,12 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-success">Guardar</button>
+            <div class="mb-3">
+                 <a href="{{url('/requestLoan')}}" title="Regresar" class="btn btn-primary">
+                     <i class="fa-solid fa-arrow-left" ></i>
+                </a>
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </div>
         </form>
     </div>
 </div>

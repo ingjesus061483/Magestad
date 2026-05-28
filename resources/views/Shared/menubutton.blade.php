@@ -89,6 +89,7 @@
     <script src="{{asset('resources/js/sb-admin-2.min.js')}}"></script>
      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
+            var submodule="{{$submodule}}"
             if ($("#errors").length>0)
             {
                 Swal.fire({
@@ -99,8 +100,10 @@
                 });
 
             }
-
-
+            if(submodule!='')
+            {
+showSubmodule(submodule)
+            }
         function ShowSubconfig(subModule)
         {
             $("#"+subModule).css('display','block');

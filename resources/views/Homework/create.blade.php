@@ -55,6 +55,9 @@
                 </div>
             </div>
             <div class="mb-3">
+                <a href="{{url('/homework')}}" title="Regresar" class="btn btn-primary">
+        <i class="fa-solid fa-arrow-left" ></i>
+    </a>
                 <button type="submit" class="btn btn-success">Guardar</button>
             </div>
         </form>

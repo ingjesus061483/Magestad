@@ -27,7 +27,7 @@
              @break
         @case(3)
         style="background-color:rgb(245, 218, 39);border-radius:10px"
-    @endswitch >
+        @endswitch >
         &nbsp;&nbsp;
 
     </a>
@@ -46,7 +46,11 @@
         @endswitch
 
     </div>
-@endforeach
+    @endforeach
 </div>
-
+<div style="padding-top:5px ">
+    <a href="{{url('/')}}?submodule=subDay" title="Regresar" class="btn btn-primary">
+        <i class="fa-solid fa-arrow-left" ></i>
+    </a>
+</div>
 @endsection

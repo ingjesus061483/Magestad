@@ -46,10 +46,8 @@ class NewnessController extends Controller
     public function index (FilterRequest $request)
     {
         $rows_per_page=$request->rows_per_page!=null?$request->rows_per_page: env('ROWS_PER_PAGE');
-      //  $pendingNewnesses=$this-> filterBy($request)['pendingNewnesses'];
-       // $doneNewnesses= $this->filterBy($request)['doneNewnesses'];
-       $pendingNewnesses=$this->filterBy($request,$this->pendingNewnesses);
-       $doneNewnesses=$this->filterBy($request,$this->doneNewnesses);
+        $pendingNewnesses=$this->filterBy($request,$this->pendingNewnesses);
+        $doneNewnesses=$this->filterBy($request,$this->doneNewnesses);
         $countpendingNewness=$pendingNewnesses->count();
         $countdoneNewness=$doneNewnesses->count();
         $pendingNewnesses=$pendingNewnesses->paginate($rows_per_page);

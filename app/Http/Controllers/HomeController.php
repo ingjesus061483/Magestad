@@ -11,9 +11,11 @@ class HomeController extends Controller
 {
     public function index()
     {
+      $data=['submodule'=> request()->submodule!=null?request()->submodule:''];
+
         $client=session()->has('client')?session('client'):null;
         if($client==null){
-            return view('Home.welcome');
+            return view('Home.welcome',$data);
         }
         $policy=ClientPolicy::where('client_id',$client?->id)->count();
         if($client->contact_informations->count()==0)
@@ -53,7 +55,7 @@ class HomeController extends Controller
         {
             session()->forget('message');
         }
-        return view('Home.welcome');
+        return view('Home.welcome',$data);
     }
     //
 }

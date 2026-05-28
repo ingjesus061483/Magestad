@@ -568,4 +568,9 @@ th {background: #eee;}*/
 <div style="padding-top:10px">
     {{ $clients->links('pagination::bootstrap-5') }}
 </div>
+<div style="padding-top:5px ">
+    <a title="Regresar" href="{{url('/')}}?submodule=subClient" class="btn btn-primary">
+        <i class="fa-solid fa-arrow-left" ></i>
+    </a>
+</div>
 @endsection

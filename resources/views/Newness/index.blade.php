@@ -41,4 +41,10 @@
     </div>
     @endforeach
 </div>
+
+<div style="padding-top:5px ">
+    <a href="{{url('/')}}?submodule=subDay" title="Regresar" class="btn btn-primary">
+        <i class="fa-solid fa-arrow-left" ></i>
+    </a>
+</div>
 @endsection
