@@ -1,29 +1,7 @@
-@extends('Shared/layout')
-@section('title','Formulario de solicitud de credito')
+    @extends('Shared/layout')
+@section('title','Informacion del cliente')
 @section('content')
-    <div style="padding-bottom: 5px">
-        <div class="card mb-4">
-            <div class="card-header">
-                <i class="fa-solid fa-id-card"></i>
-                ANEXOS
-            </div>
-            <div class="card-body">
-                Estimado Sr(a) <strong> {{$client->name_last_name}}</strong>, buenas tardes, Gracias por diligenciar el formulario 👍
-                Validaremos la información anterior
-                y nos contactaremos con usted a la mayor brevedad posible, para acordar el desembolso  y los términos de la negociación.
-                Para finalizar este proceso, favor enviar al WhatsApp 300 676 6200 o adjuntar aquí 👇 los sgtes documentos para complementar dicha solicitud:
-                <ul>
-                        <li> Cédula de ciudadanía (ambos lados)</li>
-                        <li> Desprendibles de pago (último mes)</li>
-                        <li> Certificación laboral no mayor a 30 días</li>
-                        <li> Recibo de servicio público</li>
-                        <li> Carnet ARL afiliada.</li>
-                </ul>
-                Mil gracias.<br>
-                <strong>Cesar Rodriguez CSSoluciones</strong>
-            </div>
-        </div>
-  <!--  <div class="card mb-4" id="cardInfoPersonal"style=" width:100%;margin:0 auto;">
+    <div class="card mb-4" id="cardInfoPersonal"style="width:100%;margin:0 auto;">
         <div class="card-header">
             <i class="fa-solid fa-id-card"></i>
             INFORMACION PERSONAL
@@ -149,6 +127,15 @@
                 <div class="col-sm-4">
                     <div class="mb-3">
                         <label class="form-label" style="font-weight: bold" for="">
+                            PERFIL OCUPACIONAL:
+                        </label>
+                        {{$item->occupational_position->name}}
+                    </div>
+                </div>
+                @if($item->occupational_position->id==2)
+                <div class="col-sm-4">
+                    <div class="mb-3">
+                        <label class="form-label" style="font-weight: bold" for="">
                             EMPRESA DONDE LABORA:
                         </label>
                         {{$item->company_works}}
@@ -162,6 +149,10 @@
                         {{$item->nit_company_work}}
                     </div>
                 </div>
+                @endif
+            </div>
+            <div class="row">
+                @if($item->occupational_position->id==2)
                 <div class="col-sm-4">
                     <div class="mb-3">
                         <label class="form-label" style="font-weight: bold" for="">
@@ -170,8 +161,6 @@
                         {{$item->main_address}}
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-4">
                     <div class="mb-3">
                         <label class="form-label" style="font-weight: bold" for="">
@@ -188,6 +177,10 @@
                         {{$item->city?->name}}
                     </div>
                 </div>
+                @endif
+            </div>
+            @if($item->occupational_position->id==2)
+            <div class="row">
                 <div class="col-sm-4">
                     <div class="mb-3">
                         <label class="form-label" style="font-weight: bold" for="">
@@ -196,8 +189,6 @@
                         {{$item->company_on_mission}}
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-4">
                     <div class="mb-3">
                         <label class="form-label" style="font-weight: bold" for="">
@@ -214,6 +205,10 @@
                         {{$item->branch_address}}
                     </div>
                 </div>
+            </div>
+            @endif
+            <div class="row">
+                @if ($item->occupational_position->id == 2)
                 <div class="col-sm-4">
                     <div class="mb-3">
                         <label class="form-label" style="font-weight: bold" for="">
@@ -222,24 +217,25 @@
                         {{ date("d/m/Y", strtotime($item->entry_date))}}
                     </div>
                 </div>
-            </div>
-            <div class="row">
+                @endif
                 <div class="col-sm-4">
                     <div class="mb-3">
                         <label class="form-label" style="font-weight: bold" for="">
-                            SALARIO MENSUAL PROMEDIO:
+                         {{$item->occupational_position->id==1? 'SALARIO MENSUAL PROMEDIO': 'INGRESOS'}}
                         </label>
-                        ${{number_format($item->monthly_average_salary,0,',','.')}}
+                        ${{number_format($item->average_monthly_salary,0,',','.')}}
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="mb-3">
                         <label class="form-label" style="font-weight: bold" for="">
-                            CARGO ACTUAL:
+                          {{$item->occupational_position->id==1? 'CARGO ACTUAL': 'A QUE SE DEDICA'}}
                         </label>
                         {{$item->current_position}}
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-4">
                     <div class="mb-3">
                         <label class="form-label" style="font-weight: bold" for="">
@@ -248,8 +244,6 @@
                         {{$item->payment_frequency->name}}
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-4">
                     <div class="mb-3">
                         <label class="form-label" style="font-weight: bold" for="">
@@ -266,6 +260,9 @@
                         {{$item->customer_payment_date->name}}
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                @if ($item->occupational_position->id == 2)
                 <div class="col-sm-4">
                     <div class="mb-3">
                         <label class="form-label" style="font-weight: bold" for="">
@@ -274,8 +271,7 @@
                         {{$item->contract_type?->name}}
                     </div>
                 </div>
-            </div>
-            <div class="row">
+                @endif
                 <div class="col-sm-4">
                     <div class="mb-3">
                         <label class="form-label" style="font-weight: bold" for="">
@@ -374,6 +370,7 @@
                         {{$client->seizure==1?'Si':'No' }}
                     </div>
                 </div>
+                @if ($client->seizure==1 )
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="" style="font-weight: bold">
@@ -382,6 +379,7 @@
                         {{$client->company_seizure}}
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>
@@ -470,15 +468,11 @@
             </div>
         </div>
     </div>
-</div>-->
-<div style="padding-top:5px;padding-bottom:5px">
+    <div style="padding-top:5px;padding-bottom:5px">
     @if (auth()->check())
     <a class="btn btn-primary" title="Regresar" href="{{url('/clients')}}">
         <i class="fa-solid fa-arrow-left"></i>
     </a>
     @endif
-    <a title="Finalizar proceso" href="{{url('/')}}" class="btn btn-danger">
-    <i class="fa-solid fa-flag-checkered"></i>
-    </a>
 </div>
 @endsection

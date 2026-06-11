@@ -12,18 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->foreignId('quality_holder_id')
-            ->constrained('quality_holders')
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
-            $table->foreignId('marital_status_id')
-            ->constrained('marital_status')
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
-            $table->foreignId('level_study_id')
-                  ->constrained('level_studies')   //
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+            $table->after('estate',function (Blueprint $table){
+                $table->foreignId('quality_holder_id')
+                      ->constrained('quality_holders')
+                     ->onUpdate('cascade')
+                     ->onDelete('cascade');
+                $table->foreignId('marital_status_id')
+                      ->constrained('marital_status')
+                      ->onUpdate('cascade')
+                      ->onDelete('cascade');
+                $table->foreignId('level_study_id')
+                      ->constrained('level_studies')   //
+                      ->onUpdate('cascade')
+                      ->onDelete('cascade');
+            });
         });
     }
 

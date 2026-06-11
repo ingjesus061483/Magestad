@@ -13,8 +13,8 @@ class NewnessStateSeeder extends Seeder
     public function run(): void
     {
         DB::table("state_newness")->insert([
-            ["name"=>"Novedades Pendientes"],
-            ["name"=>"Novedades Actualizada"],
+            ["name"=>"Novedad Pendiente"],
+            ["name"=>"Novedad Actualizada"],
         ]);
         //
     }

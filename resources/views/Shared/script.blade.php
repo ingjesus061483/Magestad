@@ -22,6 +22,26 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="text/javascript">
             var user=$("#user").val();
+             $.datepicker.regional['es'] = {
+                closeText: 'Cerrar',
+                prevText: '&#x3C;Ant',
+                nextText: 'Sig&#x3E;',
+                currentText: 'Hoy',
+                monthNames: ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'],
+                monthNamesShort: ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'],
+                dayNames: ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'],
+                dayNamesShort: ['dom','lun','mar','mié','jue','vie','sáb'],
+                dayNamesMin: ['D','L','M','X','J','V','S'],
+                weekHeader: 'Sm',
+                dateFormat: 'yy-mm-dd',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: ''
+            };
+
+            $.datepicker.setDefaults( $.datepicker.regional['es'] );
+
 
             $("#policyclientcount").html({{isset($policyclients)?count($policyclients):0}});
             $("#autorizationclientcount").html({{isset($autorizationsclients)?count($autorizationsclients):0}})
@@ -30,6 +50,10 @@
             var client=$("#client").val();
             var app=$("#info").val()==""?$("#info").val():parseInt($("#info").val())-1;
             var urlBase=$("#base_url").val();
+            $(".importer").click(function(){
+                $("#filterForm").fadeOut();
+                $("#importForm").fadeIn();
+            });
             $(".custom-file-input").on("change", function() {
                 var fileName = $(this).val().split("\\").pop();
                 $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
@@ -843,15 +867,24 @@
                     }
                 });
             }
-            function dropFilters()
+
+            function dropFilters(client )
             {
-                $("#dateStart").val('');
-                $("#dateEnd").val('');
                 $("#client_name").val('');
                 $("#client_id").val('');
-                $("#newsness_type").val('');
-                $("#newsness_type_id").val('');
                 $("#rows_per_page").val('');
+                if(!client)
+                {
+                    $("#dateStart").val('');
+                    $("#dateEnd").val('');
+                    $("#newsness_type").val('');
+                    $("#newsness_type_id").val('');
+
+                }
+                else
+                {
+                    $("#loan_reference").val('');
+                }
                 $("#frmfilter").submit();
             }
 
@@ -989,6 +1022,39 @@
                     }
                 });
             }
+
+
+            function editarEventType(id)
+            {
+                 var url =urlBase+'eventtype/'+id;
+                 $.ajax({
+                    url: url,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (result)
+                    {
+                        console.log(result);
+                        dialogEventTipe.dialog("open");
+                        $("#frmEventTipe #name").val(result.name);
+                        $("#frmEventTipe #description").val(result.description);
+                        $("#frmEventTipe").attr('action',urlBase+"eventtype/"+id);//"{{url('/eps')}}/"+id);
+                        let metodo= '<input type="hidden" name="_method" value="PUT">';
+                        $("#frmEventTipe").append(metodo);
+                    },
+                    error: function (ajaxContext)
+                    {
+                        Swal.fire({
+                            title: "Se han encontrado los siguientes errores:",
+                            icon: "error",
+                            text:ajaxContext.responseText,
+                            draggable: true
+                        });
+                        //alert(ajaxContext.responseText)
+                    }
+                });
+
+
+            }
             function remark(id)
             {
                 //alert(id);
@@ -1034,7 +1100,128 @@
                 });
 
             }
+            function showEvents(date)
+            {
+                var url=urlBase+'events/0';
+                var data={
+                    date:date
+                }
 
+                 $.ajax({
+                    url: url,
+                    type: "GET",
+                    data:data,
+                    dataType: "json",
+                    success: function (result)
+                    {
+                        $("#events").html('');
+                        console.log(result);
+                        var d = new Date(date).toLocaleString("en-US",{
+                            year:"numeric",
+                            month:"long",
+                            day:"numeric"
+                        });
+                        console.log(d);
+                        var title="Eventos "+d;
+                        dialogEvent.dialog( "option", "title",  title);
+                        dialogEvent.dialog("open");
+                        var div='';
+                        $.each(result, function (index, element){
+                            console.log(element)
+                                var time=new Date(element.date+" "+element.time);
+                                div=div+"<div class ='col-6' style='padding:5px;'>";
+                                div=div+"<div class='card'><div class='card-header' style='align-text:center;align-items:center'> <strong> "+element.event_type  +"</strong></div>";
+                                div=div+"<div class='card-body'> <p style='font-size:12px'><strong>Hora:</strong> "+   time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })    +"</p>";
+                                div=div+"<div style='font-size:12px; height:200px; overflow: scroll;'>"+element.remark +"</div>";
+                                div=div+"<div style='padding:5px'>"+
+                                    "<button class='btn-sm btn-warning'onclick='editEvent("+element.id+")' title='Editar evento' style='margin-left:10px' >"+
+                                    "<i class='fa-solid fa-pencil'></i></button>"+
+                                    "<button class='btn-sm btn-danger' onclick=' deleteEvent("+element.id+")' style='margin-left:10px' title='Eliminar evento'>"+
+                                    "<i class='fa-solid fa-trash'></i></button>"
+                                div=div+"</div></div></div></div>";
+
+                        });
+                        $("#events").html(div);
+                    },
+                    error: function (ajaxContext,status)
+                    {
+                        console.log( ajaxContext);
+                        var error=ajaxContext.responseJSON;
+                        Swal.fire({
+                            title: "Se han encontrado los siguientes errores:",
+                            icon: "error",
+                            text:error.message,
+                            draggable: true
+                        });
+                        //alert(ajaxContext.responseText)
+                    }
+                });
+            }
+            function deleteEvent(id)
+            {
+
+               var url=urlBase+'events/'+ id
+              var  data={
+                _method:'delete',
+                _token: "{{csrf_token()}}"
+              }
+                 Swal.fire({
+                    title: 'Eliminar evento?',
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Si, continuar",
+                    cancelButtonText: "Cancelar"
+                    }).then((result) =>
+                    {
+                        if(result.isConfirmed)
+                        {
+                           $.ajax({
+                    url: url,
+                    type: "post",
+                    data:data,
+                    dataType: "json",
+                    success: function (result)
+                    {
+                        Swal.fire({
+                            title: "Mensaje",
+                            icon: "info",
+                            text:result.message,
+                            draggable: true
+                        });
+                        window.location.reload()
+                    },
+                    error: function (ajaxContext,status)
+                    {
+                        console.log( ajaxContext);
+                        var error=ajaxContext.responseJSON;
+                        Swal.fire({
+                            title: "Se han encontrado los siguientes errores:",
+                            icon: "error",
+                            text:error.message,
+                            draggable: true
+                        });
+                        //alert(ajaxContext.responseText)
+                    }
+                });
+
+                        }
+
+
+                    });
+
+
+            }
+            function editEvent(id){
+                var url= urlBase+'events/'+ id+'/edit';
+                window.location.href=url;
+
+             }
+            function quitarEspacios(text){
+                var a= text.value.trim()
+                text.value=a
+            }
             $("#occupational_position").change(function()
             {
                 $('#company_works').val('');
@@ -1120,7 +1307,7 @@
                             progressbar.progressbar("option", "value",parseInt( result.info));
                             $("#step7").removeClass('progtrckr-todo').addClass('progtrckr-done');
                             setTimeout(function(){
-                                window.location.href=urlBase+'clients/'+client;
+                                window.location.href=urlBase+'clients/'+client+'?action=finish';
                             }, 5000);
                         },
                         error: function (ajaxContext)
@@ -1143,8 +1330,12 @@
             $(".filter").click(function(){
 
                 $("#filterForm").fadeIn();
+                $("#importForm").fadeOut();
 
             })
+            $("#btnCloseImportExcel").click(function(){
+                $("#importForm").fadeOut();
+            });
             $("#btnCloseFilter").click(function(){
                 $("#filterForm").fadeOut();
             });
@@ -1298,6 +1489,11 @@
 
 
             });
+            $("#btnEventType").click(function(){
+                dialogEventTipe.dialog('open');
+
+            })
+
             $("#btnInfoLaboral").click(function(){
                 $(".btn").removeClass('btn-info').addClass('btn-primary');
                 $("#btnInfoLaboral")
@@ -1350,6 +1546,40 @@
                 $("#frmEditClient").attr('action',urlBase+"clients/"+client_id+"/edit");
                 dialogEditClient.dialog("open");
             });
+              $("#datepicker").datepicker({
+                    onSelect:function(  dateText, inst )
+                    {
+                        showEvents(dateText);
+
+                    },
+                    autoSize:true
+              });
+              var dialogEvent=$("#dialogEvent").dialog({
+                autoOpen: false,
+                height: "auto",
+                width:400,
+                modal: true,
+                 classes:{
+                    "ui-dialog-titlebar-close":"hidden"
+                },
+                buttons:
+                [{
+                    title:"Regresar",
+                    icon: 'fa-solid fa-arrow-left',
+                    "class": 'btn btn-primary',
+                    click: function () {
+                        dialogEvent.dialog("close");
+                    }
+                }],
+
+                close: function ()
+                {
+
+                   //form[0].reset();
+                    //allFields.removeClass("ui-state-error");
+
+                }
+            })
              var dialogEditClient= $("#dialogEditClient").dialog({
                 autoOpen: false,
                 height: "auto",
@@ -1723,6 +1953,44 @@
                     //allFields.removeClass("ui-state-error");
                 }
             });
+            var dialogEventTipe=$("#dialogEventTipe").dialog({
+                autoOpen: false,
+                height: "auto",
+                 classes:{
+                    "ui-dialog-titlebar-close":"hidden"
+                },
+                width: 300,
+                modal: true,
+                buttons:
+                [
+                    {
+                        icon: 'fa-solid fa-save',
+                        title: "Guardar",
+                        "class": 'btn btn-success',
+                        click: function()
+                        {
+                            $("#frmEventTipe")[0].submit();
+                        }
+                    },
+                    {
+                        icon: 'fa-solid fa-arrow-left',
+                        title: "Salir",
+                        "class": 'btn btn-primary',
+                        click: function ()
+                        {
+                             $("#frmEventTipe")[0].reset();
+                            dialogContact.dialog("close");
+                        }
+
+                    }
+                ],
+                close: function ()
+                {
+                    $("#frmContact")[0].reset();
+                //form[0].reset();
+                //allFields.removeClass("ui-state-error");
+                }
+            })
             dialogContact= $("#dialogContact").dialog({
                 autoOpen: false,
                 height: "auto",

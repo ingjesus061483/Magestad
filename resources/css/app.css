@@ -16,6 +16,44 @@
 .tableFixHead  thead th { position: sticky; top: 0; z-index: 1; }
 
 /* Just common table stuff. Really. */
-table  { border-collapse: collapse; width: 100%; }
+table  { border-collapse: collapse;color: black; width: 100%; }
 th, td { padding: 8px 16px; }
+div{
+    color: black;
+}
 th {background:#5463AB;color:white}
+label{
+    color: #000;
+}
+
+
+select{
+    color: #000;
+}
+input[type=text]:focus{
+    color: #000;
+}
+input[type=date]:focus{
+    color: #000;
+}
+input[type=time]:focus{
+    color: #000;
+}
+input[type=number]:focus{
+    color: #000;
+}
+
+input[type=text]{
+    color: #000;
+}
+input[type=date]{
+    color: #000;
+}
+input[type=time]{
+    color: #000;
+}
+input[type=number]{
+    color: #000;
+}
+
+

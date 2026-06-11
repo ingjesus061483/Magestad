@@ -5,8 +5,6 @@
 <div style="padding: 5px">
     <a  title="Crear Arl" class="btnArl btn btn-primary" ><i class="fa-solid fa-plus"></i></a>
 </div>
-
-
 <div class="tableFixHead card">
     <table  class="table-hover table-bordered" style="width:100%" >
         <thead style ="font-size: 14px" >

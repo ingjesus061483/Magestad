@@ -27,6 +27,9 @@ class LoanController extends Controller
     public function store(StoreRequest $request)
     {
         $client=session()->has('client')?session('client'):null;
+        $day_request=loan::whereraw("DATE_FORMAT(created_at, '%Y-%m-%d')=DATE_FORMAT(curdate(),'%Y-%m-%d')")
+                         ->where('loan_status_id','=',1)
+                         ->count()+1;
       //  $ammount=$this->convert_to_number($request->ammount);
         if($client==null)
         {
@@ -34,13 +37,13 @@ class LoanController extends Controller
                                                                          sido llena");
         }
         $arrloan=[
-            'reference'=>'SC-'. $client->identification.'-'.$client->id,
+            'reference'=>'SC-'.$client->identification.'-'.$day_request,
             'ammount'=>$request->ammount,
             'term'=>$request->term,
             'client_id'=>$request->client_id,
             'warranty_id'=>$request->warranty,
             'loan_type_id'=>$request->loan_type,
-            'loan_status_id'=>3,
+            'loan_status_id'=>1,
         ];
         $loan=Loan::create($arrloan);
         session(["info"=>"7"]);

@@ -5,17 +5,18 @@ namespace App\Http\Controllers;
 use App\Exports\NewnessExport;
 use App\Http\Requests\AutorizeRequest;
 use App\Http\Requests\FilterRequest;
+use App\Http\Requests\ImportRequest;
 use App\Http\Requests\Newness\IndexRequest;
 use App\Models\Newness;
 use Illuminate\Http\Request;
 use App\Http\Requests\Newness\StoreRequest;
 use App\Http\Requests\Newness\UpdateRequest;
+use App\Imports\NewnessImport;
 use App\Models\Client;
 use App\Models\NewnessType;
 use App\Models\StateNewness;
 use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Facades\Excel;
-
 class NewnessController extends Controller
 {
     protected Builder $pendingNewnesses;
@@ -75,6 +76,29 @@ class NewnessController extends Controller
 
         //
     }
+    public function importExcel(int $id, ImportRequest $request)
+    {
+       try{
+            Excel::import(new NewnessImport,$request->file('file'));
+            return back()->with(['message'=>'Tareas importadas correctamente']);
+        }
+        catch(\Maatwebsite\Excel\Validators\ValidationException $e){
+            $failures = $e->failures();
+            $errorMessages = [];
+            foreach ($failures as $failure) {
+                $errorMessages[] = "Row {$failure->row()}: " . implode(', ', $failure->errors());
+            }
+            return back()->withErrors($errorMessages);
+        }
+
+
+    }
+     public function Downloadtemplate(int $id)
+    {
+
+        $path=storage_path('app/public/File/PlantillaNovedades.xls');
+        return response()->download($path);
+    }
     public function changeStateNewness( Request $request, int $id)
     {
         $newness=Newness::find($id);
@@ -103,7 +127,8 @@ class NewnessController extends Controller
             'client_id'=>$request->client_id,
             'newness_type_id'=>$request->newness_type_id,
             'remark'=>$request->remark,
-            'state_newness_id'=>$request->state_newness
+            'state_newness_id'=>$request->state_newness,
+
         ]);
         return redirect()->to('/Newness')->with(['message'=>'Novedad creada correctamente']);
         //

@@ -14,9 +14,10 @@ class loanStatusSeeder extends Seeder
     public function run(): void
     {
         DB::table('loan_statuses')->insert([
+            ['name'=>'Solicitado'],
             ['name'=>'Aprobado'],
             ['name'=>'Rechazado'],
-            ['name'=>'En estudio']
+
         ]);
         //
     }

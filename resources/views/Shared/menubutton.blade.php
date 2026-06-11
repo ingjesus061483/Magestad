@@ -10,7 +10,7 @@
     <meta name="author" content="">
 
     <title>{{env('APP_NAME')}}&nbsp;-&nbsp;@yield('title')</title>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <!-- Custom fonts for this template-->
     <link href="{{asset('resources/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link
@@ -21,11 +21,13 @@
     <!-- Custom styles for this template-->
     <link href="{{asset('resources/css/sb-admin-2.min.css')}}" rel="stylesheet">
     <link href="{{asset('resources/css/app.css')}}" rel="stylesheet">
+            <link href="{{asset('resources/js/jquery-ui-1.12.1.custom/jquery-ui.css')}}" rel="stylesheet" />
  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Custom fonts for this template-->
 </head>
 
 <body class="bg-gradient-primary">
+    <input type="hidden" id="base_url" value="{{url('/')}}/">
      <input type="hidden" id="token" value="{{csrf_token()}}">
     <div class="container">
 
@@ -77,17 +79,10 @@
             </div>
         </div>
     </div>
+     @include('Shared.dialog')
+@include('Shared.script')
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{asset('resources/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('resources/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="{{asset('resources/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{{asset('resources/js/sb-admin-2.min.js')}}"></script>
-     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             var submodule="{{$submodule}}"
             if ($("#errors").length>0)

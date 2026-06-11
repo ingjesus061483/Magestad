@@ -43,7 +43,9 @@ class DatabaseSeeder extends Seeder
             PrioritySeeder::class,
             OccupationalPositionSeeder::class,
             loanStatusSeeder::class,
-            LoanTypeSeeder::class
+            LoanTypeSeeder::class,
+            EventTypeSeeder::class,
+            NoticeTypeSeeder::class,
             ]);
 
 

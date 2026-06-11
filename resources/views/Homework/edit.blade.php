@@ -23,11 +23,11 @@
             </div>
             <div class="mb-3">
                 <label for="task" class="col-form-label" style="font-size:14px">Tarea</label>
-                <textarea class="form-control" name="task" id="task" rows="3" class="form-control" style="font-size:12px" >{{$homework->task}}</textarea>
+                <textarea class="textarea form-control" name="task" id="task" rows="3" onfocus="quitarEspacios(this)" onblur="quitarEspacios(this)" class="form-control" style="font-size:12px" >{{$homework->task}}</textarea>
             </div>
             <div class="mb-3">
                 <label for="remark" class="col-form-label" style="font-size:14px">Observación</label>
-                <textarea class="form-control" name="remark" id="remark" rows="3" class="form-control" style="font-size:12px" >{{$homework->remark}}</textarea>
+                <textarea class="textarea form-control" onfocus="quitarEspacios(this)" onblur="quitarEspacios(this)" name="remark" id="remark" rows="3" class="form-control" style="font-size:12px" >{{$homework->remark}}</textarea>
             </div>
 
             <div class="mb-3">

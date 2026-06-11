@@ -61,7 +61,9 @@
                 <div class="col-12">
                     <div class="mb-3">
                         <label for="" class="form-label" style="font-size:14px">Comentarios</label>
-                        <textarea name="comments" id="" rows="3" class="form-control" style="font-size:12px"></textarea>
+                        <textarea name="comments" id="" rows="3" class="textarea form-control" style="font-size:12px">
+
+                        </textarea>
                     </div>
                 </div>
             </div>

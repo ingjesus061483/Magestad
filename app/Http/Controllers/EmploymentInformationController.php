@@ -35,7 +35,7 @@ class EmploymentInformationController extends Controller
         ];
         $EmploymentInformation->update($arrEmployment);
         session(["info"=>"2"]);
-        return back()->with(['message'=>'Información de empleo actualizada correctamente']);
+        return back()->with(['message'=>'Información laboral actualizada correctamente']);
     }
     public function store(StoreRequest $request)
     {
@@ -68,7 +68,7 @@ class EmploymentInformationController extends Controller
         ];
         $EmploymentInformation=EmploymentInformation::create($arrEmployment);
         session(["info"=>"4"]);
-        return back()->with(['message'=>'Información de empleo guardada correctamente. Continua con la informacion patrimonial.']);
+        return back()->with(['message'=>'Información laboral guardada correctamente. Continua con la informacion patrimonial.']);
     }
     //
 }

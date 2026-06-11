@@ -29,7 +29,9 @@
             </div>
             <div class="mb-3">
                 <label for="remark" class="col-form-label" style="font-size:14px">Novedad</label>
-                <textarea class="form-control" name="remark" id="remark" rows="3" class="form-control" style="font-size:12px" >{{$newness->remark}}</textarea>
+                <textarea class="textarea form-control" onfocus="quitarEspacios(this)" onblur="quitarEspacios(this)" name="remark" id="remark" rows="3" class="form-control" style="font-size:12px" >
+                    {{$newness->remark}}
+                </textarea>
             </div>
             <div class="mb-3">
                  <a href="{{url('/Newness')}}" title="Regresar" class="btn btn-primary">

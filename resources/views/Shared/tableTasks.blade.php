@@ -5,7 +5,6 @@
                     <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
                     <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
                     <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                    <th style="text-align: center">N°</th>
                     <th style="text-align: center">ID</th>
                     <th style="text-align: center">FECHA</th>
                     <th style="text-align: center" >CLIENTE	</th>
@@ -32,10 +31,9 @@
                 <td>
                     @include('Shared.formDelete',['action'=>url('/homework/'.$item->id)])
                 </td>
-                <td style="text-align: center;">{{$item->id}}</td>
                 <td style="text-align: justify;"> {{$item->user->name}}</td>
                 <td style="text-align: justify;">{{date("d/m/Y", strtotime($item->date))}}</td>
-                <td style="text-align: justify;">{{$item->client->name_last_name.' '.$item->client->reference }}</td>
+                <td style="text-align: justify;">{{$item->client->reference }}</td>
                 <td style="text-align: justify;">{{$item->task}}</td>
                 <td style="text-align: justify;">{{$item->homework_type->name}}</td>
                 <td  style="text-align: justify;align-content: justify;">

@@ -31,7 +31,7 @@
                 </div>
                  <div class="col-sm-6">
                     <label for="remark" class="col-form-label" style="font-size:14px">Tarea</label>
-                    <textarea class="form-control" name="task" id="task" rows="3" class="form-control" style="font-size:12px" >
+                    <textarea class="textarea form-control" onfocus="quitarEspacios(this)" onblur="quitarEspacios(this)" name="task" id="task" rows="3" class="form-control" style="font-size:12px" >
                         {{old('task')}}
                     </textarea>
                 </div>
@@ -49,7 +49,7 @@
                 </div>
                  <div class="col-sm-6">
                     <label for="remark" class="col-form-label" style="font-size:14px">Observación</label>
-                    <textarea class="form-control" name="remark" id="remark" rows="3" class="form-control" style="font-size:12px" >
+                    <textarea class="textarea form-control" name="remark" id="remark" rows="3" onfocus="quitarEspacios(this)"  onblur="quitarEspacios(this)" class="form-control" style="font-size:12px" >
                         {{old('remark')}}
                     </textarea>
                 </div>

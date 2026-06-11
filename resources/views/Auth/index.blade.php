@@ -1,13 +1,11 @@
 @extends('Shared/layout')
 @section('title','Usuarios')
 @section('content')
-
-
-        <div style="padding: 5px">
-            <a title="Crear usuarios" class="btn btn-primary"id="btnUser" >
-                <i class="fa-solid fa-plus"></i>
-            </a>
-        </div>
+    <div style="padding: 5px">
+        <a title="Crear usuarios" class="btn btn-primary"id="btnUser" >
+             <i class="fa-solid fa-plus"></i>
+        </a>
+    </div>
     <div class="tableFixHead card">
         <table  class="table-hover table-bordered" style="width:100%">
             <thead style ="font-size: 14px" >

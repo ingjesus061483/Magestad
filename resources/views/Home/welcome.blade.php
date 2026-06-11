@@ -2,13 +2,6 @@
 @section('title','Inicio')
 @section('content')
 
-        <div class="row">
-            <div class="col-lg-6 d-none d-lg-block bg-login-image">
-                 <div class="d-flex justify-content-center align-items-center mb-3">
-                    <img class="sidebar-card-illustration mb-2" src="{{url('ImagenSistema/cs.png')}}" alt="...">
-                 </div>
-            </div>
-            <div class="col-lg-6">
                 <div class="row">
                     <div class="col-6">
                         @if(auth()->check())
@@ -20,7 +13,7 @@
                                 <div id="subFastsearch" style="display: none; position: absolute; top: 100%;  left:  0%; padding: 5px; color:black;  white-space: nowrap; background: white; border: 1px solid #ddd; box-shadow: 0 0 8px rgba(0,0,0,.1);">
                                     <ul style="list-style-type: none; margin: 0; padding: 0;">
                                         <li><a  href="{{url('clients')}}" style="color: black;">BD | Cliente</a></li>
-                                         <li><a href="{{url('Newness')}} " style="color: black;">Novedades</a></li>
+                                        <li><a href="{{url('Newness')}} " style="color: black;">Novedades</a></li>
                                         <li><a  href="{{url('homework')}}" style="color: black;">Tareas</a></li>
                                         <li ><a href="{{url('requestLoan')}}" style="color: black;">Solicitud de préstamo</a></li>
                                     </ul>
@@ -78,6 +71,8 @@
                                         <li> <a style="text-decoration: none; color: black;"  href="{{url('/eps')}}">EPS</a></li>
                                         <li> <a style="text-decoration: none; color: black;"  href="{{url('/authorizationPolicies')}}"> Politicas y autorizaciones</a></li>
                                         <li> <a style="text-decoration: none; color: black;"  href="{{url('/users')}}">Usuarios</a></li>
+                                        <li><a style="text-decoration: none; color: black;"  href="{{url('/eventtype')}}">Tipos de eventos</a></li>
+                                        <li><a style="text-decoration: none; color: black;"  href="{{url('/noticetype')}}">Tipos de alertas</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -157,7 +152,7 @@
                     </div>
                     <div class="module row" style=" justify-content: center;align-items: center;">
                         <div class="col-6" style="display:grid; justify-content: center;align-items: center;">
-                            <button class="btn boton"  style="text-align:center; color:gray;">
+                            <button class="btn boton" onclick="showSubmodule('subAgenda')" style="text-align:center; color:gray;">
                                 <i class="fa-solid fa-calendar-days"style="font-size: 30px"></i><br>
                                 <span style="color: black; " > AGENDA</span>
                             </button>
@@ -171,8 +166,8 @@
                     </div>
                     <div class="module row" style=" justify-content: center;align-items: center;">
                         <div class="col-6" style="display:grid; justify-content: center;align-items: center;">
-                            <button class="btn boton" style="text-align:center; color:gray;">
-                                <i class="fa-solid fa-bell" style="font-size: 30px"></i><span class="badge badge-danger badge-counter">+9</span><br>
+                            <button class="btn boton" onclick="showSubmodule('subAlerts')" style="text-align:center; color:gray;">
+                                <i class="fa-solid fa-bell" style="font-size: 30px"></i><span class="badge badge-danger badge-counter">{{$notice_type_total}}</span><br>
 
                                  <span style="color: black; " >ALERTAS</span>
                                <!-- <span class="badge badge-danger badge-counter">3+</span>-->
@@ -209,11 +204,45 @@
                             <li ><a style="text-decoration: none; color: black;" href="{{url('requestLoan')}}"><i class="fa-solid fa-hand-holding-usd"></i> Solicitud de préstamo</a></li>
                         </ul>
                     </div>
+
                     <div id="subIndicators" style="display: none; padding: 5px;" class="mt-4 subModule">
                         <h1 class="h4 text-center text-gray-900 mb-4" ><i class="fa-solid fa-chart-line"style="font-size: 30px"></i> INDICADORES</h1>
                     </div>
                      <div id="subAgenda" style="display: none; padding: 5px;" class="mt-4 subModule">
                         <h1 class="h4 text-center text-gray-900 mb-4" ><i class="fa-solid fa-calendar-days"style="font-size: 30px"></i> AGENDA</h1>
+                         <ul style="list-style-type: none; margin: 0; padding-bottom: 20px;">
+                            <li><a style="text-decoration: none; color: black;" href="{{url('events/create')}} "><i class="fa-solid fa-plus"></i>&nbsp; Crear evento</a></li>
+                    </div>
+                    <div id="subAlerts" style="display: none; padding: 5px;" class="mt-4 subModule">
+                        <h1 class="h4 text-center text-gray-900 mb-4" ><i class="fa-solid fa-bell" style="font-size: 30px"></i> ALERTAS</h1>
+                        <div id="accordion">
+                            @foreach($notice_types_details as $notice_type)
+                            <h3>
+                                <a style="color: black; href="#">
+                                    {{ $notice_type->notice_type}} &nbsp;
+                                    <span class="badge badge-danger badge-counter">
+                                        {{$notice_type->detail_notice_type}}
+                                    </span>
+                               </a>
+                            </h3>
+                            <div>
+                                @switch($notice_type->notice_type_id)
+                                    @case(2)
+                                        @include('Shared.tableClients',['clients'=>$clients])
+                                        @break
+                                    @case(14)
+                                        @include('Shared.Events',['eventsByDate'=>$events])
+                                        @break
+                                    @case(15)
+                                        @include('Shared.tableTasks',['homeworks'=>$Tasks])
+                                        @break
+                                    @case(16)
+                                        @include('Shared.tableNewness',['newnesses'=>$Newnesses])
+                                        @break
+                                @endswitch
+                            </div>
+                            @endforeach
+                        </div>
                     </div>
                      <div id="subReports" style="display: none; padding: 5px;" class="mt-4 subModule  ">
                         <h1 class="h4 text-center text-gray-900 mb-4" ><i class="fa-regular fa-newspaper" style="font-size: 30px"></i> REPORTES</h1>
@@ -225,7 +254,5 @@
                     </div>
                     @endif
                 </div>
-            </div>
-        </div>
 
 @endsection

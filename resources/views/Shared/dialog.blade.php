@@ -12,6 +12,12 @@
         </div>
     </form>
   </div>
+  <div id="dialogEvent" >
+    <div id ="events" class="row" style="padding: 10px">
+
+    </div>
+
+  </div>
   <div id="dialogHomework" title="Tareas" >
             <form id="frmHomework" action="{{url('homework')}}" method="POST" autocomplete="off">
                 @csrf
@@ -163,7 +169,20 @@
 
             </form>
         </div>
-        <div title="EPS" id="dialogEps">
+        <div title="Tipo de eventos" id="dialogEventTipe">
+            <form id ="frmEventTipe" action="{{url('/eventtype')}}" method="POST" autocomplete="off">
+                @csrf
+                <div class="mb-3">
+                    <label class="form-label" for="" style="font-size:14px"> Nombre*</label>
+                    <input type="text" name="name" class="form-control" style="width:80%;font-size12px " id="name">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for=""> Descripcion</label>
+                    <textarea name="description" id="description" class="form-control" style="font-size:12px;" cols="30" rows="10"></textarea>
+                </div>
+            </form>
+        </div>
+                <div title="EPS" id="dialogEps">
             <form id ="frmEps" action="{{url('/eps')}}" method="POST" autocomplete="off">
                 @csrf
                 <p style="color:gray;font-style: italic; font-size:14px">Registre aqui su EPS</p>

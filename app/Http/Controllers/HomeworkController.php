@@ -14,6 +14,8 @@ use App\Models\Client;
 use App\Models\HomeworkType;
 use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\TasksImport;
+use App\Http\Requests\ImportRequest;
 class HomeworkController extends Controller
 {
         protected Builder $pendingTasks;
@@ -101,7 +103,7 @@ class HomeworkController extends Controller
             'task'=>$request->task,
             'remark'=>$request->remark,
             'state_homework_id'=>$request->state_homework,
-            'homework_type_id'=>$request->homework_type_id
+            'homework_type_id'=>$request->homework_type_id,
         ]);
         return redirect()->to('/homework')->with(['message'=>'Tarea creada correctamente']);
 
@@ -140,6 +142,7 @@ class HomeworkController extends Controller
             'task'=>$request->task,
             'remark'=>$request->remark,
             'state_homework_id'=>$request->state_homework_id,
+
            // 'homework_type_id'=>$request->homework_type_id
         ]);
         return redirect()->to('/homework')->with(['message'=>'Tarea actualizada correctamente']);
@@ -163,5 +166,25 @@ class HomeworkController extends Controller
         $builder =$this->filterBy($request,$this->tasks);
         return Excel::download(new TasksExport($builder),'Tareas.xls' );
 
+    }
+    public function downloadTemplate(int $id)
+    {
+        $path=storage_path('app/public/File/PlantillaTareas.xls');
+        return response()->download($path);
+    }
+    public function importExcel(int $id, ImportRequest $request)
+    {
+        try{
+            Excel::import(new TasksImport,$request->file('file'));
+            return back()->with(['message'=>'Tareas importadas correctamente']);
+        }
+        catch(\Maatwebsite\Excel\Validators\ValidationException $e){
+            $failures = $e->failures();
+            $errorMessages = [];
+            foreach ($failures as $failure) {
+                $errorMessages[] = "Row {$failure->row()}: " . implode(', ', $failure->errors());
+            }
+            return back()->withErrors($errorMessages);
+        }
     }
 }

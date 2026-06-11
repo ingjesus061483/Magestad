@@ -22,8 +22,7 @@
           <link href="{{asset('resources/css/app.css')}}" rel="stylesheet">
     <!-- Custom fonts for this template-->
     <link href="{{asset('resources/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
@@ -31,6 +30,20 @@
 
 </head>
 <body id="page-top">
+    <style>
+        .textarea:focus
+        {
+            color: black
+        }
+        .textarea {
+            width: 100%;
+            height: 150px;
+            padding: 12px;
+            color:black;
+            border-radius: 4px;
+            resize: none;
+        }
+    </style>
     <input type="hidden" id="base_url" value="{{url('/')}}/">
     <input type="hidden" id="info" value="{{isset($info)?$info:''}}">
     <input type="hidden" id="client" value="{{isset($client)?$client->id:''}}">

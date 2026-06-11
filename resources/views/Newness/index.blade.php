@@ -8,10 +8,14 @@
      <button title="filtrar por..." class="filter btn btn-secondary" >
         <i class="filter fa-solid fa-filter"></i>
     </button>
-     <button title="Exportar a excel" onclick="download('Newness')"  class="btn btn-success">
+    <button title="Importar desde excel" class="importer btn btn-info">
+        <i class="fa-solid fa-file-import"></i>
+    </button>
+    <button title="Exportar a excel" onclick="download('Newness')"  class="btn btn-success">
         <i class="fa-solid fa-file-excel"></i>
-     </button>
+    </button>
 </div>
+@include('Shared.import',['action'=>url('Newness/importExcel/1')])
 @include('Shared.filter',['action'=>url('/Newness'), 'newness'=>true])
 <div id="accordion">
     @foreach($state_newnesses as $item)

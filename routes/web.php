@@ -13,11 +13,14 @@ use App\Http\Controllers\ClientPolicyController;
 use App\Http\Controllers\AuthorizationPolicyController;
 use App\Http\Controllers\DocumentTypeController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\NewnessController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewnessTypeController;
 use App\Http\Controllers\HomeworkController;
+use App\Http\Controllers\NoticeTypeController;
 use App\Http\Controllers\RequestLoanController;
 use Maatwebsite\Excel\Facades\Excel;
 /*
@@ -34,6 +37,7 @@ use Maatwebsite\Excel\Facades\Excel;
 Route::get('/',[HomeController::class,'index']);/* function () {
     return view('welcome');
 });*/
+Route::resource('noticetype',NoticeTypeController::class);
 Route::resource('requestLoan',RequestLoanController::class);
 Route::resource('homework',HomeworkController::class);
 Route::get('UnAutorize', function () {
@@ -61,11 +65,17 @@ Route::get('users/login/{id}',[UserController::class,'login']);
 Route::post('users/sigin',[UserController::class,'storelogin']);
 Route::post('users/logout',[UserController::class,'logout']);
 Route::get('Newness/download/{id}',[NewnessController::class,'downloadExcel']);
+Route::post('Newness/importExcel/{id}',[NewnessController::class,'importExcel']);
+Route::get('Newness/downloadTemplate/{id}',[NewnessController::class,'Downloadtemplate']);
 Route::get('Homework/download/{id}',[HomeworkController::class,'downloadExcel']);
+Route::get('Homework/downloadTemplate/{id}',[HomeworkController::class,'downloadTemplate']);
+Route::post('Homework/importExcel/{id}',[HomeworkController::class,'importExcel']);
+Route::resource('eventtype',EventTypeController::class);
 
 Route::post('Newness/changeStateNewness/{id}',[NewnessController::class,'changeStateNewness']);
 Route::post('homework/changeStateHomework/{id}',[HomeworkController::class,'changeStateHomework']);
 Route::resource('arls',ArlController::class);
+Route::resource('events', EventController::class);
 Route::resource('eps',EpsController::class);
 Route ::resource('clientPolicies', ClientPolicyController::class);
 Route::get('clientPolicies/SearchPolicyClient',[ClientPolicyController::class,'SearchPolicyClient']);
