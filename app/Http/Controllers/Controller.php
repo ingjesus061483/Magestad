@@ -52,6 +52,7 @@ class Controller extends BaseController
         {
             $eventsbytype[]=(object)[
                 'event_type'=>$event->event_type,
+                'event_type_id'=>$event->event_type_id,
                 'events'=>Event::join('event_types as evt','evt.id','=','events.event_type_id')
                                   ->where('date','=',$date)
                                   ->where('evt.id',$event->event_type_id)

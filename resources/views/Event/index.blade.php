@@ -50,9 +50,13 @@
         </form>
     </div>
 </div>
+@php($enddate= date('M',strtotime( $firstdate))!=date('M',strtotime( $enddate))? date('M',strtotime( $enddate)):'')
 
-<div class="card" style="padding: 5px">
-    <div class="card-body" style="margin:0 auto; height:200px; overflow: scroll; ">
+<div class="card" >
+    <div class="card-header ">
+        <i class="fa-regular fa-calendar-days"></i> Eventos {{date('M',strtotime( $firstdate)).' - '.$enddate.' '.date('Y')}}
+    </div>
+    <div class="card-body" style="margin:0 auto; height:200px; overflow: auto;">
         @include('Shared.Events',['eventsByDate'=>$eventsByDate])
     </div>
 </div>

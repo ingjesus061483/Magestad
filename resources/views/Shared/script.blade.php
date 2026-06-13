@@ -1100,11 +1100,14 @@
                 });
 
             }
-            function showEvents(date)
+            function showEvents(button)
             {
+                var date =$(button).data('date');
+                var event_type=$(button).data('event_type');
                 var url=urlBase+'events/0';
                 var data={
-                    date:date
+                    date:date,
+                    event_type:event_type
                 }
 
                  $.ajax({
@@ -1122,17 +1125,17 @@
                             day:"numeric"
                         });
                         console.log(d);
-                        var title="Eventos "+d;
+                        var title=result.event_type.name;
                         dialogEvent.dialog( "option", "title",  title);
                         dialogEvent.dialog("open");
                         var div='';
-                        $.each(result, function (index, element){
+                        $.each(result.events, function (index, element){
                             console.log(element)
                                 var time=new Date(element.date+" "+element.time);
                                 div=div+"<div class ='col-6' style='padding:5px;'>";
-                                div=div+"<div class='card'><div class='card-header' style='align-text:center;align-items:center'> <strong> "+element.event_type  +"</strong></div>";
+                                div=div+"<div class='card'><div class='card-header' style='align-text:center;align-items:center'>  "+element.title  +"</div>";
                                 div=div+"<div class='card-body'> <p style='font-size:12px'><strong>Hora:</strong> "+   time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })    +"</p>";
-                                div=div+"<div style='font-size:12px; height:200px; overflow: scroll;'>"+element.remark +"</div>";
+                                div=div+"<div style='font-size:12px; height:200px; overflow: auto;'>"+element.remark +"</div>";
                                 div=div+"<div style='padding:5px'>"+
                                     "<button class='btn-sm btn-warning'onclick='editEvent("+element.id+")' title='Editar evento' style='margin-left:10px' >"+
                                     "<i class='fa-solid fa-pencil'></i></button>"+

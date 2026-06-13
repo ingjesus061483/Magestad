@@ -28,7 +28,7 @@
                             </form>
                         </td>
                         <td>{{date("d/m/Y", strtotime($item->date)) }}</td>
-                        <td>{{ $item->client->name_last_name.' '.$item->client->reference }}</td>
+                        <td>{{ $item->client->reference }}</td>
                         <td>${{ number_format($item->amountRequested) }}</td>
                         <td>{{ $item->priorityName }}</td>
                     </tr>

@@ -144,9 +144,21 @@ class ClientController extends Controller
         $client->seizure=$seizure;
         $client->company_seizure=$request->company_seizure;
         $client->update();
+        $message="";
+if($client->quality_holder_id==1)
+    {
         session(["info"=>"6"]);
+        $message="Se ha actualizado la información legal. Continue con la información del crédito.";
+        }
+        if($client->quality_holder_id==2||$client->quality_holder_id==3)
+        {
+            session(["info"=>"7"]);
+            $message="Se ha actualizado la información legal. Continue con las politicas";
+
+            }
+
         session(['client' => $client]);
-        return back() ->with(['message'=>'Se ha actualizado la información legal. Continue con la información del crédito.']);
+        return back() ->with(['message'=>$message]);
        // return redirect()->to(url('/clients/create'))->withInput(["client_id"=>$client->id]);
     }
     public function UpdatePatrimonialInformation(Request $request ,int $id)
@@ -359,9 +371,20 @@ class ClientController extends Controller
         ];
         if(request()->action=="finish")
         {
-            session([ 'message'=>"Su solicitud de credito ha sido enviada con referencia
+            $message="";
+            if($loan!=null)
+            {
+                $message="Su solicitud de credito ha sido enviada con referencia
                               $loan->reference. a continuacion estaremos enviando un
-                              correo con los pasos a seguir de esta soicitud"]);
+                              correo con los pasos a seguir de esta soicitud";
+            }
+            else
+            {
+                $message="Su solicitud de credito ha sido enviada.
+                              A continuacion estaremos enviando un
+                              correo con los pasos a seguir de esta soicitud";
+            }
+            session([ 'message'=>$message]);
                               return view('Client.finish',$data);
         }
         session(['client' => $client]);

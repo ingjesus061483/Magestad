@@ -78,12 +78,14 @@ class EventController extends Controller
      */
     public function show(int $id,ShowRequest $request)
     {
+        $event_type=EventType::find($request->event_type);
          $events=Event::join('event_types as et','et.id','=','event_type_id')
                       -> where ('date',$request->date)
-                      ->select('events.id' ,'et.name as event_type','events.date' ,'events.time'
+                      ->where('event_type_id',$request->event_type)
+                      ->select('events.id','events.title' ,'et.name as event_type','events.date' ,'events.time'
                       ,'events.remark');
 
-return response()->json($events->get());
+        return response()->json(["event_type"=>$event_type,"events"=> $events->get()]);
         //
     }
 
