@@ -34,6 +34,7 @@ th {background: #eee;}*/
                     <div class="mb-3">
                         @include('Shared.searchClient',['client_id' => $client_id ?? null,
                                                                 'client_name' => $client_name ?? null,
+                                                                'bd_client'=>true,
                                                                 'client' => null])
                     </div>
                 </div>

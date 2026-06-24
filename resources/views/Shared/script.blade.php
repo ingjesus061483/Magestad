@@ -227,12 +227,14 @@
                 $(".client").autocomplete({
                     source: function( request, response )
                     {
+                        var bd_client=$('.client').data('bd_client');
                         $.ajax( {
                             url: urlBase+"clients/SearchByName",
                             type: "GET",
                             dataType: "json",
                             data:
                             {
+                                bd_client:bd_client,
                                 name: request.term
                             },
                             success: function( data )

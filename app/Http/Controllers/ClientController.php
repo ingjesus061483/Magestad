@@ -86,12 +86,23 @@ class ClientController extends Controller
     }
     public function SearchByName(Request $request)
     {
-        $clients=Client::where('clients.reference','like','%'.$request->name.'%')
+        $bd_client=(bool)$request->bd_client;
+        if(!$bd_client)
+        {
+            $clients=Client::where('clients.reference','like','%'.$request->name.'%')
                       ->select( "id","identification")
                       ->selectRaw("reference as name")
+                      ->orderby('reference','asc')
+                      ->get();
+            return response()->json($clients);
+        }
+        $clients=Client::where('clients.name_last_name','like','%'.$request->name.'%')
+                      ->select( "id","identification")
+                      ->selectRaw("name_last_name as name")
                         ->orderby('reference','asc')
                       ->get();
         return response()->json($clients);
+
     }
     public function UpdateDataProccess(Request $request,int $id){
         $accept_data_treatment=$request->accept_data_treatment==null?0:(bool)$request->accept_data_treatment;
@@ -193,7 +204,7 @@ if($client->quality_holder_id==1)
             session()->forget('info');
         }
         $rows_per_page=$request->rows_per_page ?? env('ROWS_PER_PAGE');
-        $clients=$this->clients;
+        $clients=$this->clients->orderby('created_at','desc');
         if($request->client_id!=null){
            $clients=$this->clients->where('clients.id','=',$request->client_id);
         }
