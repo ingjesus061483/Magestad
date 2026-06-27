@@ -22,7 +22,7 @@
                 <input type="time"name="time" class="form-control" id="time" style="font-size:12px" value="{{$event->time}}">
             </div>
             <div class="col-sm-6" >
-                <label for="event_type_id" class="col-form-label" style="font-size:14px">Tipo de eventto</label>
+                <label for="event_type_id" class="col-form-label" style="font-size:14px">Tipo de evento</label>
                 <select class="form-select" name="event_type" style="font-size:12px" id="event_type">
                     @foreach ($event_types as $type)
                     <option value="{{$type->id}}"{{$type->id==$event->event_type_id?'selected':''}}>{{$type->name}}</option>

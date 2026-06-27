@@ -1551,13 +1551,21 @@
                 $("#frmEditClient").attr('action',urlBase+"clients/"+client_id+"/edit");
                 dialogEditClient.dialog("open");
             });
-              $("#datepicker").datepicker({
-                    onSelect:function(  dateText, inst )
-                    {
-                        showEvents(dateText);
-
-                    },
-                    autoSize:true
+            $("#datepicker").datepicker({
+                onSelect:function(  dateText, inst )
+                {
+                    showEvents(dateText);
+                },
+                setDate:"10/12/2012",
+                selectedDay: 24,
+                selectedMonth: 9,
+                selectedYear:2026,
+                onChangeMonthYear:function(year, month, inst)
+                {
+                    console.log(inst);
+                    alert(year);
+                },
+                autoSize:true
               });
               var dialogEvent=$("#dialogEvent").dialog({
                 autoOpen: false,

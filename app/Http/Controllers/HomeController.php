@@ -10,6 +10,7 @@ use App\Models\Newness;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Client;
+use App\Models\EventType;
 use App\Models\NoticeType;
 
 class HomeController extends Controller
@@ -42,7 +43,7 @@ class HomeController extends Controller
         $pendingTasks  =Homework::where('state_homework_id',1)->paginate(env('ROWS_PER_PAGE'));
         $pendingNewnesses =Newness::where('state_newness_id',1)->paginate(env('ROWS_PER_PAGE'));
         $data=[
-            'events'=>$eventsByDate,
+            'event_types'=>EventType::all(),
             'submodule'=> request()->submodule!=null?request()->submodule:'',
             'notice_types_details'=>$notice_type_details->get(),
             'notice_type_total'=> $notice_types->count(),

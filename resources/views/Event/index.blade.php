@@ -9,11 +9,6 @@
         <i class="filter fa-solid fa-filter"></i>
     </button>
 </div>
-<!--<div class="card" style="padding: 5px">
-    <div class="card-body" style="margin:0 auto">
-     <div id="datepicker"></div>
-    </div>
-</div>-->
 <div class="card mb-4" style="width: 100%; display:none" id="filterForm">
     <div class="card-header">
         <i class="fas fa-filter me-1"></i>
@@ -25,14 +20,18 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for=""style="font-size:14px" >Fecha inicio</label>
-                        <input type="date" class="form-control" name="firstdate" style="font-size:12px;color:black" value="{{$firstdate }}" id="dateStart">
+                        <label for=""style="font-size:14px" >Año</label>
+                        <input type="number" class="form-control" name="year" style="font-size:12px;color:black" value="{{ $year }}">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for=""style="font-size:14px" >Fecha final</label>
-                        <input type="date" class="form-control" name="enddate" style="font-size:12px; " value="{{$enddate }}" id="dateEnd">
+                        <label class="form-label" for="" style="font-size:14px"> Mes</label>
+                        <select name="month" class="form-select" style="font-size:12px">
+                            @foreach($months as $item=>$index)
+                            <option value="{{$item}}" {{$month==$item?'selected':''}}>{{$index}}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>
@@ -50,16 +49,34 @@
         </form>
     </div>
 </div>
-@php($enddate= date('M',strtotime( $firstdate))!=date('M',strtotime( $enddate))? date('M',strtotime( $enddate)):'')
 
-<div class="card" >
-    <div class="card-header ">
-        <i class="fa-regular fa-calendar-days"></i> Eventos {{date('M',strtotime( $firstdate)).' - '.$enddate.' '.date('Y')}}
-    </div>
-    <div class="card-body" style="margin:0 auto; height:200px; overflow: auto;">
-        @include('Shared.Events',['eventsByDate'=>$eventsByDate])
+
+<div class="card">
+    <div class="card-header"><i class="fa-regular fa-calendar-days"></i>&nbsp; {{date('F',strtotime( $year.'-'.$month.'-01'))}}&nbsp; {{$year}} </div>
+    <div class="card-body">
+        <div>
+        <table class="table" >
+            <thead>
+                @foreach ($calendar[0] as $weekday)
+                <th>{{$weekday}}</th>
+                @endforeach
+            </thead>
+            <tbody>
+                @for ($i = 1; $i < count($calendar); $i++)
+                <tr>
+                    @for ($j = 0; $j <= 6; $j++)
+                    <td>
+                        <a href="{{url('events')}}/0?date={{$year.'-'.$month.'-'.($calendar[$i][$j]->day ?? '')}}"  style="{{$calendar[$i][$j]?->events>0?'color:black':''}}"> {{ ($calendar[$i][$j]->day ?? '') }}</a>
+                    </td>
+                    @endfor
+                </tr>
+                @endfor
+            </tbody>
+        </table>
+        </div>
     </div>
 </div>
+
 <div style="padding-top :5px">
     <a title="Regresar" href="{{url('/')}}?submodule=subAgenda" class="btn btn-primary">
         <i class="fa-solid fa-arrow-left" ></i>

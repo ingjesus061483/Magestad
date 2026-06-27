@@ -231,7 +231,7 @@
                                         @include('Shared.tableClients',['clients'=>$clients])
                                         @break
                                     @case(14)
-                                        @include('Shared.Events',['eventsByDate'=>$events])
+                                        <a href="{{url('events/0?date=')}}{{date('Y-m-d')}}">Ver Eventos</a>
                                         @break
                                     @case(15)
                                         @include('Shared.tableTasks',['homeworks'=>$Tasks])
