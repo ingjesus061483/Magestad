@@ -71,15 +71,6 @@ class EventController extends Controller
         $year = $request->year??date('Y');
         $month = $request->month ??date('m');
         $calendar=$this->GetCalendar($year,$month);
-
-
-
-        //print_r($calendar);
-
-
-
-      //  print_r ($eventsByDate);
-       // exit;
         $data = [
             'month'=>$month,
             'year'=>$year,
