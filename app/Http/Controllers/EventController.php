@@ -42,8 +42,8 @@ class EventController extends Controller
         $lastOfMonth = $firstOfMonth->modify('last day of this month');
         $week = array_fill(0, 7, null);
         $current = $firstOfMonth;
-        $calendar = [['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
-                    'Friday', 'Saturday'],];
+        $calendar = [['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves',
+                    'Viernes', 'Sábado'],];
         while ($current <= $lastOfMonth)
         {
             $dayIndex = (int)$current->format('w');
