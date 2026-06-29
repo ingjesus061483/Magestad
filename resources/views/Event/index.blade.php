@@ -58,14 +58,14 @@
         <table class="table" >
             <thead>
                 @foreach ($calendar[0] as $weekday)
-                <th>{{$weekday}}</th>
+                <th style="text-align: center">{{$weekday}}</th>
                 @endforeach
             </thead>
             <tbody>
                 @for ($i = 1; $i < count($calendar); $i++)
                 <tr>
                     @for ($j = 0; $j <= 6; $j++)
-                    <td>
+                    <td style="text-align:center">
                         <a href="{{url('events')}}/0?date={{$year.'-'.$month.'-'.($calendar[$i][$j]->day ?? '')}}"  style="{{$calendar[$i][$j]?->events>0?'color:black':''}}"> {{ ($calendar[$i][$j]->day ?? '') }}</a>
                     </td>
                     @endfor
